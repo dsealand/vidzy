@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "vidzy20516b65": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}
