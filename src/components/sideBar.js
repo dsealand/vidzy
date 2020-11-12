@@ -1,6 +1,8 @@
 import React from 'react'
 
-import styled from 'styled-components/native'
+import { Image, View, Text } from 'react-native'
+
+import { styled } from 'styled-components/native'
 
 const Container = styled.View`
 	width: 20%;

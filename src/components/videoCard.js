@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import { Dimensions, View } from 'react-native'
-import { LinearGradient } from 'expo-linear-gradient'
+import LinearGradient from 'expo-linear-gradient'
 import styled from 'styled-components/native'
 import ViewPager from '@react-native-community/viewpager'
 
@@ -10,10 +10,10 @@ import Sidebar from './sideBar'
 
 const { height } = Dimensions.get('window')
 
-const Container = styled(ViewPager)`
+const Container = styled(props => <ViewPager {...props} />)`
 	height: ${height}px;
 `
-const Gradient = styled(LinearGradient)`
+const Gradient = styled(props => <LinearGradient {...props} />)`
 	height: 100%;
 	justify-content: space-between;
 	position: absolute;
