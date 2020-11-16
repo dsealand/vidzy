@@ -1,5 +1,52 @@
-type Todo @model {
-  id: ID!
+type Product @model {
   name: String!
   description: String
+  category: Category!
+  price: Float
+  videos: [Video]
+  brand: String!
 }
+
+type Video @model {
+  productID: ID!
+  URL: String!
+  creator: String!
+}
+
+enum Category {
+  Cosmetics
+  Skincare
+}
+
+enum Brand {
+  Sephora
+  # TODO
+}
+
+type Creator {
+  name: String!
+  content: [Video]
+}
+
+# type Query {
+#   # return all videos
+#   getAllVidoes(): [Video]
+
+#   # return specific video
+#   getVideo(id: ID!): Video
+# }
+
+# query getVideo($id: ID!) {
+#   getVideo(videoID: $id) {
+#     URL
+#     creator
+#   }
+# }
+
+
+# # return all videos for a product
+# query getProductVideo($productID: ID!) {
+#   getProductVideo(productID: $productID) {
+#     videos
+#   }
+# }
