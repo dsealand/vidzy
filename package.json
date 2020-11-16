@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@react-native-community/viewpager": "4.1.6",
+    "esm": "^3.2.25",
     "expo": "~39.0.2",
     "expo-av": "^8.6.0",
     "expo-linear-gradient": "^8.3.1",
