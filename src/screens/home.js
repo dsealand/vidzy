@@ -1,10 +1,11 @@
-import React from 'react';
+import React from 'react'
 
-import VideoComp from '../components/videoComp'
+import VideoCard from '../components/videoCard'
+import VideoPlayer from '../components/videoPlayer'
 
 function Home(props) {
     return (
-        <VideoComp/>
+        <VideoPlayer/>
     );
 }
 

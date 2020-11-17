@@ -1,52 +1,24 @@
-type Product @model {
-  name: String!
-  description: String
-  category: Category!
-  price: Float
-  videos: [Video]
-  brand: String!
-}
-
 type Video @model {
-  productID: ID!
-  URL: String!
-  creator: String!
-}
-
-enum Category {
-  Cosmetics
-  Skincare
-}
-
-enum Brand {
-  Sephora
-  # TODO
-}
-
-type Creator {
+  id: ID!
   name: String!
-  content: [Video]
+  product: [Product]
+  creator: Creator!
+  URL: String!
 }
+ type Creator @model {
+   id: ID!
+   username: String!
+ }
 
-# type Query {
-#   # return all videos
-#   getAllVidoes(): [Video]
+ type Product @model {
+   id: ID!
+   name: String!
+   price: Int
+   description: String
+   brand: Brand
+ }
 
-#   # return specific video
-#   getVideo(id: ID!): Video
-# }
-
-# query getVideo($id: ID!) {
-#   getVideo(videoID: $id) {
-#     URL
-#     creator
-#   }
-# }
-
-
-# # return all videos for a product
-# query getProductVideo($productID: ID!) {
-#   getProductVideo(productID: $productID) {
-#     videos
-#   }
-# }
+ type Brand @model {
+   id: ID!
+   products: [Product]
+ }
