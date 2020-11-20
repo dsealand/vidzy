@@ -1,5 +1,23 @@
-
-
+## [Start] Validate update mutation for @key 'byBrand'. **
+#set( $hasSeenSomeKeyArg = false )
+#set( $keyFieldNames = ["name", "price"] )
+#foreach( $keyFieldName in $keyFieldNames )
+#if( $ctx.args.input.containsKey("$keyFieldName") ) #set( $hasSeenSomeKeyArg = true ) #end
+#end
+#foreach( $keyFieldName in $keyFieldNames )
+  #if( $hasSeenSomeKeyArg && !$ctx.args.input.containsKey("$keyFieldName") )
+    $util.error("When updating any part of the composite sort key for @key 'byBrand', you must provide all fields for the key. Missing key: '$keyFieldName'.")
+  #end
+#end
+## [End] Validate update mutation for @key 'byBrand'. **
+#if( $util.isNull($dynamodbNameOverrideMap) )
+  #set( $dynamodbNameOverrideMap = {
+  "name#price": "namePrice"
+} )
+#else
+  $util.qr($dynamodbNameOverrideMap.put("name#price", "namePrice"))
+#end
+$util.qr($ctx.args.input.put("name#price","${ctx.args.input.name}#${ctx.args.input.price}"))
 #if( $authCondition && $authCondition.expression != "" )
   #set( $condition = $authCondition )
   #if( $modelObjectKey )

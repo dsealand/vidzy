@@ -1,8 +1,10 @@
 type Video {
   id: ID!
   name: String!
-  product: [Product]
+  product: Product!
+  productID: ID!
   creator: Creator!
+  creatorID: ID!
   URL: String!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
@@ -11,6 +13,8 @@ type Video {
 type Creator {
   id: ID!
   username: String!
+  description: String!
+  videos(URL: ModelStringKeyConditionInput, filter: ModelVideoFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelVideoConnection
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 }
@@ -18,8 +22,19 @@ type Creator {
 type Product {
   id: ID!
   name: String!
-  price: Int
-  description: String
+  price: Int!
+  description: String!
+  videos(URL: ModelStringKeyConditionInput, filter: ModelVideoFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelVideoConnection
+  brand: Brand!
+  brandID: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Brand {
+  id: ID!
+  description: String!
+  products: [Product]
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 }
@@ -110,6 +125,8 @@ input ModelSizeInput {
 input ModelVideoFilterInput {
   id: ModelIDInput
   name: ModelStringInput
+  productID: ModelIDInput
+  creatorID: ModelIDInput
   URL: ModelStringInput
   and: [ModelVideoFilterInput]
   or: [ModelVideoFilterInput]
@@ -136,17 +153,23 @@ type Query {
   listCreators(filter: ModelCreatorFilterInput, limit: Int, nextToken: String): ModelCreatorConnection
   getProduct(id: ID!): Product
   listProducts(filter: ModelProductFilterInput, limit: Int, nextToken: String): ModelProductConnection
+  getBrand(id: ID!): Brand
+  listBrands(filter: ModelBrandFilterInput, limit: Int, nextToken: String): ModelBrandConnection
 }
 
 input CreateVideoInput {
   id: ID
   name: String!
+  productID: ID!
+  creatorID: ID!
   URL: String!
 }
 
 input UpdateVideoInput {
   id: ID!
   name: String
+  productID: ID
+  creatorID: ID
   URL: String
 }
 
@@ -164,10 +187,15 @@ type Mutation {
   createProduct(input: CreateProductInput!, condition: ModelProductConditionInput): Product
   updateProduct(input: UpdateProductInput!, condition: ModelProductConditionInput): Product
   deleteProduct(input: DeleteProductInput!, condition: ModelProductConditionInput): Product
+  createBrand(input: CreateBrandInput!, condition: ModelBrandConditionInput): Brand
+  updateBrand(input: UpdateBrandInput!, condition: ModelBrandConditionInput): Brand
+  deleteBrand(input: DeleteBrandInput!, condition: ModelBrandConditionInput): Brand
 }
 
 input ModelVideoConditionInput {
   name: ModelStringInput
+  productID: ModelIDInput
+  creatorID: ModelIDInput
   URL: ModelStringInput
   and: [ModelVideoConditionInput]
   or: [ModelVideoConditionInput]
@@ -184,6 +212,9 @@ type Subscription {
   onCreateProduct: Product @aws_subscribe(mutations: ["createProduct"])
   onUpdateProduct: Product @aws_subscribe(mutations: ["updateProduct"])
   onDeleteProduct: Product @aws_subscribe(mutations: ["deleteProduct"])
+  onCreateBrand: Brand @aws_subscribe(mutations: ["createBrand"])
+  onUpdateBrand: Brand @aws_subscribe(mutations: ["updateBrand"])
+  onDeleteBrand: Brand @aws_subscribe(mutations: ["deleteBrand"])
 }
 
 type ModelCreatorConnection {
@@ -194,6 +225,7 @@ type ModelCreatorConnection {
 input ModelCreatorFilterInput {
   id: ModelIDInput
   username: ModelStringInput
+  description: ModelStringInput
   and: [ModelCreatorFilterInput]
   or: [ModelCreatorFilterInput]
   not: ModelCreatorFilterInput
@@ -202,11 +234,13 @@ input ModelCreatorFilterInput {
 input CreateCreatorInput {
   id: ID
   username: String!
+  description: String!
 }
 
 input UpdateCreatorInput {
   id: ID!
   username: String
+  description: String
 }
 
 input DeleteCreatorInput {
@@ -215,6 +249,7 @@ input DeleteCreatorInput {
 
 input ModelCreatorConditionInput {
   username: ModelStringInput
+  description: ModelStringInput
   and: [ModelCreatorConditionInput]
   or: [ModelCreatorConditionInput]
   not: ModelCreatorConditionInput
@@ -230,6 +265,7 @@ input ModelProductFilterInput {
   name: ModelStringInput
   price: ModelIntInput
   description: ModelStringInput
+  brandID: ModelIDInput
   and: [ModelProductFilterInput]
   or: [ModelProductFilterInput]
   not: ModelProductFilterInput
@@ -238,8 +274,9 @@ input ModelProductFilterInput {
 input CreateProductInput {
   id: ID
   name: String!
-  price: Int
-  description: String
+  price: Int!
+  description: String!
+  brandID: ID!
 }
 
 input UpdateProductInput {
@@ -247,6 +284,7 @@ input UpdateProductInput {
   name: String
   price: Int
   description: String
+  brandID: ID
 }
 
 input DeleteProductInput {
@@ -257,7 +295,52 @@ input ModelProductConditionInput {
   name: ModelStringInput
   price: ModelIntInput
   description: ModelStringInput
+  brandID: ModelIDInput
   and: [ModelProductConditionInput]
   or: [ModelProductConditionInput]
   not: ModelProductConditionInput
+}
+
+type ModelBrandConnection {
+  items: [Brand]
+  nextToken: String
+}
+
+input ModelBrandFilterInput {
+  id: ModelIDInput
+  description: ModelStringInput
+  and: [ModelBrandFilterInput]
+  or: [ModelBrandFilterInput]
+  not: ModelBrandFilterInput
+}
+
+input CreateBrandInput {
+  id: ID
+  description: String!
+}
+
+input UpdateBrandInput {
+  id: ID!
+  description: String
+}
+
+input DeleteBrandInput {
+  id: ID
+}
+
+input ModelBrandConditionInput {
+  description: ModelStringInput
+  and: [ModelBrandConditionInput]
+  or: [ModelBrandConditionInput]
+  not: ModelBrandConditionInput
+}
+
+input ModelStringKeyConditionInput {
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  between: [String]
+  beginsWith: String
 }

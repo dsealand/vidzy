@@ -16,6 +16,7 @@ export const onCreateVideo = /* GraphQL */ `
         }
         brand {
           id
+          description
           createdAt
           updatedAt
         }
@@ -27,6 +28,7 @@ export const onCreateVideo = /* GraphQL */ `
       creator {
         id
         username
+        description
         videos {
           nextToken
         }
@@ -55,6 +57,7 @@ export const onUpdateVideo = /* GraphQL */ `
         }
         brand {
           id
+          description
           createdAt
           updatedAt
         }
@@ -66,6 +69,7 @@ export const onUpdateVideo = /* GraphQL */ `
       creator {
         id
         username
+        description
         videos {
           nextToken
         }
@@ -94,6 +98,7 @@ export const onDeleteVideo = /* GraphQL */ `
         }
         brand {
           id
+          description
           createdAt
           updatedAt
         }
@@ -105,6 +110,7 @@ export const onDeleteVideo = /* GraphQL */ `
       creator {
         id
         username
+        description
         videos {
           nextToken
         }
@@ -123,6 +129,7 @@ export const onCreateCreator = /* GraphQL */ `
     onCreateCreator {
       id
       username
+      description
       videos {
         items {
           id
@@ -145,6 +152,7 @@ export const onUpdateCreator = /* GraphQL */ `
     onUpdateCreator {
       id
       username
+      description
       videos {
         items {
           id
@@ -167,6 +175,7 @@ export const onDeleteCreator = /* GraphQL */ `
     onDeleteCreator {
       id
       username
+      description
       videos {
         items {
           id
@@ -205,6 +214,7 @@ export const onCreateProduct = /* GraphQL */ `
       }
       brand {
         id
+        description
         products {
           nextToken
         }
@@ -238,6 +248,7 @@ export const onUpdateProduct = /* GraphQL */ `
       }
       brand {
         id
+        description
         products {
           nextToken
         }
@@ -271,6 +282,7 @@ export const onDeleteProduct = /* GraphQL */ `
       }
       brand {
         id
+        description
         products {
           nextToken
         }
@@ -287,6 +299,7 @@ export const onCreateBrand = /* GraphQL */ `
   subscription OnCreateBrand {
     onCreateBrand {
       id
+      description
       products {
         items {
           id
@@ -308,6 +321,7 @@ export const onUpdateBrand = /* GraphQL */ `
   subscription OnUpdateBrand {
     onUpdateBrand {
       id
+      description
       products {
         items {
           id
@@ -329,6 +343,7 @@ export const onDeleteBrand = /* GraphQL */ `
   subscription OnDeleteBrand {
     onDeleteBrand {
       id
+      description
       products {
         items {
           id

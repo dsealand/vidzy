@@ -19,6 +19,7 @@ export const createVideo = /* GraphQL */ `
         }
         brand {
           id
+          description
           createdAt
           updatedAt
         }
@@ -30,6 +31,7 @@ export const createVideo = /* GraphQL */ `
       creator {
         id
         username
+        description
         videos {
           nextToken
         }
@@ -61,6 +63,7 @@ export const updateVideo = /* GraphQL */ `
         }
         brand {
           id
+          description
           createdAt
           updatedAt
         }
@@ -72,6 +75,7 @@ export const updateVideo = /* GraphQL */ `
       creator {
         id
         username
+        description
         videos {
           nextToken
         }
@@ -103,6 +107,7 @@ export const deleteVideo = /* GraphQL */ `
         }
         brand {
           id
+          description
           createdAt
           updatedAt
         }
@@ -114,6 +119,7 @@ export const deleteVideo = /* GraphQL */ `
       creator {
         id
         username
+        description
         videos {
           nextToken
         }
@@ -135,6 +141,7 @@ export const createCreator = /* GraphQL */ `
     createCreator(input: $input, condition: $condition) {
       id
       username
+      description
       videos {
         items {
           id
@@ -160,6 +167,7 @@ export const updateCreator = /* GraphQL */ `
     updateCreator(input: $input, condition: $condition) {
       id
       username
+      description
       videos {
         items {
           id
@@ -185,6 +193,7 @@ export const deleteCreator = /* GraphQL */ `
     deleteCreator(input: $input, condition: $condition) {
       id
       username
+      description
       videos {
         items {
           id
@@ -226,6 +235,7 @@ export const createProduct = /* GraphQL */ `
       }
       brand {
         id
+        description
         products {
           nextToken
         }
@@ -262,6 +272,7 @@ export const updateProduct = /* GraphQL */ `
       }
       brand {
         id
+        description
         products {
           nextToken
         }
@@ -298,6 +309,7 @@ export const deleteProduct = /* GraphQL */ `
       }
       brand {
         id
+        description
         products {
           nextToken
         }
@@ -317,6 +329,7 @@ export const createBrand = /* GraphQL */ `
   ) {
     createBrand(input: $input, condition: $condition) {
       id
+      description
       products {
         items {
           id
@@ -341,6 +354,7 @@ export const updateBrand = /* GraphQL */ `
   ) {
     updateBrand(input: $input, condition: $condition) {
       id
+      description
       products {
         items {
           id
@@ -365,6 +379,7 @@ export const deleteBrand = /* GraphQL */ `
   ) {
     deleteBrand(input: $input, condition: $condition) {
       id
+      description
       products {
         items {
           id

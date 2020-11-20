@@ -13,21 +13,24 @@ type Video @model
 type Creator @model {
   id: ID!
   username: String!
+  description: String!
   videos: [Video] @connection(keyName: "byCreator", fields: ["id"])
 }
 
 type Product @model
-  @key(name: "byBrand", fields: ["brandID"]) {
+  @key(name: "byBrand", fields: ["brandID", "name", "price"]) {
+    # {
     id: ID!
     name: String!
-    price: Int
-    description: String
+    price: Int!
+    description: String!
     videos: [Video] @connection(keyName: "byProduct", fields: ["id"])
-    brand: Brand! @connection(fields: ["brandID"])
+    brand: Brand! #@connection(fields: ["brandID"])
     brandID: ID!
 }
 
 type Brand @model {
   id: ID!
+  description: String!
   products: [Product] @connection(keyName: "byBrand", fields: ["id"])
 }

@@ -1,4 +1,11 @@
-
+#if( $util.isNull($dynamodbNameOverrideMap) )
+  #set( $dynamodbNameOverrideMap = {
+  "name#price": "namePrice"
+} )
+#else
+  $util.qr($dynamodbNameOverrideMap.put("name#price", "namePrice"))
+#end
+$util.qr($ctx.args.input.put("name#price","${ctx.args.input.name}#${ctx.args.input.price}"))
 #if( $authCondition )
   #set( $condition = $authCondition )
   #if( $modelObjectKey )

@@ -10,6 +10,67 @@
     }
   }
 } )
+## [Start] Applying Key Condition **
+#set( $sortKeyValue = "" )
+#set( $sortKeyValue2 = "" )
+#if( !$util.isNull($ctx.args.namePrice) && !$util.isNull($ctx.args.namePrice.beginsWith) )
+#if( !$util.isNull($ctx.args.namePrice.beginsWith.name) ) #set( $sortKeyValue = "$ctx.args.namePrice.beginsWith.name" ) #end
+#if( !$util.isNull($ctx.args.namePrice.beginsWith.price) ) #set( $sortKeyValue = "$sortKeyValue#$ctx.args.namePrice.beginsWith.price" ) #end
+  #set( $query.expression = "$query.expression AND begins_with(#sortKey, :sortKey)" )
+  $util.qr($query.expressionNames.put("#sortKey", "name#price"))
+  $util.qr($query.expressionValues.put(":sortKey", { "S": "$sortKeyValue" }))
+#end
+#if( !$util.isNull($ctx.args.namePrice) && !$util.isNull($ctx.args.namePrice.between) )
+  #if( $ctx.args.namePrice.between.size() != 2 )
+    $util.error("Argument namePrice.between expects exactly 2 elements.")
+  #end
+#if( !$util.isNull($ctx.args.namePrice.between[0].name) ) #set( $sortKeyValue = "$ctx.args.namePrice.between[0].name" ) #end
+#if( !$util.isNull($ctx.args.namePrice.between[0].price) ) #set( $sortKeyValue = "$sortKeyValue#$ctx.args.namePrice.between[0].price" ) #end
+#if( !$util.isNull($ctx.args.namePrice.between[1].name) ) #set( $sortKeyValue2 = "$ctx.args.namePrice.between[1].name" ) #end
+#if( !$util.isNull($ctx.args.namePrice.between[1].price) ) #set( $sortKeyValue2 = "$sortKeyValue2#$ctx.args.namePrice.between[1].price" ) #end
+  #set( $query.expression = "$query.expression AND #sortKey BETWEEN :sortKey0 AND :sortKey1" )
+  $util.qr($query.expressionNames.put("#sortKey", "name#price"))
+  $util.qr($query.expressionValues.put(":sortKey0", { "S": "$sortKeyValue" }))
+  $util.qr($query.expressionValues.put(":sortKey1", { "S": "$sortKeyValue2" }))
+#end
+#if( !$util.isNull($ctx.args.namePrice) && !$util.isNull($ctx.args.namePrice.eq) )
+#if( !$util.isNull($ctx.args.namePrice.eq.name) ) #set( $sortKeyValue = "$ctx.args.namePrice.eq.name" ) #end
+#if( !$util.isNull($ctx.args.namePrice.eq.price) ) #set( $sortKeyValue = "$sortKeyValue#$ctx.args.namePrice.eq.price" ) #end
+  #set( $query.expression = "$query.expression AND #sortKey = :sortKey" )
+  $util.qr($query.expressionNames.put("#sortKey", "name#price"))
+  $util.qr($query.expressionValues.put(":sortKey", { "S": "$sortKeyValue" }))
+#end
+#if( !$util.isNull($ctx.args.namePrice) && !$util.isNull($ctx.args.namePrice.lt) )
+#if( !$util.isNull($ctx.args.namePrice.lt.name) ) #set( $sortKeyValue = "$ctx.args.namePrice.lt.name" ) #end
+#if( !$util.isNull($ctx.args.namePrice.lt.price) ) #set( $sortKeyValue = "$sortKeyValue#$ctx.args.namePrice.lt.price" ) #end
+  #set( $query.expression = "$query.expression AND #sortKey < :sortKey" )
+  $util.qr($query.expressionNames.put("#sortKey", "name#price"))
+  $util.qr($query.expressionValues.put(":sortKey", { "S": "$sortKeyValue" }))
+#end
+#if( !$util.isNull($ctx.args.namePrice) && !$util.isNull($ctx.args.namePrice.le) )
+#if( !$util.isNull($ctx.args.namePrice.le.name) ) #set( $sortKeyValue = "$ctx.args.namePrice.le.name" ) #end
+#if( !$util.isNull($ctx.args.namePrice.le.price) ) #set( $sortKeyValue = "$sortKeyValue#$ctx.args.namePrice.le.price" ) #end
+  #set( $query.expression = "$query.expression AND #sortKey <= :sortKey" )
+  $util.qr($query.expressionNames.put("#sortKey", "name#price"))
+  $util.qr($query.expressionValues.put(":sortKey", { "S": "$sortKeyValue" }))
+#end
+#if( !$util.isNull($ctx.args.namePrice) && !$util.isNull($ctx.args.namePrice.gt) )
+#if( !$util.isNull($ctx.args.namePrice.gt.name) ) #set( $sortKeyValue = "$ctx.args.namePrice.gt.name" ) #end
+#if( !$util.isNull($ctx.args.namePrice.gt.price) ) #set( $sortKeyValue = "$sortKeyValue#$ctx.args.namePrice.gt.price" ) #end
+  #set( $query.expression = "$query.expression AND #sortKey > :sortKey" )
+  $util.qr($query.expressionNames.put("#sortKey", "name#price"))
+  $util.qr($query.expressionValues.put(":sortKey", { "S": "$sortKeyValue" }))
+#end
+#if( !$util.isNull($ctx.args.namePrice) && !$util.isNull($ctx.args.namePrice.ge) )
+#if( !$util.isNull($ctx.args.namePrice.ge.name) ) #set( $sortKeyValue = "$ctx.args.namePrice.ge.name" ) #end
+#if( !$util.isNull($ctx.args.namePrice.ge.price) ) #set( $sortKeyValue = "$sortKeyValue#$ctx.args.namePrice.ge.price" ) #end
+  #set( $query.expression = "$query.expression AND #sortKey >= :sortKey" )
+  $util.qr($query.expressionNames.put("#sortKey", "name#price"))
+  $util.qr($query.expressionValues.put(":sortKey", { "S": "$sortKeyValue" }))
+#end
+
+
+## [End] Applying Key Condition **
 {
   "version": "2018-05-29",
   "operation": "Query",

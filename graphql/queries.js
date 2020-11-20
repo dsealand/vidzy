@@ -16,6 +16,7 @@ export const getVideo = /* GraphQL */ `
         }
         brand {
           id
+          description
           createdAt
           updatedAt
         }
@@ -27,6 +28,7 @@ export const getVideo = /* GraphQL */ `
       creator {
         id
         username
+        description
         videos {
           nextToken
         }
@@ -63,6 +65,7 @@ export const listVideos = /* GraphQL */ `
         creator {
           id
           username
+          description
           createdAt
           updatedAt
         }
@@ -80,6 +83,7 @@ export const getCreator = /* GraphQL */ `
     getCreator(id: $id) {
       id
       username
+      description
       videos {
         items {
           id
@@ -107,6 +111,7 @@ export const listCreators = /* GraphQL */ `
       items {
         id
         username
+        description
         videos {
           nextToken
         }
@@ -138,6 +143,7 @@ export const getProduct = /* GraphQL */ `
       }
       brand {
         id
+        description
         products {
           nextToken
         }
@@ -167,6 +173,7 @@ export const listProducts = /* GraphQL */ `
         }
         brand {
           id
+          description
           createdAt
           updatedAt
         }
@@ -182,6 +189,7 @@ export const getBrand = /* GraphQL */ `
   query GetBrand($id: ID!) {
     getBrand(id: $id) {
       id
+      description
       products {
         items {
           id
@@ -208,6 +216,7 @@ export const listBrands = /* GraphQL */ `
     listBrands(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        description
         products {
           nextToken
         }

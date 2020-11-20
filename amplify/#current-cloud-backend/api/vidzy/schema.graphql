@@ -1,24 +1,36 @@
-type Video @model {
-  id: ID!
-  name: String!
-  product: [Product]
-  creator: Creator!
-  URL: String!
+type Video @model
+  @key(name: "byCreator", fields: ["creatorID", "URL"])
+  @key(name: "byProduct", fields: ["productID", "URL"]) {
+    id: ID!
+    name: String!
+    product: Product! @connection(fields: ["productID"])
+    productID: ID!
+    creator: Creator! @connection(fields: ["creatorID"])
+    creatorID: ID!
+    URL: String!
 }
- type Creator @model {
-   id: ID!
-   username: String!
- }
 
- type Product @model {
-   id: ID!
-   name: String!
-   price: Int
-   description: String
-  #  brand: Brand
- }
+type Creator @model {
+  id: ID!
+  username: String!
+  description: String!
+  videos: [Video] @connection(keyName: "byCreator", fields: ["id"])
+}
 
-#  type Brand @model {
-#    id: ID!
-#    products: [Product]
-#  }
+type Product @model
+  #@key(name: "byBrand", fields: ["brandID", "name", "price"]) {
+    {
+    id: ID!
+    name: String!
+    price: Int!
+    description: String!
+    videos: [Video] @connection(keyName: "byProduct", fields: ["id"])
+    brand: Brand! #@connection(fields: ["brandID"])
+    brandID: ID!
+}
+
+type Brand @model {
+  id: ID!
+  description: String!
+  products: [Product] #@connection(keyName: "byBrand", fields: ["id"])
+}
