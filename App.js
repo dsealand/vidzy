@@ -7,6 +7,15 @@ import { createVideo, updateVideo, deleteVideo} from './graphql/mutations';
 
 Amplify.configure(awsconfig);
 
+const client = new AWSAppSyncClient({
+  url: awsconfig.aws_appsync_graphqlEndpoint,
+  region: awsconfig.aws_appsync_region,
+  auth: {
+    type: awsconfig.aws_appsync_authenticationType,
+    apiKey: awsconfig.aws_appsync_apiKey
+  }
+});
+
 // test video input object
 const testVideo = { id: 1, name: "vid1", productID: 1, creatorID: 1, URL: "https://google.com" };
 // await API.graphql(graphqlOperation(createVideo, {input: testVideo}));
