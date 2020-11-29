@@ -1,65 +1,48 @@
-import React, { useState } from 'react'
+import React from "react";
 
-import { Dimensions, View } from 'react-native'
-import LinearGradient from 'expo-linear-gradient'
-import styled from 'styled-components/native'
-import ViewPager from '@react-native-community/viewpager'
+import { View } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import style from "styled-components/native";
 
-import VideoPlayer from './videoPlayer'
-import Sidebar from './sideBar'
+import VideoPlayer from "./videoPlayer";
+import Buttons from "./buttons";
 
-const { height } = Dimensions.get('window')
+const Gradient = style((props) => <LinearGradient {...props} />)`
+    height: 100%;
+    width: 100%;
+	justifyContent: center;
+	alignItems: flex-end
+    position: absolute;
+    top: 0;
+    left: 0;
+    zIndex: 1;
+`;
 
-const Container = styled(props => <ViewPager {...props} />)`
-	height: ${height}px;
-`
-const Gradient = styled(props => <LinearGradient {...props} />)`
-	height: 100%;
-	justify-content: space-between;
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	z-index: 1;
-`
-const Center = styled.View`
-	flex: 1;
-	flex-direction: row;
-`
+const VideoContainer = style.View`
+    overflow: hidden;
+    background: black;
+    border-radius: 2%;
+    height: 60%;
+    width: 90%;
+`;
 
-const VideoCard = ({ videos }) => {
-	const [selected, setSelected] = useState(0)
-
-	return (
-		<Container
-			orientation='vertical'
-			onPageSelected={e => setSelected(e.nativeEvent.position)}
-			initialPage={0}>
-			{videos.map((item, index) => {
-				return (
-					<View key={index}>
-						<VideoPlayer
-							video={item.video}
-							poster={item.poster}
-							isPlay={selected === index}
-						/>
-						<Gradient
-							locations={[0, 0.26, 0.6, 1]}
-							colors={[
-								'rgba(26,26,26,0.6)',
-								'rgba(26,26,26,0)',
-								'rgba(26,26,26,0)',
-								'rgba(26,26,26,0.6)'
-							]}>
-							<Center>
-								<Sidebar avatar={item.user.avatar} count={item.count} />
-							</Center>
-						</Gradient>
-					</View>
-				)
-			})}
-		</Container>
-	)
-}
+const VideoCard = (/*{ video, poster }*/) => {
+    return (
+        <VideoContainer>
+            <VideoPlayer />
+            <Gradient
+                locations={[0, 0.25, 0.75, 1]}
+                colors={[
+                    "rgba(26,26,26,0.6)",
+                    "rgba(26,26,26,0)",
+                    "rgba(26,26,26,0)",
+                    "rgba(26,26,26,0.6)",
+                ]}
+            >
+                <Buttons />
+            </Gradient>
+        </VideoContainer>
+    );
+};
 
 export default VideoCard;

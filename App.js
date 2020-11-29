@@ -1,25 +1,20 @@
 import React from "react";
 
-import { SafeAreaView, Text } from "react-native";
-import { Video } from "react-native-video";
+import { SafeAreaView, Text, StyleSheet } from "react-native";
+import style from "styled-components/native";
 
-import VideoPlayer from "./src/components/videoPlayer";
+import Explore from "./src/screens/explore";
+import Header from "./src/components/header";
+
+const Window = style.SafeAreaView`
+	justifyContent: flex-start;
+	alignItems: center;
+`;
 
 export default function App() {
-  return (
-    <SafeAreaView>
-      <Text>Hello World</Text>
-      <Video
-        source={require("../assets/IMG_0240.mp4")}
-        rate={1.0}
-        volume={1.0}
-        isMuted={false}
-        shouldPlay
-        useNativeControls={false}
-        posterSource={poster}
-        source={video}
-        resizeMode="cover"
-      />
-    </SafeAreaView>
-  );
+    return (
+        <Window>
+            <Explore />
+        </Window>
+    );
 }
