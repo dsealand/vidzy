@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
+import AWSAppSyncClient, { AUTH_TYPE } from 'aws-appsync';
 import awsconfig from './aws-exports';
 import { createVideo, updateVideo, deleteVideo} from './graphql/mutations';
 
@@ -11,17 +12,19 @@ const client = new AWSAppSyncClient({
   url: awsconfig.aws_appsync_graphqlEndpoint,
   region: awsconfig.aws_appsync_region,
   auth: {
-    type: awsconfig.aws_appsync_authenticationType,
-    apiKey: awsconfig.aws_appsync_apiKey
-  }
+    type: AUTH_TYPE.API_KEY,
+    apiKey: awsconfig.aws_appsync_apiKey,
+  },
 });
 
 // test video input object
 const testVideo = { id: 1, name: "vid1", productID: 1, creatorID: 1, URL: "https://google.com" };
-// await API.graphql(graphqlOperation(createVideo, {input: testVideo}));
+(async () => {
+  await API.graphql(graphqlOperation(createVideo, {input: testVideo}));
+})();
 
 (async () => {
-  const result = await API.mutate({
+  const result = await client.mutate({
     mutation: gql(createVideo),
     variables: {
       input: testVideo
