@@ -7,7 +7,7 @@ const Logo = style.View`
     alignSelf: flex-start;
 `;
 
-const Header = (/*{ video, poster }*/) => {
+const Header = () => {
     return (
         <Logo>
             <Text style={styles.logo}>Vidzy</Text>

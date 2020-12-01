@@ -35,7 +35,7 @@ const Circle = style.TouchableOpacity`
 	alignItems: center;
 `;
 
-const Buttons = (/*{ video, poster }*/) => {
+const Buttons = (/*{ user, brand, product }*/) => {
     return (
         <ButtonContainer>
             <TopBarContainer>

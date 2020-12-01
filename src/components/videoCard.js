@@ -1,11 +1,16 @@
 import React from "react";
 
-import { View } from "react-native";
+import { View, useWindowDimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import style from "styled-components/native";
 
 import VideoPlayer from "./videoPlayer";
 import Buttons from "./buttons";
+
+/*
+const windowWidth = useWindowDimensions().width;
+const windowHeight = useWindowDimensions().height;
+*/
 
 const Gradient = style((props) => <LinearGradient {...props} />)`
     height: 100%;
@@ -22,14 +27,17 @@ const VideoContainer = style.View`
     overflow: hidden;
     background: black;
     border-radius: 2%;
-    height: 60%;
-    width: 90%;
 `;
 
-const VideoCard = (/*{ video, poster }*/) => {
+const VideoCard = ({ product }) => {
+    const window = useWindowDimensions();
+
     return (
         <VideoContainer>
-            <VideoPlayer />
+            <VideoPlayer
+                video={product.video}
+                style={{ height: window.height, width: window.width }}
+            />
             <Gradient
                 locations={[0, 0.25, 0.75, 1]}
                 colors={[
@@ -39,7 +47,11 @@ const VideoCard = (/*{ video, poster }*/) => {
                     "rgba(26,26,26,0.6)",
                 ]}
             >
-                <Buttons />
+                <Buttons
+                /*  user={data.user}
+                    brand={data.brand}
+                    product={data.product}*/
+                />
             </Gradient>
         </VideoContainer>
     );
