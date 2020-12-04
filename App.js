@@ -76,7 +76,6 @@ const testCreator = { id: 30, username: "user30", description: "test user 30" };
     console.log("begin query test")
     var result;
     try {
-        // result = await API.graphql(graphqlOperation(queries.getVideo, { id: 2 }));
         result = await API.graphql({ query: queries.getVideo, variables: { id: 30}});
         console.log(result)
     } catch (e) {
