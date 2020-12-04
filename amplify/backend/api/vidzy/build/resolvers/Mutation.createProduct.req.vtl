@@ -6,6 +6,26 @@ $util.qr($context.args.input.put("createdAt", $util.defaultIfNull($ctx.args.inpu
 ## Automatically set the updatedAt timestamp. **
 $util.qr($context.args.input.put("updatedAt", $util.defaultIfNull($ctx.args.input.updatedAt, $createdAt)))
 ## [End] Set default values. **
+## [Start] Validate create mutation for @key 'byBrand'. **
+#set( $hasSeenSomeKeyArg = false )
+#set( $keyFieldNames = ["name", "price"] )
+#foreach( $keyFieldName in $keyFieldNames )
+#if( $ctx.args.input.containsKey("$keyFieldName") ) #set( $hasSeenSomeKeyArg = true ) #end
+#end
+#foreach( $keyFieldName in $keyFieldNames )
+  #if( $hasSeenSomeKeyArg && !$ctx.args.input.containsKey("$keyFieldName") )
+    $util.error("When creating any part of the composite sort key for @key 'byBrand', you must provide all fields for the key. Missing key: '$keyFieldName'.")
+  #end
+#end
+## [End] Validate create mutation for @key 'byBrand'. **
+#if( $util.isNull($dynamodbNameOverrideMap) )
+  #set( $dynamodbNameOverrideMap = {
+  "name#price": "namePrice"
+} )
+#else
+  $util.qr($dynamodbNameOverrideMap.put("name#price", "namePrice"))
+#end
+$util.qr($ctx.args.input.put("name#price","${ctx.args.input.name}#${ctx.args.input.price}"))
 ## [Start] Prepare DynamoDB PutItem Request. **
 $util.qr($context.args.input.put("__typename", "Product"))
 #set( $condition = {

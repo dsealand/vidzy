@@ -14,12 +14,6 @@ export const getVideo = /* GraphQL */ `
         videos {
           nextToken
         }
-        brand {
-          id
-          description
-          createdAt
-          updatedAt
-        }
         brandID
         createdAt
         updatedAt
@@ -141,15 +135,6 @@ export const getProduct = /* GraphQL */ `
         }
         nextToken
       }
-      brand {
-        id
-        description
-        products {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       brandID
       createdAt
       updatedAt
@@ -171,12 +156,6 @@ export const listProducts = /* GraphQL */ `
         videos {
           nextToken
         }
-        brand {
-          id
-          description
-          createdAt
-          updatedAt
-        }
         brandID
         createdAt
         updatedAt
@@ -191,16 +170,16 @@ export const getBrand = /* GraphQL */ `
       id
       description
       products {
-        items {
-          id
-          name
-          price
-          description
-          brandID
-          createdAt
-          updatedAt
+        id
+        name
+        price
+        description
+        videos {
+          nextToken
         }
-        nextToken
+        brandID
+        createdAt
+        updatedAt
       }
       createdAt
       updatedAt
@@ -218,7 +197,13 @@ export const listBrands = /* GraphQL */ `
         id
         description
         products {
-          nextToken
+          id
+          name
+          price
+          description
+          brandID
+          createdAt
+          updatedAt
         }
         createdAt
         updatedAt

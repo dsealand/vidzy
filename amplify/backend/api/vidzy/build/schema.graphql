@@ -1,9 +1,9 @@
 type Video {
   id: ID!
   name: String!
-  product: Product!
+  product: Product
   productID: ID!
-  creator: Creator!
+  creator: Creator
   creatorID: ID!
   URL: String!
   createdAt: AWSDateTime!
@@ -25,7 +25,6 @@ type Product {
   price: Int!
   description: String!
   videos(URL: ModelStringKeyConditionInput, filter: ModelVideoFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelVideoConnection
-  brand: Brand!
   brandID: ID!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
@@ -34,7 +33,7 @@ type Product {
 type Brand {
   id: ID!
   description: String!
-  products(namePrice: ModelProductByBrandCompositeKeyConditionInput, filter: ModelProductFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelProductConnection
+  products: [Product]
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 }
@@ -343,19 +342,4 @@ input ModelStringKeyConditionInput {
   gt: String
   between: [String]
   beginsWith: String
-}
-
-input ModelProductByBrandCompositeKeyConditionInput {
-  eq: ModelProductByBrandCompositeKeyInput
-  le: ModelProductByBrandCompositeKeyInput
-  lt: ModelProductByBrandCompositeKeyInput
-  ge: ModelProductByBrandCompositeKeyInput
-  gt: ModelProductByBrandCompositeKeyInput
-  between: [ModelProductByBrandCompositeKeyInput]
-  beginsWith: ModelProductByBrandCompositeKeyInput
-}
-
-input ModelProductByBrandCompositeKeyInput {
-  name: String
-  price: Int
 }

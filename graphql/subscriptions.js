@@ -14,12 +14,6 @@ export const onCreateVideo = /* GraphQL */ `
         videos {
           nextToken
         }
-        brand {
-          id
-          description
-          createdAt
-          updatedAt
-        }
         brandID
         createdAt
         updatedAt
@@ -55,12 +49,6 @@ export const onUpdateVideo = /* GraphQL */ `
         videos {
           nextToken
         }
-        brand {
-          id
-          description
-          createdAt
-          updatedAt
-        }
         brandID
         createdAt
         updatedAt
@@ -95,12 +83,6 @@ export const onDeleteVideo = /* GraphQL */ `
         description
         videos {
           nextToken
-        }
-        brand {
-          id
-          description
-          createdAt
-          updatedAt
         }
         brandID
         createdAt
@@ -212,15 +194,6 @@ export const onCreateProduct = /* GraphQL */ `
         }
         nextToken
       }
-      brand {
-        id
-        description
-        products {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       brandID
       createdAt
       updatedAt
@@ -245,15 +218,6 @@ export const onUpdateProduct = /* GraphQL */ `
           updatedAt
         }
         nextToken
-      }
-      brand {
-        id
-        description
-        products {
-          nextToken
-        }
-        createdAt
-        updatedAt
       }
       brandID
       createdAt
@@ -280,15 +244,6 @@ export const onDeleteProduct = /* GraphQL */ `
         }
         nextToken
       }
-      brand {
-        id
-        description
-        products {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       brandID
       createdAt
       updatedAt
@@ -301,16 +256,16 @@ export const onCreateBrand = /* GraphQL */ `
       id
       description
       products {
-        items {
-          id
-          name
-          price
-          description
-          brandID
-          createdAt
-          updatedAt
+        id
+        name
+        price
+        description
+        videos {
+          nextToken
         }
-        nextToken
+        brandID
+        createdAt
+        updatedAt
       }
       createdAt
       updatedAt
@@ -323,16 +278,16 @@ export const onUpdateBrand = /* GraphQL */ `
       id
       description
       products {
-        items {
-          id
-          name
-          price
-          description
-          brandID
-          createdAt
-          updatedAt
+        id
+        name
+        price
+        description
+        videos {
+          nextToken
         }
-        nextToken
+        brandID
+        createdAt
+        updatedAt
       }
       createdAt
       updatedAt
@@ -345,16 +300,16 @@ export const onDeleteBrand = /* GraphQL */ `
       id
       description
       products {
-        items {
-          id
-          name
-          price
-          description
-          brandID
-          createdAt
-          updatedAt
+        id
+        name
+        price
+        description
+        videos {
+          nextToken
         }
-        nextToken
+        brandID
+        createdAt
+        updatedAt
       }
       createdAt
       updatedAt

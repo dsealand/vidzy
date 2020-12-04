@@ -1,9 +1,9 @@
 type Video {
   id: ID!
   name: String!
-  product: Product!
+  product: Product
   productID: ID!
-  creator: Creator!
+  creator: Creator
   creatorID: ID!
   URL: String!
   createdAt: AWSDateTime!
@@ -25,7 +25,6 @@ type Product {
   price: Int!
   description: String!
   videos(URL: ModelStringKeyConditionInput, filter: ModelVideoFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelVideoConnection
-  brand: Brand!
   brandID: ID!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
