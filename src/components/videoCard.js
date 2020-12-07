@@ -35,7 +35,7 @@ const VideoCard = ({ product }) => {
     return (
         <VideoContainer>
             <VideoPlayer
-                video={product.video}
+                video={product.URL}
                 style={{ height: window.height, width: window.width }}
             />
             <Gradient

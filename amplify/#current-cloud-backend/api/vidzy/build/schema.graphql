@@ -1,0 +1,345 @@
+type Video {
+  id: ID!
+  name: String!
+  product: Product
+  productID: ID!
+  creator: Creator
+  creatorID: ID!
+  URL: String!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Creator {
+  id: ID!
+  username: String!
+  description: String!
+  videos(URL: ModelStringKeyConditionInput, filter: ModelVideoFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelVideoConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Product {
+  id: ID!
+  name: String!
+  price: Int!
+  description: String!
+  videos(URL: ModelStringKeyConditionInput, filter: ModelVideoFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelVideoConnection
+  brandID: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Brand {
+  id: ID!
+  description: String!
+  products: [Product]
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelVideoConnection {
+  items: [Video]
+  nextToken: String
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+input ModelVideoFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  productID: ModelIDInput
+  creatorID: ModelIDInput
+  URL: ModelStringInput
+  and: [ModelVideoFilterInput]
+  or: [ModelVideoFilterInput]
+  not: ModelVideoFilterInput
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+type Query {
+  getVideo(id: ID!): Video
+  listVideos(filter: ModelVideoFilterInput, limit: Int, nextToken: String): ModelVideoConnection
+  getCreator(id: ID!): Creator
+  listCreators(filter: ModelCreatorFilterInput, limit: Int, nextToken: String): ModelCreatorConnection
+  getProduct(id: ID!): Product
+  listProducts(filter: ModelProductFilterInput, limit: Int, nextToken: String): ModelProductConnection
+  getBrand(id: ID!): Brand
+  listBrands(filter: ModelBrandFilterInput, limit: Int, nextToken: String): ModelBrandConnection
+}
+
+input CreateVideoInput {
+  id: ID
+  name: String!
+  productID: ID!
+  creatorID: ID!
+  URL: String!
+}
+
+input UpdateVideoInput {
+  id: ID!
+  name: String
+  productID: ID
+  creatorID: ID
+  URL: String
+}
+
+input DeleteVideoInput {
+  id: ID
+}
+
+type Mutation {
+  createVideo(input: CreateVideoInput!, condition: ModelVideoConditionInput): Video
+  updateVideo(input: UpdateVideoInput!, condition: ModelVideoConditionInput): Video
+  deleteVideo(input: DeleteVideoInput!, condition: ModelVideoConditionInput): Video
+  createCreator(input: CreateCreatorInput!, condition: ModelCreatorConditionInput): Creator
+  updateCreator(input: UpdateCreatorInput!, condition: ModelCreatorConditionInput): Creator
+  deleteCreator(input: DeleteCreatorInput!, condition: ModelCreatorConditionInput): Creator
+  createProduct(input: CreateProductInput!, condition: ModelProductConditionInput): Product
+  updateProduct(input: UpdateProductInput!, condition: ModelProductConditionInput): Product
+  deleteProduct(input: DeleteProductInput!, condition: ModelProductConditionInput): Product
+  createBrand(input: CreateBrandInput!, condition: ModelBrandConditionInput): Brand
+  updateBrand(input: UpdateBrandInput!, condition: ModelBrandConditionInput): Brand
+  deleteBrand(input: DeleteBrandInput!, condition: ModelBrandConditionInput): Brand
+}
+
+input ModelVideoConditionInput {
+  name: ModelStringInput
+  productID: ModelIDInput
+  creatorID: ModelIDInput
+  URL: ModelStringInput
+  and: [ModelVideoConditionInput]
+  or: [ModelVideoConditionInput]
+  not: ModelVideoConditionInput
+}
+
+type Subscription {
+  onCreateVideo: Video @aws_subscribe(mutations: ["createVideo"])
+  onUpdateVideo: Video @aws_subscribe(mutations: ["updateVideo"])
+  onDeleteVideo: Video @aws_subscribe(mutations: ["deleteVideo"])
+  onCreateCreator: Creator @aws_subscribe(mutations: ["createCreator"])
+  onUpdateCreator: Creator @aws_subscribe(mutations: ["updateCreator"])
+  onDeleteCreator: Creator @aws_subscribe(mutations: ["deleteCreator"])
+  onCreateProduct: Product @aws_subscribe(mutations: ["createProduct"])
+  onUpdateProduct: Product @aws_subscribe(mutations: ["updateProduct"])
+  onDeleteProduct: Product @aws_subscribe(mutations: ["deleteProduct"])
+  onCreateBrand: Brand @aws_subscribe(mutations: ["createBrand"])
+  onUpdateBrand: Brand @aws_subscribe(mutations: ["updateBrand"])
+  onDeleteBrand: Brand @aws_subscribe(mutations: ["deleteBrand"])
+}
+
+type ModelCreatorConnection {
+  items: [Creator]
+  nextToken: String
+}
+
+input ModelCreatorFilterInput {
+  id: ModelIDInput
+  username: ModelStringInput
+  description: ModelStringInput
+  and: [ModelCreatorFilterInput]
+  or: [ModelCreatorFilterInput]
+  not: ModelCreatorFilterInput
+}
+
+input CreateCreatorInput {
+  id: ID
+  username: String!
+  description: String!
+}
+
+input UpdateCreatorInput {
+  id: ID!
+  username: String
+  description: String
+}
+
+input DeleteCreatorInput {
+  id: ID
+}
+
+input ModelCreatorConditionInput {
+  username: ModelStringInput
+  description: ModelStringInput
+  and: [ModelCreatorConditionInput]
+  or: [ModelCreatorConditionInput]
+  not: ModelCreatorConditionInput
+}
+
+type ModelProductConnection {
+  items: [Product]
+  nextToken: String
+}
+
+input ModelProductFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  price: ModelIntInput
+  description: ModelStringInput
+  brandID: ModelIDInput
+  and: [ModelProductFilterInput]
+  or: [ModelProductFilterInput]
+  not: ModelProductFilterInput
+}
+
+input CreateProductInput {
+  id: ID
+  name: String!
+  price: Int!
+  description: String!
+  brandID: ID!
+}
+
+input UpdateProductInput {
+  id: ID!
+  name: String
+  price: Int
+  description: String
+  brandID: ID
+}
+
+input DeleteProductInput {
+  id: ID
+}
+
+input ModelProductConditionInput {
+  name: ModelStringInput
+  price: ModelIntInput
+  description: ModelStringInput
+  brandID: ModelIDInput
+  and: [ModelProductConditionInput]
+  or: [ModelProductConditionInput]
+  not: ModelProductConditionInput
+}
+
+type ModelBrandConnection {
+  items: [Brand]
+  nextToken: String
+}
+
+input ModelBrandFilterInput {
+  id: ModelIDInput
+  description: ModelStringInput
+  and: [ModelBrandFilterInput]
+  or: [ModelBrandFilterInput]
+  not: ModelBrandFilterInput
+}
+
+input CreateBrandInput {
+  id: ID
+  description: String!
+}
+
+input UpdateBrandInput {
+  id: ID!
+  description: String
+}
+
+input DeleteBrandInput {
+  id: ID
+}
+
+input ModelBrandConditionInput {
+  description: ModelStringInput
+  and: [ModelBrandConditionInput]
+  or: [ModelBrandConditionInput]
+  not: ModelBrandConditionInput
+}
+
+input ModelStringKeyConditionInput {
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  between: [String]
+  beginsWith: String
+}

@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-vidzy-dev-95631-authRole",
+      "UnauthRoleArn": "arn:aws:iam::440148346084:role/amplify-vidzy-dev-95631-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::440148346084:role/amplify-vidzy-dev-95631-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-vidzy-dev-95631-deployment",
+      "UnauthRoleName": "amplify-vidzy-dev-95631-unauthRole",
+      "StackName": "amplify-vidzy-dev-95631",
+      "StackId": "arn:aws:cloudformation:us-west-2:440148346084:stack/amplify-vidzy-dev-95631/b0d22540-2375-11eb-b9e1-02f5117d25a9",
+      "AmplifyAppId": "d3dpxhxrch3itf"
+    },
+    "categories": {
+      "auth": {
+        "vidzy20516b65": {}
+      }
+    }
+  }
+}
