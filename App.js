@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import style from "styled-components/native";
 
 import VideoCard from "./src/components/videoCard";
@@ -39,7 +39,7 @@ const client = new AWSAppSyncClient({
 // })();
 
 // // test brand input object
-// const testBrand = { id: 30, description: "test brand2"};
+// const testBrand = { id: 30, description: "test brand2" };
 // (async () => {
 //     console.log("begin brand mutation test")
 //     try {
@@ -77,28 +77,52 @@ const client = new AWSAppSyncClient({
 //     console.log("end creator mutation test");
 // })();
 
-var videoList;
-
-// test getting video
-(async () => {
-    console.log("begin query test")
-    try {
-        videoList = await API.graphql({ query: queries.listVideos});
-    } catch (e) {
-        console.log(e);
-    }
-    console.log("end query test", videoList.data.listVideos.items)
-}) ();
+// // test getting video
+// async function videoQuery() {
+//     console.log("begin query test")
+//     try {
+//         videoList = await API.graphql({ query: queries.listVideos });
+//     } catch (e) {
+//         console.log(e);
+//     }
+//     return videoList
+//     // console.log("end query test", videoList.data.listVideos.items)
+// };
 
 const Window = style.SafeAreaView`
 	justifyContent: flex-start;
 	alignItems: center;
 `;
 
-export default function App() {
+export default async function App() {
+    const [videos, setVideos] = useState([]);
+    // var videos;
+
+    useEffect(() => {
+        // test getting video
+        async function videoQuery() {
+            var videoList;
+            console.log("begin query test")
+            try {
+                videoList = await API.graphql({ query: queries.listVideos });
+            } catch (e) {
+                console.log(e);
+            }
+            console.log(videoList)
+            console.log("end test")
+            return videoList
+            // console.log("end query test", videoList.data.listVideos.items)
+        };
+    }, []);
+
+    // videos = videoQuery();
+    // console.log("created videos array")
+    // console.log(await videos)
+
     return (
         <Window>
-            <Explore videos={videoList.data.listVideos.items} />
+            <Explore videos={videoQuery} />
+            {/* <Explore videos={videoList.data.listVideos.items} /> */}
         </Window>
     );
 }
