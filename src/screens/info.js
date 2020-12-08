@@ -37,6 +37,25 @@ const api = [
             photo: "",
         },
     },
+    {
+        id: 2,
+        video: require("../assets/IMG_0243.mp4"),
+        user: {
+            username: "",
+            description: "",
+            photo: "",
+        },
+        product: {
+            username: "",
+            description: "",
+            photo: "",
+        },
+        brand: {
+            username: "",
+            description: "",
+            photo: "",
+        },
+    },
 ];
 
 export default api;

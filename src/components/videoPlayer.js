@@ -7,20 +7,17 @@ const ProductVideo = style(Video)`
     background: transparent;
 `;
 
-const VideoPlayer = ({ video }) => {
+const VideoPlayer = ({ video, height }) => {
     return (
         <ProductVideo
             source={video}
-            /*source={{
-          uri:
-            "https://d2h74skj6dqe4u.cloudfront.net/PXL_20201021_215704455.mpd",
-        }}*/
             resizeMode="contain"
             rate={1.0}
             volume={1.0}
             isMuted={false}
             shouldPlay
             isLooping
+            style={{ height: height }}
         />
     );
 };

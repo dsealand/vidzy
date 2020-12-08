@@ -7,11 +7,6 @@ import style from "styled-components/native";
 import VideoPlayer from "./videoPlayer";
 import Buttons from "./buttons";
 
-/*
-const windowWidth = useWindowDimensions().width;
-const windowHeight = useWindowDimensions().height;
-*/
-
 const Gradient = style((props) => <LinearGradient {...props} />)`
     height: 100%;
     width: 100%;
@@ -25,19 +20,28 @@ const Gradient = style((props) => <LinearGradient {...props} />)`
 
 const VideoContainer = style.View`
     overflow: hidden;
-    background: black;
-    border-radius: 2%;
+    background: #282828;
+    border-radius: 50;
 `;
 
 const VideoCard = ({ product }) => {
     const window = useWindowDimensions();
+    var height = window.height * 0.9;
+    var width = height * (16.0 / 9.0);
+
+    if (width > window.width * 0.9) {
+        width = window.width * 0.9;
+        height = window.width * (9.0 / 16.0);
+    }
 
     return (
-        <VideoContainer>
-            <VideoPlayer
-                video={product.video}
-                style={{ height: window.height, width: window.width }}
-            />
+        <VideoContainer
+            style={{
+                height: height,
+                width: width,
+            }}
+        >
+            <VideoPlayer video={product.video} height={height} />
             <Gradient
                 locations={[0, 0.25, 0.75, 1]}
                 colors={[
