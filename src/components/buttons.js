@@ -2,7 +2,7 @@ import React from "react";
 
 import { Image, Text } from "react-native";
 import style from "styled-components/native";
-import { Ionicons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 
 const ButtonContainer = style.View`
     flexDirection: column;
@@ -40,12 +40,12 @@ const Buttons = (/*{ user, brand, product }*/) => {
         <ButtonContainer>
             <TopBarContainer>
                 <Circle>
-                    <Ionicons name="md-cart" size={35} color="white" />
+                    <Feather name="shopping-cart" size={30} color="white" />
                 </Circle>
             </TopBarContainer>
             <BottomBarContainer>
                 <Circle>
-                    <Ionicons name="md-person" size={35} color="white" />
+                    <Feather name="user" size={30} color="white" />
                 </Circle>
                 <Circle>
                     <Image

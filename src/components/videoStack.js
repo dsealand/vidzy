@@ -1,9 +1,8 @@
 import React from "react";
 
-import { View, FlatList } from "react-native";
-import style from "styled-components/native";
+import { FlatList } from "react-native";
 
-import VideoCard from "../components/videoCard";
+import VideoCard from "./videoCard";
 
 const VideoStack = ({ videos }) => {
     const renderProduct = ({ item }) => (

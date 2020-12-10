@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 
-import { View, useWindowDimensions } from "react-native";
+import { useWindowDimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import style from "styled-components/native";
+import { Video } from "expo-av";
 
 import VideoPlayer from "./videoPlayer";
-import Buttons from "./buttons";
+import Buttons from "./buttons2";
+import Colors from "./colors";
 
 const Gradient = style((props) => <LinearGradient {...props} />)`
     height: 100%;
@@ -20,44 +22,71 @@ const Gradient = style((props) => <LinearGradient {...props} />)`
 
 const VideoContainer = style.View`
     overflow: hidden;
-    background: #282828;
     border-radius: 50;
+    backgroundColor: ${Colors.darkGrey};
+`;
+
+const CardBorder = style.View`
+    alignItems: center;
+    justifyContent: center;
+    backgroundColor: transparent;
 `;
 
 const VideoCard = ({ product }) => {
-    const window = useWindowDimensions();
-    var height = window.height * 0.9;
-    var width = height * (16.0 / 9.0);
+    var height = 0;
+    var width = 0;
 
-    if (width > window.width * 0.9) {
-        width = window.width * 0.9;
+    var window = useWindowDimensions();
+    if (window.height * (16.0 / 9.0) > window.width) {
+        width = window.width;
         height = window.width * (9.0 / 16.0);
+    } else {
+        width = window.height * (16.0 / 9.0);
+        height = window.height;
     }
 
     return (
-        <VideoContainer
+        <CardBorder
             style={{
                 height: height,
                 width: width,
             }}
         >
-            <VideoPlayer video={product.video} height={height} />
-            <Gradient
-                locations={[0, 0.25, 0.75, 1]}
-                colors={[
-                    "rgba(26,26,26,0.6)",
-                    "rgba(26,26,26,0)",
-                    "rgba(26,26,26,0)",
-                    "rgba(26,26,26,0.6)",
-                ]}
+            <VideoContainer
+                style={{
+                    height: height * 0.85,
+                    width: width * 0.85,
+
+                    shadowColor: Colors.black,
+                    shadowOffset: {
+                        width: 0,
+                        height: 7,
+                    },
+                    shadowOpacity: 0.5,
+                    shadowRadius: 10,
+                }}
             >
-                <Buttons
-                /*  user={data.user}
-                    brand={data.brand}
-                    product={data.product}*/
+                <VideoPlayer
+                    video={product.video.video}
+                    orientation={product.video.orientation}
                 />
-            </Gradient>
-        </VideoContainer>
+                <Gradient
+                    locations={[0, 0.25, 0.75, 1]}
+                    colors={[
+                        "rgba(26,26,26,0.6)",
+                        "rgba(26,26,26,0)",
+                        "rgba(26,26,26,0)",
+                        "rgba(26,26,26,0.6)",
+                    ]}
+                >
+                    <Buttons
+                    /*  user={data.user}
+                            brand={data.brand}
+                            product={data.product}*/
+                    />
+                </Gradient>
+            </VideoContainer>
+        </CardBorder>
     );
 };
 

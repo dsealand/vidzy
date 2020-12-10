@@ -1,23 +1,30 @@
 import React from "react";
 
-import { SafeAreaView, Text, StyleSheet } from "react-native";
-import style from "styled-components/native";
+import { SafeAreaView, Text, StyleSheet, ViewComponent } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 
 import Explore from "./src/screens/explore";
 import VideoStack from "./src/components/videoStack";
 import VideoCard from "./src/components/videoCard";
-import api from "./src/screens/info";
+import VideoPlayer from "./src/components/videoPlayer";
+import Header from "./src/components/header";
+import { Video } from "expo-av";
 
-const Window = style.SafeAreaView`
-	justifyContent: flex-start;
-    alignItems: center;
-    backgroundColor: #f2f2f2;
-`;
+const Stack = createStackNavigator();
 
 export default function App() {
     return (
-        <Window>
-            <Explore videos={api} />
-        </Window>
+        <NavigationContainer>
+            <Stack.Navigator initialRouteName="Explore">
+                <Stack.Screen
+                    name="Explore"
+                    component={Explore}
+                    options={{
+                        headerTitle: (props) => <Header {...props} />,
+                    }}
+                />
+            </Stack.Navigator>
+        </NavigationContainer>
     );
 }

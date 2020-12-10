@@ -1,59 +1,47 @@
 const api = [
     {
         id: 0,
-        video: require("../assets/IMG_0240.mp4"),
-        user: {
+        video: {
+            video: require("../assets/surf1.mp4"),
+            orientation: "portrait",
+        },
+        creator: {
+            id: "",
             username: "",
-            description: "",
-            photo: "",
         },
         product: {
-            username: "",
-            description: "",
-            photo: "",
-        },
-        brand: {
-            username: "",
-            description: "",
-            photo: "",
+            id: "",
+            name: "",
+            price: "",
+            brand: "",
         },
     },
     {
         id: 1,
-        video: require("../assets/IMG_0241.mp4"),
-        user: {
-            username: "",
-            description: "",
-            photo: "",
+        video: {
+            video: require("../assets/IMG_0240.mp4"),
+            orientation: "portrait",
         },
-        product: {
-            username: "",
-            description: "",
-            photo: "",
-        },
-        brand: {
-            username: "",
-            description: "",
-            photo: "",
+    },
+    {
+        id: 1,
+        video: {
+            video: require("../assets/surf2.mp4"),
+            orientation: "landscape",
         },
     },
     {
         id: 2,
-        video: require("../assets/IMG_0243.mp4"),
-        user: {
-            username: "",
-            description: "",
-            photo: "",
+        video: {
+            video: require("../assets/IMG_0241.mp4"),
+            orientation: "portrait",
         },
-        product: {
-            username: "",
-            description: "",
-            photo: "",
-        },
-        brand: {
-            username: "",
-            description: "",
-            photo: "",
+    },
+    {
+        id: 3,
+        video: {
+            video: require("../assets/IMG_0243.mp4"),
+            orientation: "portrait",
         },
     },
 ];
