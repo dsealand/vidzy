@@ -14,7 +14,6 @@ const Container = style(ViewPager)`
 
 const Explore = ({ videos }) => {
     // const [selected, setSelected] = useState(0);
-    console.log(videos)
 
     const renderProduct = ({ item }) => (
         <VideoCard key={item.id} product={item} />
