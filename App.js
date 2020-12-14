@@ -15,6 +15,8 @@ const Stack = createStackNavigator();
 
 export default function App() {
     return (
+        <Explore />
+        /*
         <NavigationContainer>
             <Stack.Navigator initialRouteName="Explore">
                 <Stack.Screen
@@ -26,5 +28,6 @@ export default function App() {
                 />
             </Stack.Navigator>
         </NavigationContainer>
+        */
     );
 }

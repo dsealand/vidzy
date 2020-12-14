@@ -1,6 +1,8 @@
 import React from "react";
 
 import { Video } from "expo-av";
+import HoverVideoPlayer from "react-hover-video-player";
+import ReactPlayer from "react-player";
 import style from "styled-components/native";
 
 const ProductVideo = style(Video)`
@@ -13,6 +15,8 @@ const ProductVideo = style(Video)`
 const VideoPlayer = ({ video, orientation }) => {
     var resizeMode = orientation === "portrait" ? "contain" : "cover";
     return (
+        <ReactPlayer url="./IMG_0240.mp4" />
+        /*
         <ProductVideo
             source={video}
             rate={1.0}
@@ -23,6 +27,7 @@ const VideoPlayer = ({ video, orientation }) => {
             style={{ flex: 1 }}
             resizeMode={resizeMode}
         />
+        */
     );
 };
 
