@@ -10,9 +10,18 @@ import VideoCard from "./src/components/videoCard";
 import VideoPlayer from "./src/components/videoPlayer";
 import { Video } from "expo-av";
 
+import Amplify, { API, graphqlOperation } from 'aws-amplify';
+import awsconfig from './aws-exports';
+import * as mutations from './graphql/mutations';
+import * as queries from './graphql/queries';
+
+Amplify.configure(awsconfig);
+
 const Stack = createStackNavigator();
 
 export default function App() {
+
+
     return (
         <NavigationContainer>
             <Stack.Navigator initialRouteName="ForYou">
