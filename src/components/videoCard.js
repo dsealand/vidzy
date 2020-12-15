@@ -3,17 +3,17 @@ import React, { useState } from "react";
 import { useWindowDimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import style from "styled-components/native";
-import { Video } from "expo-av";
 
-import VideoPlayer from "./videoPlayer";
-import Buttons from "./buttons2";
 import Colors from "./colors";
+import VideoPlayer from "./videoPlayer";
+import VideoElements from "./videoElements";
+import CreatorModal from "./creatorModal";
 
 const Gradient = style((props) => <LinearGradient {...props} />)`
     height: 100%;
     width: 100%;
 	justifyContent: center;
-	alignItems: flex-end
+	alignItems: flex-end;
     position: absolute;
     top: 0;
     left: 0;
@@ -21,72 +21,42 @@ const Gradient = style((props) => <LinearGradient {...props} />)`
 `;
 
 const VideoContainer = style.View`
-    overflow: hidden;
-    border-radius: 50;
     backgroundColor: ${Colors.darkGrey};
-`;
-
-const CardBorder = style.View`
-    alignItems: center;
     justifyContent: center;
-    backgroundColor: transparent;
+	alignItems: flex-end;
 `;
 
-const VideoCard = ({ product }) => {
-    var height = 0;
-    var width = 0;
+const VideoCard = ({ card, isPlay }) => {
+    const [creatorModalVisible, setCreatorModalVisible] = useState(false);
 
-    var window = useWindowDimensions();
-    if (window.height * (16.0 / 9.0) > window.width) {
-        width = window.width;
-        height = window.width * (9.0 / 16.0);
-    } else {
-        width = window.height * (16.0 / 9.0);
-        height = window.height;
-    }
+    const width = useWindowDimensions().width;
+    const height = useWindowDimensions().height;
 
     return (
-        <CardBorder
-            style={{
-                height: height,
-                width: width,
-            }}
-        >
-            <VideoContainer
-                style={{
-                    height: height * 0.85,
-                    width: width * 0.85,
-
-                    shadowColor: Colors.black,
-                    shadowOffset: {
-                        width: 0,
-                        height: 7,
-                    },
-                    shadowOpacity: 0.5,
-                    shadowRadius: 10,
-                }}
+        <VideoContainer style={{ height: height, width: width }}>
+            <CreatorModal isVisible={creatorModalVisible} />
+            <VideoPlayer
+                video={card.video.video}
+                isPlay={isPlay}
+                orientation={card.video.orientation}
+            />
+            <Gradient
+                locations={[0, 0.25, 0.75, 1]}
+                colors={[
+                    "rgba(35,35,35,1)",
+                    "rgba(35,35,35,0)",
+                    "rgba(35,35,35,0)",
+                    "rgba(35,35,35,1)",
+                ]}
             >
-                <VideoPlayer
-                    video={product.video.video}
-                    orientation={product.video.orientation}
+                <VideoElements
+                    creator={card.creator}
+                    product={card.product}
+                    brand={card.brand}
+                    onPressCreator={setCreatorModalVisible}
                 />
-                <Gradient
-                    locations={[0, 0.25, 0.75, 1]}
-                    colors={[
-                        "rgba(26,26,26,0.6)",
-                        "rgba(26,26,26,0)",
-                        "rgba(26,26,26,0)",
-                        "rgba(26,26,26,0.6)",
-                    ]}
-                >
-                    <Buttons
-                    /*  user={data.user}
-                            brand={data.brand}
-                            product={data.product}*/
-                    />
-                </Gradient>
-            </VideoContainer>
-        </CardBorder>
+            </Gradient>
+        </VideoContainer>
     );
 };
 

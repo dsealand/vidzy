@@ -9,18 +9,8 @@ import VideoStack from "../components/videoStack";
 
 import api from "./info";
 
-const Window = style.View`
-	justifyContent: flex-start;
-    alignItems: center;
-    backgroundColor: ${Colors.lightGrey};
-`;
-
 const Explore = () => {
-    return (
-        <Window>
-            <VideoStack videos={api} />
-        </Window>
-    );
+    return <VideoStack stack={api} />;
 };
 
 export default Explore;
