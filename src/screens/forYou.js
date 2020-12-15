@@ -8,28 +8,32 @@ import Header from "../components/header";
 import VideoStack from "../components/videoStack";
 
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
-import awsconfig from './aws-exports';
+import awsmobile from './aws-exports';
 import * as mutations from './graphql/mutations';
 import * as queries from './graphql/queries';
 
-Amplify.configure(awsconfig);
+Amplify.configure(awsmobile);
 
 import api from "./info";
 
-const Explore = () => {
-
+const ForYou = () => {
     state = { videos: [] }
-    async componentDidMount() {
-        try {
-            const apiData = await API.graphql(graphqlOperation(queries.listVideos))
-            const videos = apiData.data.listVideos.items
-            this.setState({ videos })
-            console.log(videos)
-        } catch (err) {
-            console.log('error: ', err)
+
+    async(() => {
+        async function getVideos() {
+            try {
+                const apiData = await API.graphql(graphqlOperation(queries.listVideos))
+                const videos = apiData.data.listVideos.items
+                this.setState({ videos })
+                console.log(videos)
+            } catch (err) {
+                console.log('error: ', err)
+            }
         }
-    }
+        getVideos();
+    });
+
     return <VideoStack stack={api} />;
 };
 
-export default Explore;
+export default ForYou;
