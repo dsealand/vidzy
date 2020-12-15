@@ -1,29 +1,23 @@
 import React from "react";
 
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, useWindowDimensions } from "react-native";
 import style from "styled-components/native";
 
-const Logo = style.View`
-    alignSelf: flex-start;
-`;
+import Colors from "./colors";
 
-const Header = () => {
-    return (
-        <Logo>
-            <Text style={styles.logo}>Vidzy</Text>
-        </Logo>
-    );
+const Header = ({ text }) => {
+    return <Text style={styles.logo}>Explore</Text>;
 };
 
 const styles = StyleSheet.create({
     logo: {
-        fontSize: 50,
+        fontSize: 80,
         fontFamily: "Helvetica",
         fontWeight: "bold",
-        color: "white",
+        color: Colors.darkGrey,
         textShadowOffset: { width: 2, height: 2 },
         textShadowRadius: 1,
-        textShadowColor: "grey",
+        textShadowColor: "blue",
         letterSpacing: 7,
     },
 });
