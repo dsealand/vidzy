@@ -7,7 +7,7 @@ const api = [
         },
         creator: {
             id: "",
-            username: "SurfGod",
+            username: "surf_god69",
         },
         product: {
             id: "",
@@ -20,7 +20,6 @@ const api = [
         },
     },
     {
-        id: 1,
         video: {
             id: "",
             video: require("../assets/IMG_0240.mp4"),
@@ -41,7 +40,6 @@ const api = [
         },
     },
     {
-        id: 2,
         video: {
             id: "",
             video: require("../assets/surf2.mp4"),
@@ -62,7 +60,6 @@ const api = [
         },
     },
     {
-        id: 3,
         video: {
             id: "",
             video: require("../assets/IMG_0241.mp4"),
@@ -83,7 +80,6 @@ const api = [
         },
     },
     {
-        id: 4,
         video: {
             id: "",
             video: require("../assets/IMG_0243.mp4"),
