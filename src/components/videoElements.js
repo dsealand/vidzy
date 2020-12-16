@@ -67,6 +67,7 @@ const VideoElements = ({ creator, product, brand, onPressCreator }) => {
                 <BasicText>$ {product.price}</BasicText>
             </LeftContainer>
             <RightContainer>
+                {/* Logic used to hide creator icon when on creator video stack */}
                 {creator !== undefined && (
                     <Element onPress={onPressCreator}>
                         <Feather name="user" size={20} color={Colors.white} />

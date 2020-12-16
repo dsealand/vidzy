@@ -90,7 +90,8 @@ const creatorModal = ({ navigation, creator, onPressClose }) => {
                         onPress={onPressClose}
                         onPressOut={() => {
                             navigation.navigate("Creator", {
-                                id: "creator.creator.name",
+                                creator: creator,
+                                back: true,
                             });
                         }}
                     >

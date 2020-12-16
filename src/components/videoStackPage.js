@@ -26,7 +26,7 @@ const HeaderText = style.Text`
     fontWeight: bold;
 `;
 
-const Cart = style(TouchableOpacity)`
+const Element = style(TouchableOpacity)`
     shadowColor: ${Colors.darkGrey};
     shadowOpacity: 1;
     shadowRadius: 10px;
@@ -34,19 +34,32 @@ const Cart = style(TouchableOpacity)`
     alignItems: center;
 `;
 
-const VideoStackPage = ({ navigation, headerText, videoStack }) => {
+/* VideoStackPage
+ *
+ * A videoStack with header, cart button, and back button
+ */
+const VideoStackPage = ({ navigation, headerText, videoStack, back }) => {
     return (
         <View>
             <Header>
-                <Cart /* Dummy view just to get formatting to look right */ />
+                <Element onPress={() => navigation.goBack()}>
+                    {/* onPress should not work when Feather icon arrow-left not rendered */}
+                    {back !== undefined && (
+                        <Feather
+                            name="arrow-left"
+                            size={20}
+                            color={Colors.white}
+                        />
+                    )}
+                </Element>
                 <HeaderText>{headerText}</HeaderText>
-                <Cart>
+                <Element>
                     <Feather
                         name="shopping-cart"
                         size={20}
                         color={Colors.white}
                     />
-                </Cart>
+                </Element>
             </Header>
             <VideoStack navigation={navigation} stack={videoStack} />
         </View>

@@ -45,8 +45,8 @@ const VideoCard = ({ navigation, card, isPlay }) => {
             >
                 <CreatorModal
                     navigation={navigation}
-                    onPressClose={() => setCreatorModalVisible(false)}
                     creator={api[0]}
+                    onPressClose={() => setCreatorModalVisible(false)}
                 />
             </Modal>
             <VideoPlayer
