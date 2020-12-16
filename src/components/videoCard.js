@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { useWindowDimensions } from "react-native";
+import { useWindowDimensions, Modal } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import style from "styled-components/native";
 
@@ -8,6 +8,8 @@ import Colors from "./colors";
 import VideoPlayer from "./videoPlayer";
 import VideoElements from "./videoElements";
 import CreatorModal from "./creatorModal";
+
+import api from "../data/creatorInfo_api";
 
 const Gradient = style((props) => <LinearGradient {...props} />)`
     height: 100%;
@@ -26,15 +28,27 @@ const VideoContainer = style.View`
 	alignItems: flex-end;
 `;
 
-const VideoCard = ({ card, isPlay }) => {
+const VideoCard = ({ navigation, card, isPlay }) => {
     const [creatorModalVisible, setCreatorModalVisible] = useState(false);
+    const [productModalVisible, setProductModalVisible] = useState(false);
 
     const width = useWindowDimensions().width;
     const height = useWindowDimensions().height;
 
     return (
         <VideoContainer style={{ height: height, width: width }}>
-            <CreatorModal isVisible={creatorModalVisible} />
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={creatorModalVisible}
+                /* onShow={ trigger API call to get creator info to pass as prop to CreatorModal } */
+            >
+                <CreatorModal
+                    navigation={navigation}
+                    onPressClose={() => setCreatorModalVisible(false)}
+                    creator={api[0]}
+                />
+            </Modal>
             <VideoPlayer
                 video={card.video.video}
                 isPlay={isPlay}
@@ -53,7 +67,7 @@ const VideoCard = ({ card, isPlay }) => {
                     creator={card.creator}
                     product={card.product}
                     brand={card.brand}
-                    onPressCreator={setCreatorModalVisible}
+                    onPressCreator={() => setCreatorModalVisible(true)}
                 />
             </Gradient>
         </VideoContainer>

@@ -6,7 +6,7 @@ import ViewPager from "@react-native-community/viewpager";
 import Colors from "./colors";
 import VideoCard from "./videoCard";
 
-const VideoStack = ({ stack }) => {
+const VideoStack = ({ navigation, stack }) => {
     const [selected, setSelected] = useState(0);
 
     return (
@@ -20,6 +20,7 @@ const VideoStack = ({ stack }) => {
                 return (
                     <VideoCard
                         key={index}
+                        navigation={navigation}
                         card={card}
                         isPlay={selected === index}
                     />

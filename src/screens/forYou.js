@@ -1,16 +1,17 @@
 import React from "react";
 
-import { View, FlatList, Text } from "react-native";
-import style from "styled-components/native";
+import VideoStackPage from "../components/videoStackPage";
 
-import Colors from "../components/colors";
-import Header from "../components/header";
-import VideoStack from "../components/videoStack";
+import api from "../data/forYouStack_api";
 
-import api from "./info";
-
-const Explore = () => {
-    return <VideoStack stack={api} />;
+const ForYou = ({ navigation }) => {
+    return (
+        <VideoStackPage
+            navigation={navigation}
+            headerText={"For You"}
+            videoStack={api}
+        />
+    );
 };
 
-export default Explore;
+export default ForYou;
