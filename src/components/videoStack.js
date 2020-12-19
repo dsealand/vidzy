@@ -25,6 +25,12 @@ const VideoStack = ({ navigation, stack }) => {
         return didBlur, didFocus;
     }, [navigation]);
 
+    // console.log("stack1: ");
+    // console.log(stack);
+
+    console.log("new stack");
+    console.log("\n");
+
     return (
         <ViewPager
             orientation="vertical"

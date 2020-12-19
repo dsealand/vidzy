@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import awsmobile from '../../aws-exports';
-import * as queries from '../../graphql/mutations.js';
+import * as queries from '../../graphql/queries';
 
 import VideoStackPage from "../components/videoStackPage";
 import api from "../data/forYouStack_api";
@@ -10,29 +10,31 @@ import api from "../data/forYouStack_api";
 Amplify.configure(awsmobile);
 
 const ForYou = ({ navigation }) => {
-    const [videos, setVideos] = useState([]);
+    const [videoStack, setVideoStack] = useState([]);
 
+    // video query with useEffect hook and async function
     useEffect(() => {
         async function getVideos() {
             try {
-                const apiData = await API.graphql(graphqlOperation(queries.listVideos))
-                const videos = apiData.data.listVideos.items
-
-                setVideos(videos);
-                // this.setState({ videos })
-                console.log(videos)
+                const apiData = await API.graphql(graphqlOperation(queries.listVideos));
+                const videos = apiData.data.listVideos.items;
+                setVideoStack(videos);
+                // console.log("video data")
+                // console.log(videos)
             } catch (err) {
-                console.log('error: ', err)
+                console.log('error1: ', err);
             }
         }
         getVideos();
+        // console.log("useEffect video stack query");
+        // console.log(videoStack);
     });
 
     return (
         <VideoStackPage
             navigation={navigation}
             headerText={"For You"}
-            videoStack={api}
+            videoStack={videoStack}
         />
     );
 };

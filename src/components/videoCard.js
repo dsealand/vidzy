@@ -35,6 +35,9 @@ const VideoCard = ({ navigation, card, isPlay }) => {
     const width = useWindowDimensions().width;
     const height = useWindowDimensions().height;
 
+    console.log("videocard element");
+    console.log("\n");
+
     return (
         <VideoContainer style={{ height: height, width: width }}>
             <Modal
@@ -50,9 +53,9 @@ const VideoCard = ({ navigation, card, isPlay }) => {
                 />
             </Modal>
             <VideoPlayer
-                video={card.video.video}
+                video={card.URL}
                 isPlay={isPlay}
-                orientation={card.video.orientation}
+                // orientation={card.video.orientation}
             />
             <Gradient
                 locations={[0, 0.25, 0.75, 1]}
@@ -64,9 +67,9 @@ const VideoCard = ({ navigation, card, isPlay }) => {
                 ]}
             >
                 <VideoElements
-                    creator={card.creator}
-                    product={card.product}
-                    brand={card.brand}
+                    creator={card.creatorID}
+                    product={card.productID}
+                    brand={card.name}
                     onPressCreator={() => setCreatorModalVisible(true)}
                 />
             </Gradient>

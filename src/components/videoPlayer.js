@@ -20,10 +20,15 @@ const ProductVideo = style(Video)`
 const VideoPlayer = ({ video, isPlay, orientation }) => {
     var resizeMode = orientation === "portrait" ? "cover" : "contain";
 
+    console.log("videoplayer component");
+    console.log(video);
+    console.log("\n");
+
     return (
         <VideoContainer>
             <ProductVideo
-                source={video}
+                // source={{ uri: "http://d2h74skj6dqe4u.cloudfront.net/test_vid_1.mpd" }}
+                source={{ uri: video }}
                 rate={1.0}
                 volume={1.0}
                 isMuted={false}
