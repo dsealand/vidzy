@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+import { TouchableOpacity } from "react-native";
 import style from "styled-components/native";
 import { Feather } from "@expo/vector-icons";
 
@@ -30,11 +31,19 @@ const RightContainer = style.View`
     bottom: 12%;
 `;
 
+const ProductInfo = style.TouchableOpacity`
+    flexDirection: column;
+    alignItems: flex-start;
+    shadowColor: ${Colors.darkGrey};
+    shadowOpacity: 1;
+    shadowRadius: 10px;
+`;
+
 const Element = style.TouchableOpacity`
     flexDirection: column;
     justifyContent: center;
     alignItems: center;
-    height: 45px;
+    height: 40px;
     shadowColor: ${Colors.darkGrey};
     shadowOpacity: 1;
     shadowRadius: 10px;
@@ -58,15 +67,26 @@ const ElementText = style(BasicText)`
     fontWeight: bold;
 `;
 
-const VideoElements = ({ creator, product, brand, onPressCreator }) => {
+const VideoElements = ({
+    creator,
+    product,
+    brand,
+    onPressCreator,
+    onPressProduct,
+}) => {
     return (
         <Container>
             <LeftContainer>
-                <BasicText>{brand.name}</BasicText>
-                <ProductNameText>{product.name}</ProductNameText>
-                <BasicText>$ {product.price}</BasicText>
+                <ProductInfo onPress={onPressProduct}>
+                    <BasicText>{brand.name}</BasicText>
+                    <ProductNameText>{product.name}</ProductNameText>
+                    <BasicText>$ {product.price}</BasicText>
+                </ProductInfo>
             </LeftContainer>
             <RightContainer>
+                <Element>
+                    <Feather name="heart" size={20} color={Colors.white} />
+                </Element>
                 {/* Logic used to hide creator icon when on creator video stack */}
                 {creator !== undefined && (
                     <Element onPress={onPressCreator}>
@@ -74,14 +94,6 @@ const VideoElements = ({ creator, product, brand, onPressCreator }) => {
                         <ElementText>@{creator.username}</ElementText>
                     </Element>
                 )}
-                <Element>
-                    <Feather
-                        name="arrow-up-circle"
-                        size={20}
-                        color={Colors.white}
-                    />
-                    <ElementText>Product</ElementText>
-                </Element>
             </RightContainer>
         </Container>
     );

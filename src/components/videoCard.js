@@ -8,8 +8,10 @@ import Colors from "./colors";
 import VideoPlayer from "./videoPlayer";
 import VideoElements from "./videoElements";
 import CreatorModal from "./creatorModal";
+import ProductModal from "./productModal";
 
-import api from "../data/creatorInfo_api";
+import creatorAPI from "../data/creatorInfo_api";
+import productAPI from "../data/productInfo_api";
 
 const Gradient = style((props) => <LinearGradient {...props} />)`
     height: 100%;
@@ -45,8 +47,20 @@ const VideoCard = ({ navigation, card, isPlay }) => {
             >
                 <CreatorModal
                     navigation={navigation}
-                    creator={api[0]}
+                    creator={creatorAPI[0]}
                     onPressClose={() => setCreatorModalVisible(false)}
+                />
+            </Modal>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={productModalVisible}
+                /* onShow={ trigger API call to get product info to pass as prop to CreatorModal } */
+            >
+                <ProductModal
+                    navigation={navigation}
+                    product={productAPI[0]}
+                    onPressClose={() => setProductModalVisible(false)}
                 />
             </Modal>
             <VideoPlayer
@@ -68,6 +82,7 @@ const VideoCard = ({ navigation, card, isPlay }) => {
                     product={card.product}
                     brand={card.brand}
                     onPressCreator={() => setCreatorModalVisible(true)}
+                    onPressProduct={() => setProductModalVisible(true)}
                 />
             </Gradient>
         </VideoContainer>

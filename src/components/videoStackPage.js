@@ -53,7 +53,7 @@ const VideoStackPage = ({ navigation, headerText, videoStack, back }) => {
                     )}
                 </Element>
                 <HeaderText>{headerText}</HeaderText>
-                <Element>
+                <Element onPress={() => navigation.navigate("Cart")}>
                     <Feather
                         name="shopping-cart"
                         size={20}
