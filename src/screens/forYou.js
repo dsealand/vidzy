@@ -28,7 +28,7 @@ const ForYou = ({ navigation }) => {
         getVideos();
         // console.log("useEffect video stack query");
         // console.log(videoStack);
-    });
+    }, []);
 
     return (
         <VideoStackPage
