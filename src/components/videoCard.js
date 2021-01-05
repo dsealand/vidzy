@@ -35,9 +35,6 @@ const VideoCard = ({ navigation, card, isPlay }) => {
     const width = useWindowDimensions().width;
     const height = useWindowDimensions().height;
 
-    console.log("videocard element");
-    console.log("\n");
-
     return (
         <VideoContainer style={{ height: height, width: width }}>
             <Modal
