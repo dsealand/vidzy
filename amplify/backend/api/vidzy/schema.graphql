@@ -8,11 +8,13 @@ type Video @model
     creator: Creator @connection(fields: ["creatorID"])
     creatorID: ID!
     URL: String!
+    orientation: String
 }
 
 type Creator @model {
   id: ID!
   username: String!
+  photo: String!
   description: String!
   videos: [Video] @connection(keyName: "byCreator", fields: ["id"])
 }

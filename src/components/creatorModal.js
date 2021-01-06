@@ -52,7 +52,7 @@ const CreatorName = style.Text`
     paddingBottom: 12px;
 `;
 
-const CreatorHandel = style.Text`
+const CreatorHandle = style.Text`
     font-size: 12px
     fontFamily: Helvetica;
     color: ${Colors.lightGrey};
@@ -79,13 +79,13 @@ const creatorModal = ({ navigation, creator, onPressClose }) => {
     return (
         <Container>
             <ModalContainer>
-                <CreatorName>{creator.creator.name}</CreatorName>
+                <CreatorName>{creator.username}</CreatorName>
                 <DownArrow onPress={onPressClose}>
                     <Feather name="arrow-down" size={20} color={Colors.white} />
                 </DownArrow>
                 <CreatorInfo>
-                    <CreatorPhoto source={creator.creator.photo} />
-                    <CreatorHandel>@{creator.creator.username}</CreatorHandel>
+                    {/* <CreatorPhoto source={creator.creator.photo} /> */}
+                    <CreatorHandle>@{creator.username}</CreatorHandle>
                     <MoreVideos
                         onPress={onPressClose}
                         onPressOut={() => {

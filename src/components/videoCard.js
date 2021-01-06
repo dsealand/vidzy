@@ -45,7 +45,7 @@ const VideoCard = ({ navigation, card, isPlay }) => {
             >
                 <CreatorModal
                     navigation={navigation}
-                    creator={api[0]}
+                    creator={card.creator}
                     onPressClose={() => setCreatorModalVisible(false)}
                 />
             </Modal>
@@ -64,9 +64,9 @@ const VideoCard = ({ navigation, card, isPlay }) => {
                 ]}
             >
                 <VideoElements
-                    creator={card.creatorID}
-                    product={card.productID}
-                    brand={card.name}
+                    creator={card.creator}
+                    product={card.product}
+                    brand={card.product.brand}
                     onPressCreator={() => setCreatorModalVisible(true)}
                 />
             </Gradient>

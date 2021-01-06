@@ -7,12 +7,14 @@ import VideoStackPage from "../components/videoStackPage";
 
 import api from "../data/creatorStack_api";
 
+// need to replace api with video stack specific to creator
+
 const Creator = ({ route, navigation }) => {
     const { creator, back } = route.params;
     return (
         <VideoStackPage
             navigation={navigation}
-            headerText={creator.creator.name}
+            headerText={creator.username}
             videoStack={api}
             back={back}
         />

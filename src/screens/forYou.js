@@ -19,15 +19,11 @@ const ForYou = ({ navigation }) => {
                 const apiData = await API.graphql(graphqlOperation(queries.listVideos));
                 const videos = apiData.data.listVideos.items;
                 setVideoStack(videos);
-                // console.log("video data")
-                // console.log(videos)
             } catch (err) {
                 console.log('error1: ', err);
             }
         }
         getVideos();
-        // console.log("useEffect video stack query");
-        // console.log(videoStack);
     }, []);
 
     return (

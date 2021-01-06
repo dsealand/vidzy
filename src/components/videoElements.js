@@ -62,7 +62,8 @@ const VideoElements = ({ creator, product, brand, onPressCreator }) => {
     return (
         <Container>
             <LeftContainer>
-                <BasicText>{brand.name}</BasicText>
+                {/* replace when schema has brand connected to product */}
+                <BasicText>{product.brandID}</BasicText>
                 <ProductNameText>{product.name}</ProductNameText>
                 <BasicText>$ {product.price}</BasicText>
             </LeftContainer>
