@@ -6,6 +6,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import ForYou from "./src/screens/forYou";
 import Creator from "./src/screens/creator";
+import Product from "./src/screens/product";
 import Cart from "./src/screens/cart";
 
 const Stack = createStackNavigator();
@@ -22,6 +23,11 @@ export default function App() {
                 <Stack.Screen
                     name="Creator"
                     component={Creator}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="Product"
+                    component={Product}
                     options={{ headerShown: false }}
                 />
                 <Stack.Screen
