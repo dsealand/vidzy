@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 
 import {
-    Image,
     View,
+    Text,
+    StyleSheet,
     TouchableOpacity,
     FlatList,
-    ScrollView,
+    SectionList,
 } from "react-native";
 import style from "styled-components/native";
 import { Feather } from "@expo/vector-icons";
@@ -23,7 +24,7 @@ const Container = style.View`
 const ModalContainer = style.View`
     backgroundColor: ${Colors.white}
     width: 100%;
-    height: 45%;
+    height: 60%;
     borderTopLeftRadius: 20px;
     borderTopRightRadius: 20px;
     justifyContent: flex-start;
@@ -41,7 +42,7 @@ const TopContainer = style.View`
     justifyContent: space-between;
     alignItems: center;
     width: 83%;
-    height: 15%
+    height: 12%
     left: 3%;
 `;
 
@@ -68,7 +69,7 @@ const BigText = style.Text`
 `;
 
 const PriceText = style.Text`
-    font-size: 12px;
+    font-size: 13px;
     fontFamily: Helvetica;
     color: ${Colors.main};
     fontWeight: bold;
@@ -87,37 +88,102 @@ const AddToCartText = style(BigText)`
     color: ${Colors.white};
 `;
 
+const MoreVideos = style(TouchableOpacity)`
+    width: 150px;
+    height: 50px;
+    justifyContent: center;
+    alignItems: center;
+`;
+
 const MoreVideosText = style(BigText)`
     color: ${Colors.main};
 `;
 
-const ProductImageBorder = style.View`
-    width: 33%;
+const SectionHeaderText = style.Text`
+    font-size: 13px;
+    fontFamily: Helvetica;
+    color: ${Colors.black};
+    fontWeight: bold;
+`;
+
+const ImageSpacer = style.View`
     aspectRatio: 1;
     justifyContent: center;
     alignItems: center
 `;
 
-const ProductImage = style.View`
+const ProductImageBorder = style.View`
     backgroundColor: ${Colors.white};
     borderRadius: 10px;
     width: 85%;
     aspectRatio: 1;
+    overflow: hidden;
 `;
 
 const ColorImageBorder = style.View`
-    width: 20%;
-    aspectRatio: 1;
-    justifyContent: center;
-    alignItems: center
-`;
-
-const ColorImage = style.View`
-    backgroundColor: ${Colors.white};
+    backgroundColor: ${Colors.white}
     width: 50px;
     borderRadius: 25px;
     aspectRatio: 1;
+    overflow: hidden;
 `;
+
+const styles = StyleSheet.create({
+    shadow: {
+        shadowColor: Colors.darkGrey,
+        shadowOpacity: 0.5,
+        shadowRadius: 2,
+        shadowOffset: { width: 3, height: 3 },
+    },
+});
+
+const renderSection = ({ item }) => {
+    if (item.title === "Images") {
+        return (
+            <FlatList
+                data={item.list}
+                numColumns={3}
+                renderItem={renderImageListItem}
+                keyExtractor={(item) => item.id}
+            />
+        );
+    } else {
+        return (
+            <FlatList
+                data={item.list}
+                numColumns={5}
+                renderItem={renderColorListItem}
+                keyExtractor={(item) => item.id}
+            />
+        );
+    }
+};
+
+const renderImageListItem = ({ item }) => {
+    return (
+        <ImageSpacer style={{ width: "33%" }}>
+            <View style={styles.shadow}>
+                <ProductImageBorder />
+            </View>
+        </ImageSpacer>
+    );
+};
+
+const renderColorListItem = ({ item }) => {
+    return (
+        <ImageSpacer style={{ width: "20%" }}>
+            <View style={styles.shadow}>
+                <ColorImageBorder>
+                    <View style={{ flex: 1, backgroundColor: item.color }} />
+                </ColorImageBorder>
+            </View>
+        </ImageSpacer>
+    );
+};
+
+const renderSectionHeader = ({ section }) => {
+    return <SectionHeaderText>{section.title}</SectionHeaderText>;
+};
 
 const productModal = ({ navigation, product, onPressClose }) => {
     return (
@@ -130,12 +196,29 @@ const productModal = ({ navigation, product, onPressClose }) => {
                 <DownArrow onPress={onPressClose}>
                     <Feather name="arrow-down" size={20} color={Colors.main} />
                 </DownArrow>
-                <ProductScroll></ProductScroll>
+                <ProductScroll>
+                    <SectionList
+                        sections={product.product.data}
+                        renderSectionHeader={renderSectionHeader}
+                        renderItem={renderSection}
+                        stickySectionHeadersEnabled={false}
+                    />
+                </ProductScroll>
                 <BottomContainer>
                     <AddToCart>
                         <AddToCartText>Add To Cart</AddToCartText>
                     </AddToCart>
-                    <MoreVideosText>More Videos</MoreVideosText>
+                    <MoreVideos
+                        onPress={onPressClose}
+                        onPressOut={() => {
+                            navigation.navigate("Product", {
+                                product: product,
+                                back: true,
+                            });
+                        }}
+                    >
+                        <MoreVideosText>More Videos</MoreVideosText>
+                    </MoreVideos>
                 </BottomContainer>
             </ModalContainer>
         </Container>

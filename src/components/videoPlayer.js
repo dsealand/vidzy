@@ -23,6 +23,7 @@ const VideoPlayer = ({ video, isPlay, orientation }) => {
     return (
         <VideoContainer>
             <ProductVideo
+                /* make sure to change source to uri: for URL */
                 source={video}
                 rate={1.0}
                 volume={1.0}

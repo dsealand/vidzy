@@ -41,7 +41,7 @@ const TopContainer = style.View`
 `;
 
 const BottomContainer = style.View`
-    backgroundColor: ${Colors.lighterGrey};
+    backgroundColor: ${Colors.white};
     justifyContent: center;
     alignItems: center;
     width: 100%;
@@ -62,7 +62,7 @@ const CreatorName = style.Text`
 `;
 
 const CreatorHandel = style.Text`
-    font-size: 12px
+    font-size: 13px
     fontFamily: Helvetica;
     color: ${Colors.lightGrey};
     padding: 10px;
@@ -78,7 +78,7 @@ const MoreVideos = style(TouchableOpacity)`
 `;
 
 const MoreVideosText = style.Text`
-    font-size: 12px
+    font-size: 13px
     fontFamily: Helvetica;
     color: ${Colors.white};
     fontWeight: bold;

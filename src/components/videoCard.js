@@ -64,9 +64,9 @@ const VideoCard = ({ navigation, card, isPlay }) => {
                 />
             </Modal>
             <VideoPlayer
-                video={card.video.video}
+                video={card.URL}
                 isPlay={isPlay}
-                orientation={card.video.orientation}
+                orientation={card.orientation}
             />
             <Gradient
                 locations={[0, 0.25, 0.75, 1]}

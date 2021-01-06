@@ -50,7 +50,7 @@ const Element = style.TouchableOpacity`
 `;
 
 const BasicText = style.Text`
-    font-size: 12px
+    font-size: 14px
     fontFamily: Helvetica;
     color: ${Colors.white};
     textShadowRadius: 1px;
@@ -58,12 +58,12 @@ const BasicText = style.Text`
 `;
 
 const ProductNameText = style(BasicText)`
-    font-size: 15px;
+    font-size: 17px;
     fontWeight: bold;
 `;
 
 const ElementText = style(BasicText)`
-    font-size: 10px;
+    font-size: 11px;
     fontWeight: bold;
 `;
 

@@ -1,10 +1,8 @@
 const api = [
     {
-        video: {
-            id: "",
-            video: require("../assets/videos/IMG_0240.mp4"),
-            orientation: "portrait",
-        },
+        id: "",
+        URL: require("../assets/videos/IMG_0240.mp4"),
+        orientation: "portrait",
         product: {
             id: "",
             name: "Brunch Pony",
@@ -16,11 +14,10 @@ const api = [
         },
     },
     {
-        video: {
-            id: "",
-            video: require("../assets/videos/IMG_0241.mp4"),
-            orientation: "portrait",
-        },
+        id: "",
+        URL: require("../assets/videos/IMG_0241.mp4"),
+        orientation: "portrait",
+
         product: {
             id: "",
             name: "Contour Concealer",
@@ -32,11 +29,9 @@ const api = [
         },
     },
     {
-        video: {
-            id: "",
-            video: require("../assets/videos/IMG_0243.mp4"),
-            orientation: "portrait",
-        },
+        id: "",
+        URL: require("../assets/videos/IMG_0243.mp4"),
+        orientation: "portrait",
         product: {
             id: "",
             name: "Doll Unit",

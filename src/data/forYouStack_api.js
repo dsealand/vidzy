@@ -1,10 +1,8 @@
 const api = [
     {
-        video: {
-            id: "",
-            video: require("../assets/videos/surf1.mp4"),
-            orientation: "landscape",
-        },
+        id: "",
+        URL: require("../assets/videos/surf1.mp4"),
+        orientation: "landscape",
         creator: {
             id: "",
             username: "surf_god69",
@@ -20,11 +18,9 @@ const api = [
         },
     },
     {
-        video: {
-            id: "",
-            video: require("../assets/videos/IMG_0240.mp4"),
-            orientation: "portrait",
-        },
+        id: "",
+        URL: require("../assets/videos/IMG_0240.mp4"),
+        orientation: "portrait",
         creator: {
             id: "",
             username: "courtneymonet",
@@ -40,11 +36,9 @@ const api = [
         },
     },
     {
-        video: {
-            id: "",
-            video: require("../assets/videos/surf2.mp4"),
-            orientation: "landscape",
-        },
+        id: "",
+        URL: require("../assets/videos/surf2.mp4"),
+        orientation: "landscape",
         creator: {
             id: "",
             username: "surf_god69",
@@ -60,11 +54,9 @@ const api = [
         },
     },
     {
-        video: {
-            id: "",
-            video: require("../assets/videos/IMG_0241.mp4"),
-            orientation: "portrait",
-        },
+        id: "",
+        URL: require("../assets/videos/IMG_0241.mp4"),
+        orientation: "portrait",
         creator: {
             id: "",
             username: "courtneymonet",
@@ -80,11 +72,9 @@ const api = [
         },
     },
     {
-        video: {
-            id: "",
-            video: require("../assets/videos/IMG_0243.mp4"),
-            orientation: "portrait",
-        },
+        id: "",
+        URL: require("../assets/videos/IMG_0243.mp4"),
+        orientation: "portrait",
         creator: {
             id: "",
             username: "courtneymonet",

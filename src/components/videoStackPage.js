@@ -22,7 +22,7 @@ const HeaderText = style.Text`
     color: ${Colors.white};
     textShadowRadius: 1px;
     textShadowColor: ${Colors.darkGrey};
-    font-size: 15px;
+    font-size: 17px;
     fontWeight: bold;
 `;
 
