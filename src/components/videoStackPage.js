@@ -28,8 +28,8 @@ const HeaderText = style.Text`
 
 const Element = style(TouchableOpacity)`
     shadowColor: ${Colors.darkGrey};
-    shadowOpacity: 1;
-    shadowRadius: 5px;
+    shadowOpacity: 0.5;
+    shadowRadius: 7px;
     width: 20%;
     alignItems: center;
 `;
@@ -38,20 +38,35 @@ const Element = style(TouchableOpacity)`
  *
  * A videoStack with header, cart button, and back button
  */
-const VideoStackPage = ({ navigation, headerText, videoStack, back }) => {
+const VideoStackPage = ({
+    navigation,
+    headerText,
+    videoStack,
+    back,
+    filter,
+}) => {
     return (
         <View>
             <Header>
-                <Element onPress={() => navigation.goBack()}>
-                    {/* onPress should not work when Feather icon arrow-left not rendered */}
-                    {back !== undefined && (
+                {filter !== undefined && (
+                    <Element>
+                        <Feather
+                            name="sliders"
+                            size={20}
+                            color={Colors.white}
+                        />
+                    </Element>
+                )}
+                {/* onPress should not work when Feather icon arrow-left not rendered */}
+                {back !== undefined && (
+                    <Element onPress={() => navigation.goBack()}>
                         <Feather
                             name="arrow-left"
                             size={20}
                             color={Colors.white}
                         />
-                    )}
-                </Element>
+                    </Element>
+                )}
                 <HeaderText>{headerText}</HeaderText>
                 <Element onPress={() => navigation.navigate("Cart")}>
                     <Feather

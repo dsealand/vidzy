@@ -45,8 +45,8 @@ const Element = style.TouchableOpacity`
     alignItems: center;
     height: 40px;
     shadowColor: ${Colors.darkGrey};
-    shadowOpacity: 1;
-    shadowRadius: 5px;
+    shadowOpacity: 0.5;
+    shadowRadius: 7px;
 `;
 
 const BasicText = style.Text`
@@ -71,9 +71,26 @@ const VideoElements = ({
     creator,
     product,
     brand,
+    videoLiked,
     onPressCreator,
     onPressProduct,
 }) => {
+    const [liked, setLiked] = useState(videoLiked);
+
+    /* add code here to update users liked videos */
+    const likePress = () => {
+        if (liked) {
+            setLiked(false);
+        } else {
+            setLiked(true);
+        }
+    };
+
+    let iconColor = Colors.white;
+    if (liked) {
+        iconColor = Colors.main;
+    }
+
     return (
         <Container>
             <LeftContainer>
@@ -84,8 +101,8 @@ const VideoElements = ({
                 </ProductInfo>
             </LeftContainer>
             <RightContainer>
-                <Element>
-                    <Feather name="heart" size={20} color={Colors.white} />
+                <Element onPress={likePress}>
+                    <Feather name="heart" size={20} color={iconColor} />
                 </Element>
                 {/* Logic used to hide creator icon when on creator video stack */}
                 {creator !== undefined && (

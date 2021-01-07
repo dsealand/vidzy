@@ -82,6 +82,7 @@ const VideoCard = ({ navigation, card, isPlay }) => {
                     creator={card.creator}
                     product={card.product}
                     brand={card.brand}
+                    videoLiked={card.liked}
                     onPressCreator={() => setCreatorModalVisible(true)}
                     onPressProduct={() => setProductModalVisible(true)}
                 />

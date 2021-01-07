@@ -22,7 +22,7 @@ const Container = style.View`
 `;
 
 const ModalContainer = style.View`
-    backgroundColor: ${Colors.lighterGrey}
+    backgroundColor: ${Colors.lightestGrey}
     width: 100%;
     height: 60%;
     borderTopLeftRadius: 20px;
@@ -31,19 +31,21 @@ const ModalContainer = style.View`
     alignItems: flex-start;
 `;
 
-const DownArrow = style(TouchableOpacity)`
-    position: absolute;
-    top: 17px;
-    right: 17px;
-`;
-
 const TopContainer = style.View`
     flexDirection: row;
     justifyContent: space-between;
     alignItems: center;
-    width: 83%;
-    height: 11%
+    width: 94%;
+    height: 10%
     left: 3%;
+`;
+
+const TopRightContainer = style.View`
+    flexDirection: row;
+    justifyContent: space-around;
+    alignItems: center;
+    width: 20%;
+    height: 100%;
 `;
 
 const BottomContainer = style.View`
@@ -68,14 +70,14 @@ const BigText = style.Text`
 `;
 
 const PriceText = style.Text`
-    font-size: 13px;
+    font-size: 15px;
     fontFamily: Helvetica;
     color: ${Colors.main};
     fontWeight: bold;
 `;
 
 const AddToCart = style(TouchableOpacity)`
-    backgroundColor: ${Colors.mainLight};
+    backgroundColor: ${Colors.main};
     borderRadius: 25px;
     width: 150px;
     height: 50px;
@@ -190,11 +192,18 @@ const productModal = ({ navigation, product, onPressClose }) => {
             <ModalContainer>
                 <TopContainer>
                     <BigText>{product.product.name}</BigText>
-                    <PriceText>$ {product.product.price}</PriceText>
+                    <TopRightContainer>
+                        <PriceText>$ {product.product.price}</PriceText>
+                        <TouchableOpacity onPress={onPressClose}>
+                            <Feather
+                                name="arrow-down"
+                                size={20}
+                                color={Colors.main}
+                            />
+                        </TouchableOpacity>
+                    </TopRightContainer>
                 </TopContainer>
-                <DownArrow onPress={onPressClose}>
-                    <Feather name="arrow-down" size={20} color={Colors.main} />
-                </DownArrow>
+
                 <ProductScroll>
                     <SectionList
                         sections={product.product.data}

@@ -17,7 +17,7 @@ const Logo = style.View`
     justifyContent: center;
     alignItems: center;
     width: 100%;
-    height: 50%;
+    height: 30%;
 `;
 
 const LogoText = style.Text`
@@ -31,7 +31,7 @@ const Slogan = style.View`
     justifyContent: center;
     alignItems: center;
     width: 100%;
-    height: 15%;
+    height: 30%;
 `;
 
 const BigText = style.Text`
@@ -54,7 +54,10 @@ const BasicButton = style(TouchableOpacity)`
     justifyContent: center;
     alignItems: center;
     backgroundColor: ${Colors.white}
-    borderRadius: 15px;
+    borderRadius: 20px;
+    shadowColor: ${Colors.lightGrey};
+    shadowOpacity: 0.2;
+    shadowRadius: 5px;
 `;
 
 const SignUp = style.View`
@@ -94,12 +97,20 @@ const Login = ({ navigation }) => {
                         Get Started
                     </BigText>
                 </BasicButton>
-                <BasicButton>
+                <BasicButton
+                    onPress={() => {
+                        navigation.navigate("SignIn");
+                    }}
+                >
                     <BigText style={{ color: Colors.main }}>Login</BigText>
                 </BasicButton>
                 <SignUp>
                     <SignUpText>New around here? </SignUpText>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => {
+                            navigation.navigate("SignUp");
+                        }}
+                    >
                         <SignUpText style={{ color: Colors.main }}>
                             Sign up
                         </SignUpText>

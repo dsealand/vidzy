@@ -16,7 +16,6 @@ const Container = style.View`
 `;
 
 const ModalContainer = style.View`
-    backgroundColor: ${Colors.main}
     width: 100%;
     height: 45%;
     borderTopLeftRadius: 20px;
@@ -26,22 +25,23 @@ const ModalContainer = style.View`
     overflow: hidden;
 `;
 
-const DownArrow = style(TouchableOpacity)`
-    position: absolute;
-    top: 17px;
-    right: 17px;
+const Element = style(TouchableOpacity)`
+    width: 15%;
+    justifyContent: center;
+    alignItems: center;
 `;
 
 const TopContainer = style.View`
+    backgroundColor: ${Colors.main}
     flexDirection: row;
     alignItems: center;
-    justifyContent: center;
+    justifyContent: space-between;
     width: 100%;
     height: 15%
 `;
 
 const BottomContainer = style.View`
-    backgroundColor: ${Colors.lighterGrey};
+    backgroundColor: ${Colors.lightestGrey}
     justifyContent: center;
     alignItems: center;
     width: 100%;
@@ -69,7 +69,7 @@ const CreatorHandel = style.Text`
 `;
 
 const MoreVideos = style(TouchableOpacity)`
-    backgroundColor: ${Colors.main2};
+    backgroundColor: ${Colors.main};
     borderRadius: 10px;
     width: 100px;
     height: 20px;
@@ -89,11 +89,17 @@ const creatorModal = ({ navigation, creator, onPressClose }) => {
         <Container>
             <ModalContainer>
                 <TopContainer>
+                    <Element />
                     <CreatorName>{creator.creator.name}</CreatorName>
+                    <Element onPress={onPressClose}>
+                        <Feather
+                            name="arrow-down"
+                            size={20}
+                            color={Colors.white}
+                        />
+                    </Element>
                 </TopContainer>
-                <DownArrow onPress={onPressClose}>
-                    <Feather name="arrow-down" size={20} color={Colors.white} />
-                </DownArrow>
+
                 <BottomContainer>
                     <CreatorPhoto source={creator.creator.photo} />
                     <CreatorHandel>@{creator.creator.username}</CreatorHandel>
