@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { SafeAreaView, Text, StyleSheet, ViewComponent } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
+import Login from "./src/screens/login";
 import ForYou from "./src/screens/forYou";
 import Creator from "./src/screens/creator";
 import Product from "./src/screens/product";
@@ -14,7 +15,12 @@ const Stack = createStackNavigator();
 export default function App() {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="ForYou">
+            <Stack.Navigator initialRouteName="Login">
+                <Stack.Screen
+                    name="Login"
+                    component={Login}
+                    options={{ headerShown: false }}
+                />
                 <Stack.Screen
                     name="ForYou"
                     component={ForYou}
