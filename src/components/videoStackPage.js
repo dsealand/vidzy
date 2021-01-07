@@ -10,7 +10,7 @@ import VideoStack from "../components/videoStack";
 const Header = style.View`
     position: absolute;
     width: 100%
-    top: 50px;
+    top: 60px;
     z-index: 1;
     flexDirection: row;
     alignItems: center;
@@ -29,7 +29,7 @@ const HeaderText = style.Text`
 const Element = style(TouchableOpacity)`
     shadowColor: ${Colors.darkGrey};
     shadowOpacity: 1;
-    shadowRadius: 10px;
+    shadowRadius: 5px;
     width: 20%;
     alignItems: center;
 `;

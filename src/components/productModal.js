@@ -131,8 +131,8 @@ const ColorImageBorder = style.View`
 const styles = StyleSheet.create({
     shadow: {
         shadowColor: Colors.darkGrey,
-        shadowOpacity: 0.5,
-        shadowRadius: 2,
+        shadowOpacity: 0.15,
+        shadowRadius: 3,
         shadowOffset: { width: 3, height: 3 },
     },
 });

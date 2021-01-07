@@ -46,7 +46,7 @@ const Element = style.TouchableOpacity`
     height: 40px;
     shadowColor: ${Colors.darkGrey};
     shadowOpacity: 1;
-    shadowRadius: 10px;
+    shadowRadius: 5px;
 `;
 
 const BasicText = style.Text`
