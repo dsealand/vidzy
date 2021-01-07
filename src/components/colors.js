@@ -3,9 +3,10 @@ const colors = {
     white: "#FFFFFF",
     darkGrey: "#232323",
     lightGrey: "#9e9e9e",
-    lighterGrey: "#e8e8e8",
-    main: "#007d15",
-    main2: "#00d123",
+    lighterGrey: "#ebebeb",
+    main: "#9900ff",
+    mainDark: "#6700ab",
+    mainLight: "#ad30ff",
 };
 
 export default colors;

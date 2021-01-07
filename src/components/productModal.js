@@ -22,7 +22,7 @@ const Container = style.View`
 `;
 
 const ModalContainer = style.View`
-    backgroundColor: ${Colors.white}
+    backgroundColor: ${Colors.lighterGrey}
     width: 100%;
     height: 60%;
     borderTopLeftRadius: 20px;
@@ -51,14 +51,13 @@ const BottomContainer = style.View`
     justifyContent: space-around;
     alignItems: center;
     width: 100%;
-    height: 20%
+    paddingTop: 3%;
 `;
 
 const ProductScroll = style.View`
     width: 94%;
-    height: 60%;
+    height: 70%;
     left: 3%;
-    backgroundColor: ${Colors.white};
 `;
 
 const BigText = style.Text`
@@ -76,7 +75,7 @@ const PriceText = style.Text`
 `;
 
 const AddToCart = style(TouchableOpacity)`
-    backgroundColor: ${Colors.main2};
+    backgroundColor: ${Colors.mainLight};
     borderRadius: 25px;
     width: 150px;
     height: 50px;

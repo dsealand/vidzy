@@ -70,6 +70,7 @@ const VideoCard = ({ navigation, card, isPlay }) => {
             />
             <Gradient
                 locations={[0, 0.25, 0.75, 1]}
+                /* rgba(35, 35, 35) = #232323 = "Colors.darkgrey" */
                 colors={[
                     "rgba(35,35,35,1)",
                     "rgba(35,35,35,0)",
