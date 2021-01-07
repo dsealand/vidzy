@@ -42,7 +42,7 @@ const TopContainer = style.View`
     justifyContent: space-between;
     alignItems: center;
     width: 83%;
-    height: 12%
+    height: 11%
     left: 3%;
 `;
 
