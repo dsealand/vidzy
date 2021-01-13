@@ -4,8 +4,8 @@ import { View, TouchableOpacity } from "react-native";
 import style from "styled-components/native";
 import { Feather } from "@expo/vector-icons";
 
-import Colors from "../components/colors";
-import VideoStack from "../components/videoStack";
+import Colors from "./colors";
+import VideoStack from "./videoStack";
 
 const Header = style.View`
     position: absolute;
@@ -67,6 +67,7 @@ const VideoStackPage = ({
                         />
                     </Element>
                 )}
+                {filter == undefined && back == undefined && <Element />}
                 <HeaderText>{headerText}</HeaderText>
                 <Element onPress={() => navigation.navigate("Cart")}>
                     <Feather

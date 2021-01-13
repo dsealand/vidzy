@@ -6,7 +6,7 @@ const api = [
         product: {
             id: "",
             name: "Brunch Pony",
-            price: "29.99",
+            price: 29.99,
         },
         brand: {
             id: "",
@@ -21,7 +21,7 @@ const api = [
         product: {
             id: "",
             name: "Contour Concealer",
-            price: "69",
+            price: 69,
         },
         brand: {
             id: "",
@@ -35,7 +35,7 @@ const api = [
         product: {
             id: "",
             name: "Doll Unit",
-            price: "420",
+            price: 420,
         },
         brand: {
             id: "",

@@ -10,7 +10,7 @@ const api = [
         product: {
             id: "",
             name: "Contour Concealer",
-            price: "69",
+            price: 69,
         },
         brand: {
             id: "",

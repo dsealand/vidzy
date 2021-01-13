@@ -21,7 +21,7 @@ const Container = style(KeyboardAvoidingView)`
 
 const BackButton = style(TouchableOpacity)`
     position: absolute;
-    top: 8%;
+    top: 60px;
     left: 5%;
 `;
 
@@ -71,7 +71,7 @@ const BigText = style.Text`
 const BasicButton = style(TouchableOpacity)`
     width: 275px;
     height: 50px;
-    flex-direction: row;
+    flexDirection: row;
     justifyContent: center;
     alignItems: center;
     backgroundColor: ${Colors.white}
@@ -82,7 +82,7 @@ const BasicButton = style(TouchableOpacity)`
 `;
 
 const Terms = style.View`
-    flex-direction: column;
+    flexDirection: column;
     justifyContent: center;
     alignItems: center;
     top: 10%;

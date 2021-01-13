@@ -61,7 +61,7 @@ const BasicButton = style(TouchableOpacity)`
 `;
 
 const SignUp = style.View`
-    flex-direction: row;
+    flexDirection: row;
     height: 50px;
     justifyContent: center;
     alignItems: center;

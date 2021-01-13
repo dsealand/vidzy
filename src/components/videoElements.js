@@ -87,6 +87,7 @@ const VideoElements = ({
     };
 
     let iconColor = Colors.white;
+
     if (liked) {
         iconColor = Colors.main;
     }
