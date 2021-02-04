@@ -13,8 +13,6 @@ import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import awsmobile from '../../aws-exports';
 import * as queries from '../../graphql/queries';
 
-import api from "../data/creatorInfo_api";
-
 Amplify.configure(awsmobile);
 
 const Gradient = style((props) => <LinearGradient {...props} />)`
