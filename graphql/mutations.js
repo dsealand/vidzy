@@ -17,7 +17,15 @@ export const createVideo = /* GraphQL */ `
         videos {
           nextToken
         }
+        brand {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
         brandID
+        userID
         createdAt
         updatedAt
       }
@@ -25,6 +33,7 @@ export const createVideo = /* GraphQL */ `
       creator {
         id
         username
+        photo
         description
         videos {
           nextToken
@@ -34,6 +43,32 @@ export const createVideo = /* GraphQL */ `
       }
       creatorID
       URL
+      orientation
+      userHistory {
+        id
+        videoID
+        userID
+        video {
+          id
+          name
+          productID
+          creatorID
+          URL
+          orientation
+          viewCount
+          createdAt
+          updatedAt
+        }
+        user {
+          id
+          username
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      viewCount
       createdAt
       updatedAt
     }
@@ -55,7 +90,15 @@ export const updateVideo = /* GraphQL */ `
         videos {
           nextToken
         }
+        brand {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
         brandID
+        userID
         createdAt
         updatedAt
       }
@@ -63,6 +106,7 @@ export const updateVideo = /* GraphQL */ `
       creator {
         id
         username
+        photo
         description
         videos {
           nextToken
@@ -72,6 +116,32 @@ export const updateVideo = /* GraphQL */ `
       }
       creatorID
       URL
+      orientation
+      userHistory {
+        id
+        videoID
+        userID
+        video {
+          id
+          name
+          productID
+          creatorID
+          URL
+          orientation
+          viewCount
+          createdAt
+          updatedAt
+        }
+        user {
+          id
+          username
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      viewCount
       createdAt
       updatedAt
     }
@@ -93,7 +163,15 @@ export const deleteVideo = /* GraphQL */ `
         videos {
           nextToken
         }
+        brand {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
         brandID
+        userID
         createdAt
         updatedAt
       }
@@ -101,6 +179,7 @@ export const deleteVideo = /* GraphQL */ `
       creator {
         id
         username
+        photo
         description
         videos {
           nextToken
@@ -110,6 +189,32 @@ export const deleteVideo = /* GraphQL */ `
       }
       creatorID
       URL
+      orientation
+      userHistory {
+        id
+        videoID
+        userID
+        video {
+          id
+          name
+          productID
+          creatorID
+          URL
+          orientation
+          viewCount
+          createdAt
+          updatedAt
+        }
+        user {
+          id
+          username
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      viewCount
       createdAt
       updatedAt
     }
@@ -123,6 +228,7 @@ export const createCreator = /* GraphQL */ `
     createCreator(input: $input, condition: $condition) {
       id
       username
+      photo
       description
       videos {
         items {
@@ -131,6 +237,8 @@ export const createCreator = /* GraphQL */ `
           productID
           creatorID
           URL
+          orientation
+          viewCount
           createdAt
           updatedAt
         }
@@ -149,6 +257,7 @@ export const updateCreator = /* GraphQL */ `
     updateCreator(input: $input, condition: $condition) {
       id
       username
+      photo
       description
       videos {
         items {
@@ -157,6 +266,8 @@ export const updateCreator = /* GraphQL */ `
           productID
           creatorID
           URL
+          orientation
+          viewCount
           createdAt
           updatedAt
         }
@@ -175,6 +286,7 @@ export const deleteCreator = /* GraphQL */ `
     deleteCreator(input: $input, condition: $condition) {
       id
       username
+      photo
       description
       videos {
         items {
@@ -183,6 +295,8 @@ export const deleteCreator = /* GraphQL */ `
           productID
           creatorID
           URL
+          orientation
+          viewCount
           createdAt
           updatedAt
         }
@@ -210,12 +324,32 @@ export const createProduct = /* GraphQL */ `
           productID
           creatorID
           URL
+          orientation
+          viewCount
           createdAt
           updatedAt
         }
         nextToken
       }
+      brand {
+        id
+        name
+        description
+        products {
+          id
+          name
+          price
+          description
+          brandID
+          userID
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
       brandID
+      userID
       createdAt
       updatedAt
     }
@@ -238,12 +372,32 @@ export const updateProduct = /* GraphQL */ `
           productID
           creatorID
           URL
+          orientation
+          viewCount
           createdAt
           updatedAt
         }
         nextToken
       }
+      brand {
+        id
+        name
+        description
+        products {
+          id
+          name
+          price
+          description
+          brandID
+          userID
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
       brandID
+      userID
       createdAt
       updatedAt
     }
@@ -266,12 +420,32 @@ export const deleteProduct = /* GraphQL */ `
           productID
           creatorID
           URL
+          orientation
+          viewCount
           createdAt
           updatedAt
         }
         nextToken
       }
+      brand {
+        id
+        name
+        description
+        products {
+          id
+          name
+          price
+          description
+          brandID
+          userID
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
       brandID
+      userID
       createdAt
       updatedAt
     }
@@ -284,6 +458,7 @@ export const createBrand = /* GraphQL */ `
   ) {
     createBrand(input: $input, condition: $condition) {
       id
+      name
       description
       products {
         id
@@ -293,7 +468,15 @@ export const createBrand = /* GraphQL */ `
         videos {
           nextToken
         }
+        brand {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
         brandID
+        userID
         createdAt
         updatedAt
       }
@@ -309,6 +492,7 @@ export const updateBrand = /* GraphQL */ `
   ) {
     updateBrand(input: $input, condition: $condition) {
       id
+      name
       description
       products {
         id
@@ -318,7 +502,15 @@ export const updateBrand = /* GraphQL */ `
         videos {
           nextToken
         }
+        brand {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
         brandID
+        userID
         createdAt
         updatedAt
       }
@@ -334,6 +526,7 @@ export const deleteBrand = /* GraphQL */ `
   ) {
     deleteBrand(input: $input, condition: $condition) {
       id
+      name
       description
       products {
         id
@@ -343,7 +536,315 @@ export const deleteBrand = /* GraphQL */ `
         videos {
           nextToken
         }
+        brand {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
         brandID
+        userID
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createUser = /* GraphQL */ `
+  mutation CreateUser(
+    $input: CreateUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    createUser(input: $input, condition: $condition) {
+      id
+      username
+      history {
+        id
+        videoID
+        userID
+        video {
+          id
+          name
+          productID
+          creatorID
+          URL
+          orientation
+          viewCount
+          createdAt
+          updatedAt
+        }
+        user {
+          id
+          username
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateUser = /* GraphQL */ `
+  mutation UpdateUser(
+    $input: UpdateUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    updateUser(input: $input, condition: $condition) {
+      id
+      username
+      history {
+        id
+        videoID
+        userID
+        video {
+          id
+          name
+          productID
+          creatorID
+          URL
+          orientation
+          viewCount
+          createdAt
+          updatedAt
+        }
+        user {
+          id
+          username
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteUser = /* GraphQL */ `
+  mutation DeleteUser(
+    $input: DeleteUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    deleteUser(input: $input, condition: $condition) {
+      id
+      username
+      history {
+        id
+        videoID
+        userID
+        video {
+          id
+          name
+          productID
+          creatorID
+          URL
+          orientation
+          viewCount
+          createdAt
+          updatedAt
+        }
+        user {
+          id
+          username
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createVideoUserHistory = /* GraphQL */ `
+  mutation CreateVideoUserHistory(
+    $input: CreateVideoUserHistoryInput!
+    $condition: ModelVideoUserHistoryConditionInput
+  ) {
+    createVideoUserHistory(input: $input, condition: $condition) {
+      id
+      videoID
+      userID
+      video {
+        id
+        name
+        product {
+          id
+          name
+          price
+          description
+          brandID
+          userID
+          createdAt
+          updatedAt
+        }
+        productID
+        creator {
+          id
+          username
+          photo
+          description
+          createdAt
+          updatedAt
+        }
+        creatorID
+        URL
+        orientation
+        userHistory {
+          id
+          videoID
+          userID
+          createdAt
+          updatedAt
+        }
+        viewCount
+        createdAt
+        updatedAt
+      }
+      user {
+        id
+        username
+        history {
+          id
+          videoID
+          userID
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateVideoUserHistory = /* GraphQL */ `
+  mutation UpdateVideoUserHistory(
+    $input: UpdateVideoUserHistoryInput!
+    $condition: ModelVideoUserHistoryConditionInput
+  ) {
+    updateVideoUserHistory(input: $input, condition: $condition) {
+      id
+      videoID
+      userID
+      video {
+        id
+        name
+        product {
+          id
+          name
+          price
+          description
+          brandID
+          userID
+          createdAt
+          updatedAt
+        }
+        productID
+        creator {
+          id
+          username
+          photo
+          description
+          createdAt
+          updatedAt
+        }
+        creatorID
+        URL
+        orientation
+        userHistory {
+          id
+          videoID
+          userID
+          createdAt
+          updatedAt
+        }
+        viewCount
+        createdAt
+        updatedAt
+      }
+      user {
+        id
+        username
+        history {
+          id
+          videoID
+          userID
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteVideoUserHistory = /* GraphQL */ `
+  mutation DeleteVideoUserHistory(
+    $input: DeleteVideoUserHistoryInput!
+    $condition: ModelVideoUserHistoryConditionInput
+  ) {
+    deleteVideoUserHistory(input: $input, condition: $condition) {
+      id
+      videoID
+      userID
+      video {
+        id
+        name
+        product {
+          id
+          name
+          price
+          description
+          brandID
+          userID
+          createdAt
+          updatedAt
+        }
+        productID
+        creator {
+          id
+          username
+          photo
+          description
+          createdAt
+          updatedAt
+        }
+        creatorID
+        URL
+        orientation
+        userHistory {
+          id
+          videoID
+          userID
+          createdAt
+          updatedAt
+        }
+        viewCount
+        createdAt
+        updatedAt
+      }
+      user {
+        id
+        username
+        history {
+          id
+          videoID
+          userID
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }

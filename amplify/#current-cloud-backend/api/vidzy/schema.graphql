@@ -8,12 +8,17 @@ type Video @model
     creator: Creator @connection(fields: ["creatorID"])
     creatorID: ID!
     URL: String!
+    orientation: String
+    userHistory: [VideoUserHistory] #@connection(keyName: "byVideoUser", fields: ["id"])
+    # userLiked: [VideoUserLiked] #@connection(keyName: "byVideo", fields: ["id"])
+    viewCount: Int
 }
 
 type Creator @model {
   id: ID!
   username: String!
-  description: String!
+  photo: String
+  description: String
   videos: [Video] @connection(keyName: "byCreator", fields: ["id"])
 }
 
@@ -25,12 +30,57 @@ type Product @model
     price: Int!
     description: String!
     videos: [Video] @connection(keyName: "byProduct", fields: ["id"])
-    # brand: Brand! #@connection(fields: ["brandID"])
+    brand: Brand! #@connection(fields: ["brandID"])
     brandID: ID!
+    # userCart: [ProductUser] #@connection(keyName: "byProduct", fields: ["id"])
+    userID: ID
 }
 
 type Brand @model {
   id: ID!
+  name: String!
   description: String!
   products: [Product] #@connection(keyName: "byBrand", fields: ["id"])
 }
+
+# user model schema
+type User @model {
+  id: ID!
+  username: String!
+  history: [VideoUserHistory] #@connection(keyName: "byUserHistory", fields: ["id"])
+  # liked: [VideoUserLiked] #@connection(keyName: "byUserLiked", fields: ["id"])
+  # cart: [ProductUser] #@connection(keyName: "byUserCart", fields: ["id"])
+}
+
+type VideoUserHistory @model(queries: null)
+  @key(name: "byVideoUser", fields: ["videoID", "userID"])
+  @key(name: "byUserHistory", fields: ["userID", "videoID"]) {
+  
+  id: ID!
+  videoID: ID!
+  userID: ID!
+  video: Video! @connection(fields: ["videoID"])
+  user: User! @connection(fields: ["userID"])
+}
+
+# type VideoUserLiked @model(queries: null)
+#   #@key(name: "byVideo", fields: ["videoID", "userID"])
+#   #@key(name: "byUserLiked", fields: ["userID", "videoID"]) {
+#   {
+#   id: ID!
+#   videoID: ID!
+#   userID: ID!
+#   video: Video! #@connection(fields: ["videoID"])
+#   user: User! #@connection(fields: ["userID"])
+# }
+
+# type ProductUser @model(queries: null)
+#   #@key(name: "byProduct", fields: ["productID", "userID"])
+#   #@key(name: "byUserCart", fields: ["userID", "productID"]) {
+#   {
+#   id: ID!
+#   productID: ID!
+#   userID: ID!
+#   product: Product! #@connection(fields: ["productID"])
+#   user: User! #@connection(fields: ["userID"])
+# }

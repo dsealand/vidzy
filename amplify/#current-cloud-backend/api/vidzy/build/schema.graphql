@@ -6,6 +6,9 @@ type Video {
   creator: Creator
   creatorID: ID!
   URL: String!
+  orientation: String
+  userHistory: [VideoUserHistory]
+  viewCount: Int
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 }
@@ -13,7 +16,8 @@ type Video {
 type Creator {
   id: ID!
   username: String!
-  description: String!
+  photo: String
+  description: String
   videos(URL: ModelStringKeyConditionInput, filter: ModelVideoFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelVideoConnection
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
@@ -25,15 +29,36 @@ type Product {
   price: Int!
   description: String!
   videos(URL: ModelStringKeyConditionInput, filter: ModelVideoFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelVideoConnection
+  brand: Brand!
   brandID: ID!
+  userID: ID
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 }
 
 type Brand {
   id: ID!
+  name: String!
   description: String!
   products: [Product]
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type User {
+  id: ID!
+  username: String!
+  history: [VideoUserHistory]
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type VideoUserHistory {
+  id: ID!
+  videoID: ID!
+  userID: ID!
+  video: Video!
+  user: User!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 }
@@ -127,6 +152,8 @@ input ModelVideoFilterInput {
   productID: ModelIDInput
   creatorID: ModelIDInput
   URL: ModelStringInput
+  orientation: ModelStringInput
+  viewCount: ModelIntInput
   and: [ModelVideoFilterInput]
   or: [ModelVideoFilterInput]
   not: ModelVideoFilterInput
@@ -154,6 +181,8 @@ type Query {
   listProducts(filter: ModelProductFilterInput, limit: Int, nextToken: String): ModelProductConnection
   getBrand(id: ID!): Brand
   listBrands(filter: ModelBrandFilterInput, limit: Int, nextToken: String): ModelBrandConnection
+  getUser(id: ID!): User
+  listUsers(filter: ModelUserFilterInput, limit: Int, nextToken: String): ModelUserConnection
 }
 
 input CreateVideoInput {
@@ -162,6 +191,8 @@ input CreateVideoInput {
   productID: ID!
   creatorID: ID!
   URL: String!
+  orientation: String
+  viewCount: Int
 }
 
 input UpdateVideoInput {
@@ -170,6 +201,8 @@ input UpdateVideoInput {
   productID: ID
   creatorID: ID
   URL: String
+  orientation: String
+  viewCount: Int
 }
 
 input DeleteVideoInput {
@@ -189,6 +222,12 @@ type Mutation {
   createBrand(input: CreateBrandInput!, condition: ModelBrandConditionInput): Brand
   updateBrand(input: UpdateBrandInput!, condition: ModelBrandConditionInput): Brand
   deleteBrand(input: DeleteBrandInput!, condition: ModelBrandConditionInput): Brand
+  createUser(input: CreateUserInput!, condition: ModelUserConditionInput): User
+  updateUser(input: UpdateUserInput!, condition: ModelUserConditionInput): User
+  deleteUser(input: DeleteUserInput!, condition: ModelUserConditionInput): User
+  createVideoUserHistory(input: CreateVideoUserHistoryInput!, condition: ModelVideoUserHistoryConditionInput): VideoUserHistory
+  updateVideoUserHistory(input: UpdateVideoUserHistoryInput!, condition: ModelVideoUserHistoryConditionInput): VideoUserHistory
+  deleteVideoUserHistory(input: DeleteVideoUserHistoryInput!, condition: ModelVideoUserHistoryConditionInput): VideoUserHistory
 }
 
 input ModelVideoConditionInput {
@@ -196,6 +235,8 @@ input ModelVideoConditionInput {
   productID: ModelIDInput
   creatorID: ModelIDInput
   URL: ModelStringInput
+  orientation: ModelStringInput
+  viewCount: ModelIntInput
   and: [ModelVideoConditionInput]
   or: [ModelVideoConditionInput]
   not: ModelVideoConditionInput
@@ -214,6 +255,12 @@ type Subscription {
   onCreateBrand: Brand @aws_subscribe(mutations: ["createBrand"])
   onUpdateBrand: Brand @aws_subscribe(mutations: ["updateBrand"])
   onDeleteBrand: Brand @aws_subscribe(mutations: ["deleteBrand"])
+  onCreateUser: User @aws_subscribe(mutations: ["createUser"])
+  onUpdateUser: User @aws_subscribe(mutations: ["updateUser"])
+  onDeleteUser: User @aws_subscribe(mutations: ["deleteUser"])
+  onCreateVideoUserHistory: VideoUserHistory @aws_subscribe(mutations: ["createVideoUserHistory"])
+  onUpdateVideoUserHistory: VideoUserHistory @aws_subscribe(mutations: ["updateVideoUserHistory"])
+  onDeleteVideoUserHistory: VideoUserHistory @aws_subscribe(mutations: ["deleteVideoUserHistory"])
 }
 
 type ModelCreatorConnection {
@@ -224,6 +271,7 @@ type ModelCreatorConnection {
 input ModelCreatorFilterInput {
   id: ModelIDInput
   username: ModelStringInput
+  photo: ModelStringInput
   description: ModelStringInput
   and: [ModelCreatorFilterInput]
   or: [ModelCreatorFilterInput]
@@ -233,12 +281,14 @@ input ModelCreatorFilterInput {
 input CreateCreatorInput {
   id: ID
   username: String!
-  description: String!
+  photo: String
+  description: String
 }
 
 input UpdateCreatorInput {
   id: ID!
   username: String
+  photo: String
   description: String
 }
 
@@ -248,6 +298,7 @@ input DeleteCreatorInput {
 
 input ModelCreatorConditionInput {
   username: ModelStringInput
+  photo: ModelStringInput
   description: ModelStringInput
   and: [ModelCreatorConditionInput]
   or: [ModelCreatorConditionInput]
@@ -265,6 +316,7 @@ input ModelProductFilterInput {
   price: ModelIntInput
   description: ModelStringInput
   brandID: ModelIDInput
+  userID: ModelIDInput
   and: [ModelProductFilterInput]
   or: [ModelProductFilterInput]
   not: ModelProductFilterInput
@@ -276,6 +328,7 @@ input CreateProductInput {
   price: Int!
   description: String!
   brandID: ID!
+  userID: ID
 }
 
 input UpdateProductInput {
@@ -284,6 +337,7 @@ input UpdateProductInput {
   price: Int
   description: String
   brandID: ID
+  userID: ID
 }
 
 input DeleteProductInput {
@@ -295,6 +349,7 @@ input ModelProductConditionInput {
   price: ModelIntInput
   description: ModelStringInput
   brandID: ModelIDInput
+  userID: ModelIDInput
   and: [ModelProductConditionInput]
   or: [ModelProductConditionInput]
   not: ModelProductConditionInput
@@ -307,6 +362,7 @@ type ModelBrandConnection {
 
 input ModelBrandFilterInput {
   id: ModelIDInput
+  name: ModelStringInput
   description: ModelStringInput
   and: [ModelBrandFilterInput]
   or: [ModelBrandFilterInput]
@@ -315,11 +371,13 @@ input ModelBrandFilterInput {
 
 input CreateBrandInput {
   id: ID
+  name: String!
   description: String!
 }
 
 input UpdateBrandInput {
   id: ID!
+  name: String
   description: String
 }
 
@@ -328,10 +386,69 @@ input DeleteBrandInput {
 }
 
 input ModelBrandConditionInput {
+  name: ModelStringInput
   description: ModelStringInput
   and: [ModelBrandConditionInput]
   or: [ModelBrandConditionInput]
   not: ModelBrandConditionInput
+}
+
+type ModelUserConnection {
+  items: [User]
+  nextToken: String
+}
+
+input ModelUserFilterInput {
+  id: ModelIDInput
+  username: ModelStringInput
+  and: [ModelUserFilterInput]
+  or: [ModelUserFilterInput]
+  not: ModelUserFilterInput
+}
+
+input CreateUserInput {
+  id: ID
+  username: String!
+}
+
+input UpdateUserInput {
+  id: ID!
+  username: String
+}
+
+input DeleteUserInput {
+  id: ID
+}
+
+input ModelUserConditionInput {
+  username: ModelStringInput
+  and: [ModelUserConditionInput]
+  or: [ModelUserConditionInput]
+  not: ModelUserConditionInput
+}
+
+input CreateVideoUserHistoryInput {
+  id: ID
+  videoID: ID!
+  userID: ID!
+}
+
+input UpdateVideoUserHistoryInput {
+  id: ID!
+  videoID: ID
+  userID: ID
+}
+
+input DeleteVideoUserHistoryInput {
+  id: ID
+}
+
+input ModelVideoUserHistoryConditionInput {
+  videoID: ModelIDInput
+  userID: ModelIDInput
+  and: [ModelVideoUserHistoryConditionInput]
+  or: [ModelVideoUserHistoryConditionInput]
+  not: ModelVideoUserHistoryConditionInput
 }
 
 input ModelStringKeyConditionInput {
@@ -342,4 +459,14 @@ input ModelStringKeyConditionInput {
   gt: String
   between: [String]
   beginsWith: String
+}
+
+input ModelIDKeyConditionInput {
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  between: [ID]
+  beginsWith: ID
 }

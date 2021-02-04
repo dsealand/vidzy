@@ -14,7 +14,15 @@ export const onCreateVideo = /* GraphQL */ `
         videos {
           nextToken
         }
+        brand {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
         brandID
+        userID
         createdAt
         updatedAt
       }
@@ -22,6 +30,7 @@ export const onCreateVideo = /* GraphQL */ `
       creator {
         id
         username
+        photo
         description
         videos {
           nextToken
@@ -31,6 +40,32 @@ export const onCreateVideo = /* GraphQL */ `
       }
       creatorID
       URL
+      orientation
+      userHistory {
+        id
+        videoID
+        userID
+        video {
+          id
+          name
+          productID
+          creatorID
+          URL
+          orientation
+          viewCount
+          createdAt
+          updatedAt
+        }
+        user {
+          id
+          username
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      viewCount
       createdAt
       updatedAt
     }
@@ -49,7 +84,15 @@ export const onUpdateVideo = /* GraphQL */ `
         videos {
           nextToken
         }
+        brand {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
         brandID
+        userID
         createdAt
         updatedAt
       }
@@ -57,6 +100,7 @@ export const onUpdateVideo = /* GraphQL */ `
       creator {
         id
         username
+        photo
         description
         videos {
           nextToken
@@ -66,6 +110,32 @@ export const onUpdateVideo = /* GraphQL */ `
       }
       creatorID
       URL
+      orientation
+      userHistory {
+        id
+        videoID
+        userID
+        video {
+          id
+          name
+          productID
+          creatorID
+          URL
+          orientation
+          viewCount
+          createdAt
+          updatedAt
+        }
+        user {
+          id
+          username
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      viewCount
       createdAt
       updatedAt
     }
@@ -84,7 +154,15 @@ export const onDeleteVideo = /* GraphQL */ `
         videos {
           nextToken
         }
+        brand {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
         brandID
+        userID
         createdAt
         updatedAt
       }
@@ -92,6 +170,7 @@ export const onDeleteVideo = /* GraphQL */ `
       creator {
         id
         username
+        photo
         description
         videos {
           nextToken
@@ -101,6 +180,32 @@ export const onDeleteVideo = /* GraphQL */ `
       }
       creatorID
       URL
+      orientation
+      userHistory {
+        id
+        videoID
+        userID
+        video {
+          id
+          name
+          productID
+          creatorID
+          URL
+          orientation
+          viewCount
+          createdAt
+          updatedAt
+        }
+        user {
+          id
+          username
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      viewCount
       createdAt
       updatedAt
     }
@@ -111,6 +216,7 @@ export const onCreateCreator = /* GraphQL */ `
     onCreateCreator {
       id
       username
+      photo
       description
       videos {
         items {
@@ -119,6 +225,8 @@ export const onCreateCreator = /* GraphQL */ `
           productID
           creatorID
           URL
+          orientation
+          viewCount
           createdAt
           updatedAt
         }
@@ -134,6 +242,7 @@ export const onUpdateCreator = /* GraphQL */ `
     onUpdateCreator {
       id
       username
+      photo
       description
       videos {
         items {
@@ -142,6 +251,8 @@ export const onUpdateCreator = /* GraphQL */ `
           productID
           creatorID
           URL
+          orientation
+          viewCount
           createdAt
           updatedAt
         }
@@ -157,6 +268,7 @@ export const onDeleteCreator = /* GraphQL */ `
     onDeleteCreator {
       id
       username
+      photo
       description
       videos {
         items {
@@ -165,6 +277,8 @@ export const onDeleteCreator = /* GraphQL */ `
           productID
           creatorID
           URL
+          orientation
+          viewCount
           createdAt
           updatedAt
         }
@@ -189,12 +303,32 @@ export const onCreateProduct = /* GraphQL */ `
           productID
           creatorID
           URL
+          orientation
+          viewCount
           createdAt
           updatedAt
         }
         nextToken
       }
+      brand {
+        id
+        name
+        description
+        products {
+          id
+          name
+          price
+          description
+          brandID
+          userID
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
       brandID
+      userID
       createdAt
       updatedAt
     }
@@ -214,12 +348,32 @@ export const onUpdateProduct = /* GraphQL */ `
           productID
           creatorID
           URL
+          orientation
+          viewCount
           createdAt
           updatedAt
         }
         nextToken
       }
+      brand {
+        id
+        name
+        description
+        products {
+          id
+          name
+          price
+          description
+          brandID
+          userID
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
       brandID
+      userID
       createdAt
       updatedAt
     }
@@ -239,12 +393,32 @@ export const onDeleteProduct = /* GraphQL */ `
           productID
           creatorID
           URL
+          orientation
+          viewCount
           createdAt
           updatedAt
         }
         nextToken
       }
+      brand {
+        id
+        name
+        description
+        products {
+          id
+          name
+          price
+          description
+          brandID
+          userID
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
       brandID
+      userID
       createdAt
       updatedAt
     }
@@ -254,6 +428,7 @@ export const onCreateBrand = /* GraphQL */ `
   subscription OnCreateBrand {
     onCreateBrand {
       id
+      name
       description
       products {
         id
@@ -263,7 +438,15 @@ export const onCreateBrand = /* GraphQL */ `
         videos {
           nextToken
         }
+        brand {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
         brandID
+        userID
         createdAt
         updatedAt
       }
@@ -276,6 +459,7 @@ export const onUpdateBrand = /* GraphQL */ `
   subscription OnUpdateBrand {
     onUpdateBrand {
       id
+      name
       description
       products {
         id
@@ -285,7 +469,15 @@ export const onUpdateBrand = /* GraphQL */ `
         videos {
           nextToken
         }
+        brand {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
         brandID
+        userID
         createdAt
         updatedAt
       }
@@ -298,6 +490,7 @@ export const onDeleteBrand = /* GraphQL */ `
   subscription OnDeleteBrand {
     onDeleteBrand {
       id
+      name
       description
       products {
         id
@@ -307,7 +500,297 @@ export const onDeleteBrand = /* GraphQL */ `
         videos {
           nextToken
         }
+        brand {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
         brandID
+        userID
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateUser = /* GraphQL */ `
+  subscription OnCreateUser {
+    onCreateUser {
+      id
+      username
+      history {
+        id
+        videoID
+        userID
+        video {
+          id
+          name
+          productID
+          creatorID
+          URL
+          orientation
+          viewCount
+          createdAt
+          updatedAt
+        }
+        user {
+          id
+          username
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateUser = /* GraphQL */ `
+  subscription OnUpdateUser {
+    onUpdateUser {
+      id
+      username
+      history {
+        id
+        videoID
+        userID
+        video {
+          id
+          name
+          productID
+          creatorID
+          URL
+          orientation
+          viewCount
+          createdAt
+          updatedAt
+        }
+        user {
+          id
+          username
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteUser = /* GraphQL */ `
+  subscription OnDeleteUser {
+    onDeleteUser {
+      id
+      username
+      history {
+        id
+        videoID
+        userID
+        video {
+          id
+          name
+          productID
+          creatorID
+          URL
+          orientation
+          viewCount
+          createdAt
+          updatedAt
+        }
+        user {
+          id
+          username
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateVideoUserHistory = /* GraphQL */ `
+  subscription OnCreateVideoUserHistory {
+    onCreateVideoUserHistory {
+      id
+      videoID
+      userID
+      video {
+        id
+        name
+        product {
+          id
+          name
+          price
+          description
+          brandID
+          userID
+          createdAt
+          updatedAt
+        }
+        productID
+        creator {
+          id
+          username
+          photo
+          description
+          createdAt
+          updatedAt
+        }
+        creatorID
+        URL
+        orientation
+        userHistory {
+          id
+          videoID
+          userID
+          createdAt
+          updatedAt
+        }
+        viewCount
+        createdAt
+        updatedAt
+      }
+      user {
+        id
+        username
+        history {
+          id
+          videoID
+          userID
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateVideoUserHistory = /* GraphQL */ `
+  subscription OnUpdateVideoUserHistory {
+    onUpdateVideoUserHistory {
+      id
+      videoID
+      userID
+      video {
+        id
+        name
+        product {
+          id
+          name
+          price
+          description
+          brandID
+          userID
+          createdAt
+          updatedAt
+        }
+        productID
+        creator {
+          id
+          username
+          photo
+          description
+          createdAt
+          updatedAt
+        }
+        creatorID
+        URL
+        orientation
+        userHistory {
+          id
+          videoID
+          userID
+          createdAt
+          updatedAt
+        }
+        viewCount
+        createdAt
+        updatedAt
+      }
+      user {
+        id
+        username
+        history {
+          id
+          videoID
+          userID
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteVideoUserHistory = /* GraphQL */ `
+  subscription OnDeleteVideoUserHistory {
+    onDeleteVideoUserHistory {
+      id
+      videoID
+      userID
+      video {
+        id
+        name
+        product {
+          id
+          name
+          price
+          description
+          brandID
+          userID
+          createdAt
+          updatedAt
+        }
+        productID
+        creator {
+          id
+          username
+          photo
+          description
+          createdAt
+          updatedAt
+        }
+        creatorID
+        URL
+        orientation
+        userHistory {
+          id
+          videoID
+          userID
+          createdAt
+          updatedAt
+        }
+        viewCount
+        createdAt
+        updatedAt
+      }
+      user {
+        id
+        username
+        history {
+          id
+          videoID
+          userID
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }

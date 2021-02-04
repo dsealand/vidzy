@@ -76,6 +76,8 @@ const MoreVideosText = style.Text`
 `;
 
 const creatorModal = ({ navigation, creator, onPressClose }) => {
+    console.log(creator);
+    console.log("creator");
     return (
         <Container>
             <ModalContainer>
@@ -84,7 +86,7 @@ const creatorModal = ({ navigation, creator, onPressClose }) => {
                     <Feather name="arrow-down" size={20} color={Colors.white} />
                 </DownArrow>
                 <CreatorInfo>
-                    {/* <CreatorPhoto source={creator.creator.photo} /> */}
+                    <CreatorPhoto source={{uri: creator.photo}} />
                     <CreatorHandle>@{creator.username}</CreatorHandle>
                     <MoreVideos
                         onPress={onPressClose}

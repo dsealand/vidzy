@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useWindowDimensions, Modal } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -9,7 +9,13 @@ import VideoPlayer from "./videoPlayer";
 import VideoElements from "./videoElements";
 import CreatorModal from "./creatorModal";
 
+import Amplify, { API, graphqlOperation } from 'aws-amplify';
+import awsmobile from '../../aws-exports';
+import * as queries from '../../graphql/queries';
+
 import api from "../data/creatorInfo_api";
+
+Amplify.configure(awsmobile);
 
 const Gradient = style((props) => <LinearGradient {...props} />)`
     height: 100%;
@@ -31,11 +37,26 @@ const VideoContainer = style.View`
 const VideoCard = ({ navigation, card, isPlay }) => {
     const [creatorModalVisible, setCreatorModalVisible] = useState(false);
     const [productModalVisible, setProductModalVisible] = useState(false);
+    const [creator, setCreator] = useState([]);
 
     const width = useWindowDimensions().width;
     const height = useWindowDimensions().height;
 
-    return (
+    // video query with useEffect hook and async function
+    useEffect(() => {
+        async function getCreator() {
+            try {
+                const apiData = await API.graphql(graphqlOperation(queries.getCreator, {id: 30}));
+                const creator = apiData.data.getCreator;
+                setCreator(creator);
+            } catch (err) {
+                console.log('error1: ', err);
+            }
+        }
+        getCreator();
+    }, []);
+
+    return (        
         <VideoContainer style={{ height: height, width: width }}>
             <Modal
                 animationType="slide"
@@ -45,7 +66,7 @@ const VideoCard = ({ navigation, card, isPlay }) => {
             >
                 <CreatorModal
                     navigation={navigation}
-                    creator={card.creator}
+                    creator={creator}
                     onPressClose={() => setCreatorModalVisible(false)}
                 />
             </Modal>

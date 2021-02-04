@@ -16,6 +16,19 @@ Amplify.configure(awsmobile);
 
 const Stack = createStackNavigator();
 
+// const creator30 = { id: 30, username: "user30", description: "test user 30", photo: "https://www.google.com/imgres?imgurl=https%3A%2F%2Fmedia-exp1.licdn.com%2Fdms%2Fimage%2FC5603AQFXVK-jzSdujA%2Fprofile-displayphoto-shrink_200_200%2F0%3Fe%3D1611792000%26v%3Dbeta%26t%3Djx5pnyV9t_o_JRgDepnodt5MQYZHeFHNmPHEXnvrayM&imgrefurl=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fevan-hassman&tbnid=lrEu6MjGS2k69M&vet=12ahUKEwij_JLR9NDuAhV9ATQIHavPDMUQMygDegQIARAx..i&docid=TUUz23F_1FLasM&w=200&h=200&q=evan%20hassman&client=ubuntu&ved=2ahUKEwij_JLR9NDuAhV9ATQIHavPDMUQMygDegQIARAx"};
+// (async () => {
+//     console.log("begin creator mutation test")
+//     try {
+//         const result = await API.graphql(graphqlOperation(mutations.updateCreator, { input: creator30 }));
+//         console.log(result)
+//     } catch (e) {
+//         console.log(e);
+//     }
+//     console.log("end video mutation test");
+// })();
+
+
 // // video object mutation
 // const testVideo1 = { id: 1, name: "vid1", productID: 30, creatorID: 30, URL: "https://d2h74skj6dqe4u.cloudfront.net/test_vid_1.mpd" };
 // (async () => {

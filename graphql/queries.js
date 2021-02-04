@@ -14,7 +14,15 @@ export const getVideo = /* GraphQL */ `
         videos {
           nextToken
         }
+        brand {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
         brandID
+        userID
         createdAt
         updatedAt
       }
@@ -22,6 +30,7 @@ export const getVideo = /* GraphQL */ `
       creator {
         id
         username
+        photo
         description
         videos {
           nextToken
@@ -31,6 +40,32 @@ export const getVideo = /* GraphQL */ `
       }
       creatorID
       URL
+      orientation
+      userHistory {
+        id
+        videoID
+        userID
+        video {
+          id
+          name
+          productID
+          creatorID
+          URL
+          orientation
+          viewCount
+          createdAt
+          updatedAt
+        }
+        user {
+          id
+          username
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      viewCount
       createdAt
       updatedAt
     }
@@ -52,6 +87,7 @@ export const listVideos = /* GraphQL */ `
           price
           description
           brandID
+          userID
           createdAt
           updatedAt
         }
@@ -59,12 +95,22 @@ export const listVideos = /* GraphQL */ `
         creator {
           id
           username
+          photo
           description
           createdAt
           updatedAt
         }
         creatorID
         URL
+        orientation
+        userHistory {
+          id
+          videoID
+          userID
+          createdAt
+          updatedAt
+        }
+        viewCount
         createdAt
         updatedAt
       }
@@ -77,6 +123,7 @@ export const getCreator = /* GraphQL */ `
     getCreator(id: $id) {
       id
       username
+      photo
       description
       videos {
         items {
@@ -85,6 +132,8 @@ export const getCreator = /* GraphQL */ `
           productID
           creatorID
           URL
+          orientation
+          viewCount
           createdAt
           updatedAt
         }
@@ -105,6 +154,7 @@ export const listCreators = /* GraphQL */ `
       items {
         id
         username
+        photo
         description
         videos {
           nextToken
@@ -130,12 +180,32 @@ export const getProduct = /* GraphQL */ `
           productID
           creatorID
           URL
+          orientation
+          viewCount
           createdAt
           updatedAt
         }
         nextToken
       }
+      brand {
+        id
+        name
+        description
+        products {
+          id
+          name
+          price
+          description
+          brandID
+          userID
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
       brandID
+      userID
       createdAt
       updatedAt
     }
@@ -156,7 +226,15 @@ export const listProducts = /* GraphQL */ `
         videos {
           nextToken
         }
+        brand {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
         brandID
+        userID
         createdAt
         updatedAt
       }
@@ -168,6 +246,7 @@ export const getBrand = /* GraphQL */ `
   query GetBrand($id: ID!) {
     getBrand(id: $id) {
       id
+      name
       description
       products {
         id
@@ -177,7 +256,15 @@ export const getBrand = /* GraphQL */ `
         videos {
           nextToken
         }
+        brand {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
         brandID
+        userID
         createdAt
         updatedAt
       }
@@ -195,6 +282,7 @@ export const listBrands = /* GraphQL */ `
     listBrands(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        name
         description
         products {
           id
@@ -202,6 +290,65 @@ export const listBrands = /* GraphQL */ `
           price
           description
           brandID
+          userID
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getUser = /* GraphQL */ `
+  query GetUser($id: ID!) {
+    getUser(id: $id) {
+      id
+      username
+      history {
+        id
+        videoID
+        userID
+        video {
+          id
+          name
+          productID
+          creatorID
+          URL
+          orientation
+          viewCount
+          createdAt
+          updatedAt
+        }
+        user {
+          id
+          username
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listUsers = /* GraphQL */ `
+  query ListUsers(
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        username
+        history {
+          id
+          videoID
+          userID
           createdAt
           updatedAt
         }
