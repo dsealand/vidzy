@@ -4,6 +4,7 @@ const api = [
             id: "",
             name: "Contour Concealer",
             price: 69,
+            image: "",
             data: [
                 {
                     id: 0,

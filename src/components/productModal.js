@@ -22,7 +22,7 @@ const Container = style.View`
 `;
 
 const ModalContainer = style.View`
-    backgroundColor: ${Colors.lightestGrey}
+    backgroundColor: ${Colors.lighterGrey}
     width: 100%;
     height: 60%;
     borderTopLeftRadius: 20px;

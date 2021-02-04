@@ -10,7 +10,7 @@ import Colors from "../components/colors";
 const Container = style.View`
     justifyContent: center;
     alignItems: center;
-    backgroundColor: ${Colors.lighterGrey}
+    backgroundColor: ${Colors.lightestGrey}
 `;
 
 const Logo = style.View`

@@ -41,7 +41,7 @@ const TopContainer = style.View`
 `;
 
 const BottomContainer = style.View`
-    backgroundColor: ${Colors.lightestGrey}
+    backgroundColor: ${Colors.lighterGrey}
     justifyContent: center;
     alignItems: center;
     width: 100%;

@@ -108,8 +108,12 @@ const VideoElements = ({
                 {/* Logic used to hide creator icon when on creator video stack */}
                 {creator !== undefined && (
                     <Element onPress={onPressCreator}>
-                        <Feather name="user" size={20} color={Colors.white} />
-                        <ElementText>@{creator.username}</ElementText>
+                        <Feather
+                            name="at-sign"
+                            size={20}
+                            color={Colors.white}
+                        />
+                        <ElementText>{creator.username}</ElementText>
                     </Element>
                 )}
             </RightContainer>

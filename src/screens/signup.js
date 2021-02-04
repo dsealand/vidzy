@@ -16,7 +16,7 @@ import Colors from "../components/colors";
 const Container = style(KeyboardAvoidingView)`
     justifyContent: center;
     alignItems: center;
-    backgroundColor: ${Colors.lighterGrey}
+    backgroundColor: ${Colors.lightestGrey}
 `;
 
 const BackButton = style(TouchableOpacity)`

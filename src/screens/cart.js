@@ -6,7 +6,8 @@ import { Feather } from "@expo/vector-icons";
 import { useWindowDimensions } from "react-native";
 
 import Colors from "../components/colors";
-import ProductStack from "../components/productStack";
+import CartProductStack from "../components/cartProductStack";
+import LikedProductStack from "../components/likedProductStack";
 import api from "../data/cart_api";
 
 const cart = api[0];
@@ -15,7 +16,7 @@ const liked = api[1];
 const Container = style.View`
     justifyContent: flex-end;
     alignItems: center;
-    backgroundColor: ${Colors.lighterGrey}
+    backgroundColor: ${Colors.lightestGrey}
 `;
 
 const Header = style.View`
@@ -28,7 +29,7 @@ const Header = style.View`
     justifyContent: space-between;
 `;
 
-const ProductStackContainer = style.View`
+const ProductContainer = style.View`
     justifyContent: center;
     alignItems: center;
     width: 100%;
@@ -115,13 +116,15 @@ const Cart = ({ navigation }) => {
                 <Element />
             </Header>
             <Container style={{ width: width, height: height }}>
-                <ProductStackContainer>
-                    <ProductStack
-                        selection={selection}
-                        cart={cart}
-                        liked={liked}
-                    />
-                </ProductStackContainer>
+                <ProductContainer>
+                    {selection === "Cart" && <CartProductStack cart={cart} />}
+                    {selection === "Liked" && (
+                        <LikedProductStack
+                            navigation={navigation}
+                            liked={liked}
+                        />
+                    )}
+                </ProductContainer>
                 <BottomContainer style={{ height: "15%" }}>
                     {selection === "Cart" && (
                         <BottomContainer>
