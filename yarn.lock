@@ -2686,6 +2686,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/viewpager/-/viewpager-4.2.0.tgz#11a4453715eb45cb0f732c98666ce168b800dfa4"
   integrity sha512-tptvkyStulE9Jv/LVYSldvydAq3DVOwsfqmy3mTh3NWl1LZwE4gZwZ455jiRmW5StsJ3Q/Od/GGsN0FI8gHAXQ==
 
+"@react-native-picker/picker@1.9.2":
+  version "1.9.2"
+  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-1.9.2.tgz#c5e35f97d7982d2971ee3d74b1ba8ecf4b716627"
+  integrity sha512-eNMf5uF67CsiJ9SDzofSWKu9Gh2PDyPbCSXuUJ09tkRgcOefDx6DyQnXCOPCd+8vxC1DzJKVAgLy+s425jUIeA==
+
 "@react-navigation/core@^5.14.4":
   version "5.14.4"
   resolved "https://registry.yarnpkg.com/@react-navigation/core/-/core-5.14.4.tgz#f63a2cd214bddbd25e1181f9335c32dfc3b6460f"
@@ -6978,6 +6983,11 @@ react-native-web@~0.13.12:
     normalize-css-color "^1.0.2"
     prop-types "^15.6.0"
     react-timer-mixin "^0.13.4"
+
+react-native-wheel-scroll-picker@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/react-native-wheel-scroll-picker/-/react-native-wheel-scroll-picker-0.2.4.tgz#d923f17d08334fd16ea01dc4c21d7641888ea55b"
+  integrity sha512-fwHKko8e/FprM6diUa5jTZrajK1oN8YBSqOAMFKrkPtyQGGR/zzv4vJduEQxG396291YsanLM+UM9ejDjzXsow==
 
 "react-native@https://github.com/expo/react-native/archive/sdk-40.0.0.tar.gz":
   version "0.63.2"

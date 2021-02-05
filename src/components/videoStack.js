@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import { FlatList } from "react-native";
 import ViewPager from "@react-native-community/viewpager";
 
 import Colors from "./colors";

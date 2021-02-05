@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { SafeAreaView, Text, StyleSheet, ViewComponent } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
@@ -9,8 +9,13 @@ import awsmobile from './aws-exports';
 import * as mutations from './graphql/mutations';
 import * as queries from './graphql/queries';
 
+import Login from "./src/screens/login";
+import SignIn from "./src/screens/signin";
+import SignUp from "./src/screens/signup";
 import ForYou from "./src/screens/forYou";
 import Creator from "./src/screens/creator";
+import Product from "./src/screens/product";
+import Cart from "./src/screens/cart";
 
 Amplify.configure(awsmobile);
 
@@ -140,7 +145,22 @@ export default function App() {
 
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="ForYou">
+            <Stack.Navigator initialRouteName="Login">
+                <Stack.Screen
+                    name="Login"
+                    component={Login}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="SignIn"
+                    component={SignIn}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="SignUp"
+                    component={SignUp}
+                    options={{ headerShown: false }}
+                />
                 <Stack.Screen
                     name="ForYou"
                     component={ForYou}
@@ -149,6 +169,16 @@ export default function App() {
                 <Stack.Screen
                     name="Creator"
                     component={Creator}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="Product"
+                    component={Product}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="Cart"
+                    component={Cart}
                     options={{ headerShown: false }}
                 />
             </Stack.Navigator>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+import { TouchableOpacity } from "react-native";
 import style from "styled-components/native";
 import { Feather } from "@expo/vector-icons";
 
@@ -30,18 +31,26 @@ const RightContainer = style.View`
     bottom: 12%;
 `;
 
-const Element = style.TouchableOpacity`
+const ProductInfo = style.TouchableOpacity`
     flexDirection: column;
-    justifyContent: center;
-    alignItems: center;
-    height: 45px;
+    alignItems: flex-start;
     shadowColor: ${Colors.darkGrey};
     shadowOpacity: 1;
     shadowRadius: 10px;
 `;
 
+const Element = style.TouchableOpacity`
+    flexDirection: column;
+    justifyContent: center;
+    alignItems: center;
+    height: 40px;
+    shadowColor: ${Colors.darkGrey};
+    shadowOpacity: 0.5;
+    shadowRadius: 7px;
+`;
+
 const BasicText = style.Text`
-    font-size: 12px
+    font-size: 14px
     fontFamily: Helvetica;
     color: ${Colors.white};
     textShadowRadius: 1px;
@@ -49,40 +58,71 @@ const BasicText = style.Text`
 `;
 
 const ProductNameText = style(BasicText)`
-    font-size: 15px;
+    font-size: 17px;
     fontWeight: bold;
 `;
 
 const ElementText = style(BasicText)`
-    font-size: 10px;
+    font-size: 11px;
     fontWeight: bold;
 `;
 
-const VideoElements = ({ creator, product, brand, onPressCreator }) => {
+const VideoElements = ({
+    creator,
+    product,
+    brand,
+    videoLiked,
+    onPressCreator,
+    onPressProduct,
+}) => {
+    const [liked, setLiked] = useState(videoLiked);
+
+    /* add code here to update users liked videos */
+    const likePress = () => {
+        if (liked) {
+            setLiked(false);
+        } else {
+            setLiked(true);
+        }
+    };
+
+    let iconColor = Colors.white;
+
+    if (liked) {
+        iconColor = Colors.main;
+    }
+
     return (
         <Container>
             <LeftContainer>
+<<<<<<< HEAD
                 {/* replace when schema has brand connected to product */}
                 <BasicText>{product.brandID}</BasicText>
                 <ProductNameText>{product.name}</ProductNameText>
                 <BasicText>$ {product.price}</BasicText>
+=======
+                <ProductInfo onPress={onPressProduct}>
+                    <BasicText>{brand.name}</BasicText>
+                    <ProductNameText>{product.name}</ProductNameText>
+                    <BasicText>$ {product.price}</BasicText>
+                </ProductInfo>
+>>>>>>> uxui
             </LeftContainer>
             <RightContainer>
+                <Element onPress={likePress}>
+                    <Feather name="heart" size={20} color={iconColor} />
+                </Element>
                 {/* Logic used to hide creator icon when on creator video stack */}
                 {creator !== undefined && (
                     <Element onPress={onPressCreator}>
-                        <Feather name="user" size={20} color={Colors.white} />
-                        <ElementText>@{creator.username}</ElementText>
+                        <Feather
+                            name="at-sign"
+                            size={20}
+                            color={Colors.white}
+                        />
+                        <ElementText>{creator.username}</ElementText>
                     </Element>
                 )}
-                <Element>
-                    <Feather
-                        name="arrow-up-circle"
-                        size={20}
-                        color={Colors.white}
-                    />
-                    <ElementText>Product</ElementText>
-                </Element>
             </RightContainer>
         </Container>
     );

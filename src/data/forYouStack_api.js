@@ -1,10 +1,9 @@
 const api = [
     {
-        video: {
-            id: "",
-            video: require("../assets/surf1.mp4"),
-            orientation: "landscape",
-        },
+        id: "",
+        URL: require("../assets/videos/surf1.mp4"),
+        orientation: "landscape",
+        liked: false,
         creator: {
             id: "",
             username: "surf_god69",
@@ -12,7 +11,7 @@ const api = [
         product: {
             id: "",
             name: "Shred Board",
-            price: "537",
+            price: 537,
         },
         brand: {
             id: "",
@@ -20,19 +19,18 @@ const api = [
         },
     },
     {
-        video: {
-            id: "",
-            video: require("../assets/IMG_0240.mp4"),
-            orientation: "portrait",
-        },
+        id: "",
+        URL: require("../assets/videos/IMG_0240.mp4"),
+        orientation: "portrait",
+        liked: false,
         creator: {
             id: "",
-            username: "CourtneyMonet",
+            username: "courtneymonet",
         },
         product: {
             id: "",
-            name: "Doll Unit",
-            price: "420",
+            name: "Brunch Pony",
+            price: 29.99,
         },
         brand: {
             id: "",
@@ -40,63 +38,60 @@ const api = [
         },
     },
     {
-        video: {
-            id: "",
-            video: require("../assets/surf2.mp4"),
-            orientation: "landscape",
-        },
+        id: "",
+        URL: require("../assets/videos/surf2.mp4"),
+        orientation: "landscape",
+        liked: false,
         creator: {
             id: "",
-            username: "",
+            username: "surf_god69",
         },
         product: {
             id: "",
-            name: "",
-            price: "",
+            name: "Kook Board",
+            price: 420,
         },
         brand: {
             id: "",
-            name: "",
+            name: "Catch Surf",
         },
     },
     {
-        video: {
-            id: "",
-            video: require("../assets/IMG_0241.mp4"),
-            orientation: "portrait",
-        },
+        id: "",
+        URL: require("../assets/videos/IMG_0241.mp4"),
+        orientation: "portrait",
+        liked: false,
         creator: {
             id: "",
-            username: "",
+            username: "courtneymonet",
         },
         product: {
             id: "",
-            name: "",
-            price: "",
+            name: "Contour Concealer",
+            price: 69,
         },
         brand: {
             id: "",
-            name: "",
+            name: "Ulta Beauty",
         },
     },
     {
-        video: {
-            id: "",
-            video: require("../assets/IMG_0243.mp4"),
-            orientation: "portrait",
-        },
+        id: "",
+        URL: require("../assets/videos/IMG_0243.mp4"),
+        orientation: "portrait",
+        liked: false,
         creator: {
             id: "",
-            username: "",
+            username: "courtneymonet",
         },
         product: {
             id: "",
-            name: "",
-            price: "",
+            name: "Doll Unit",
+            price: 420,
         },
         brand: {
             id: "",
-            name: "",
+            name: "Initial Cut Hair",
         },
     },
 ];

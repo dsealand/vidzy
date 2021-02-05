@@ -8,12 +8,18 @@ import Colors from "./colors";
 import VideoPlayer from "./videoPlayer";
 import VideoElements from "./videoElements";
 import CreatorModal from "./creatorModal";
+import ProductModal from "./productModal";
 
+<<<<<<< HEAD
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import awsmobile from '../../aws-exports';
 import * as queries from '../../graphql/queries';
 
 Amplify.configure(awsmobile);
+=======
+import creatorAPI from "../data/creatorInfo_api";
+import productAPI from "../data/productInfo_api";
+>>>>>>> uxui
 
 const Gradient = style((props) => <LinearGradient {...props} />)`
     height: 100%;
@@ -64,17 +70,38 @@ const VideoCard = ({ navigation, card, isPlay }) => {
             >
                 <CreatorModal
                     navigation={navigation}
+<<<<<<< HEAD
                     creator={creator}
+=======
+                    creator={creatorAPI[0]}
+>>>>>>> uxui
                     onPressClose={() => setCreatorModalVisible(false)}
+                />
+            </Modal>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={productModalVisible}
+                /* onShow={ trigger API call to get product info to pass as prop to CreatorModal } */
+            >
+                <ProductModal
+                    navigation={navigation}
+                    product={productAPI[0]}
+                    onPressClose={() => setProductModalVisible(false)}
                 />
             </Modal>
             <VideoPlayer
                 video={card.URL}
                 isPlay={isPlay}
+<<<<<<< HEAD
                 // orientation={card.video.orientation}
+=======
+                orientation={card.orientation}
+>>>>>>> uxui
             />
             <Gradient
                 locations={[0, 0.25, 0.75, 1]}
+                /* rgba(35, 35, 35) = #232323 = "Colors.darkgrey" */
                 colors={[
                     "rgba(35,35,35,1)",
                     "rgba(35,35,35,0)",
@@ -85,8 +112,14 @@ const VideoCard = ({ navigation, card, isPlay }) => {
                 <VideoElements
                     creator={card.creator}
                     product={card.product}
+<<<<<<< HEAD
                     brand={card.product.brand}
+=======
+                    brand={card.brand}
+                    videoLiked={card.liked}
+>>>>>>> uxui
                     onPressCreator={() => setCreatorModalVisible(true)}
+                    onPressProduct={() => setProductModalVisible(true)}
                 />
             </Gradient>
         </VideoContainer>

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Image, Text, View, TouchableOpacity } from "react-native";
 import style from "styled-components/native";
 import { Feather } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 
 import Colors from "./colors";
 
@@ -15,27 +16,36 @@ const Container = style.View`
 `;
 
 const ModalContainer = style.View`
-    backgroundColor: ${Colors.main}
     width: 100%;
-    height: 35%;
+    height: 45%;
     borderTopLeftRadius: 20px;
     borderTopRightRadius: 20px;
     justifyContent: flex-end;
     alignItems: center;
+    overflow: hidden;
 `;
 
-const DownArrow = style(TouchableOpacity)`
-    position: absolute;
-    top: 15px;
-    right: 15px;
+const Element = style(TouchableOpacity)`
+    width: 15%;
+    justifyContent: center;
+    alignItems: center;
 `;
 
-const CreatorInfo = style.View`
-    backgroundColor: ${Colors.white};
+const TopContainer = style.View`
+    backgroundColor: ${Colors.main}
+    flexDirection: row;
+    alignItems: center;
+    justifyContent: space-between;
+    width: 100%;
+    height: 15%
+`;
+
+const BottomContainer = style.View`
+    backgroundColor: ${Colors.lighterGrey}
     justifyContent: center;
     alignItems: center;
     width: 100%;
-    height: 83%;
+    height: 85%;
 `;
 
 const CreatorPhoto = style.Image`
@@ -49,11 +59,15 @@ const CreatorName = style.Text`
     fontFamily: Helvetica;
     color: ${Colors.white};
     fontWeight: bold;
-    paddingBottom: 12px;
 `;
 
+<<<<<<< HEAD
 const CreatorHandle = style.Text`
     font-size: 12px
+=======
+const CreatorHandel = style.Text`
+    font-size: 13px
+>>>>>>> uxui
     fontFamily: Helvetica;
     color: ${Colors.lightGrey};
     padding: 10px;
@@ -62,14 +76,14 @@ const CreatorHandle = style.Text`
 const MoreVideos = style(TouchableOpacity)`
     backgroundColor: ${Colors.main};
     borderRadius: 10px;
-    width: 25%;
+    width: 100px;
     height: 20px;
     justifyContent: center;
     alignItems: center;
 `;
 
 const MoreVideosText = style.Text`
-    font-size: 12px
+    font-size: 13px
     fontFamily: Helvetica;
     color: ${Colors.white};
     fontWeight: bold;
@@ -81,6 +95,7 @@ const creatorModal = ({ navigation, creator, onPressClose }) => {
     return (
         <Container>
             <ModalContainer>
+<<<<<<< HEAD
                 <CreatorName>{creator.username}</CreatorName>
                 <DownArrow onPress={onPressClose}>
                     <Feather name="arrow-down" size={20} color={Colors.white} />
@@ -88,6 +103,23 @@ const creatorModal = ({ navigation, creator, onPressClose }) => {
                 <CreatorInfo>
                     <CreatorPhoto source={{uri: creator.photo}} />
                     <CreatorHandle>@{creator.username}</CreatorHandle>
+=======
+                <TopContainer>
+                    <Element />
+                    <CreatorName>{creator.creator.name}</CreatorName>
+                    <Element onPress={onPressClose}>
+                        <Feather
+                            name="arrow-down"
+                            size={20}
+                            color={Colors.white}
+                        />
+                    </Element>
+                </TopContainer>
+
+                <BottomContainer>
+                    <CreatorPhoto source={creator.creator.photo} />
+                    <CreatorHandel>@{creator.creator.username}</CreatorHandel>
+>>>>>>> uxui
                     <MoreVideos
                         onPress={onPressClose}
                         onPressOut={() => {
@@ -99,7 +131,7 @@ const creatorModal = ({ navigation, creator, onPressClose }) => {
                     >
                         <MoreVideosText>More Videos</MoreVideosText>
                     </MoreVideos>
-                </CreatorInfo>
+                </BottomContainer>
             </ModalContainer>
         </Container>
     );

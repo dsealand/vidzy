@@ -1,14 +1,12 @@
 const api = [
     {
-        video: {
-            id: "",
-            video: require("../assets/IMG_0240.mp4"),
-            orientation: "portrait",
-        },
+        id: "",
+        URL: require("../assets/videos/IMG_0240.mp4"),
+        orientation: "portrait",
         product: {
             id: "",
-            name: "Doll Unit",
-            price: "420",
+            name: "Brunch Pony",
+            price: 29.99,
         },
         brand: {
             id: "",
@@ -16,35 +14,32 @@ const api = [
         },
     },
     {
-        video: {
-            id: "",
-            video: require("../assets/IMG_0241.mp4"),
-            orientation: "portrait",
-        },
+        id: "",
+        URL: require("../assets/videos/IMG_0241.mp4"),
+        orientation: "portrait",
+
         product: {
             id: "",
-            name: "",
-            price: "",
+            name: "Contour Concealer",
+            price: 69,
         },
         brand: {
             id: "",
-            name: "",
+            name: "Ulta Beauty",
         },
     },
     {
-        video: {
-            id: "",
-            video: require("../assets/IMG_0243.mp4"),
-            orientation: "portrait",
-        },
+        id: "",
+        URL: require("../assets/videos/IMG_0243.mp4"),
+        orientation: "portrait",
         product: {
             id: "",
-            name: "",
-            price: "",
+            name: "Doll Unit",
+            price: 420,
         },
         brand: {
             id: "",
-            name: "",
+            name: "Initial Cut Hair",
         },
     },
 ];

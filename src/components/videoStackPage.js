@@ -4,13 +4,13 @@ import { View, TouchableOpacity } from "react-native";
 import style from "styled-components/native";
 import { Feather } from "@expo/vector-icons";
 
-import Colors from "../components/colors";
-import VideoStack from "../components/videoStack";
+import Colors from "./colors";
+import VideoStack from "./videoStack";
 
 const Header = style.View`
     position: absolute;
     width: 100%
-    top: 50px;
+    top: 60px;
     z-index: 1;
     flexDirection: row;
     alignItems: center;
@@ -22,14 +22,14 @@ const HeaderText = style.Text`
     color: ${Colors.white};
     textShadowRadius: 1px;
     textShadowColor: ${Colors.darkGrey};
-    font-size: 15px;
+    font-size: 17px;
     fontWeight: bold;
 `;
 
 const Element = style(TouchableOpacity)`
     shadowColor: ${Colors.darkGrey};
-    shadowOpacity: 1;
-    shadowRadius: 10px;
+    shadowOpacity: 0.5;
+    shadowRadius: 7px;
     width: 20%;
     alignItems: center;
 `;
@@ -38,22 +38,38 @@ const Element = style(TouchableOpacity)`
  *
  * A videoStack with header, cart button, and back button
  */
-const VideoStackPage = ({ navigation, headerText, videoStack, back }) => {
+const VideoStackPage = ({
+    navigation,
+    headerText,
+    videoStack,
+    back,
+    filter,
+}) => {
     return (
         <View>
             <Header>
-                <Element onPress={() => navigation.goBack()}>
-                    {/* onPress should not work when Feather icon arrow-left not rendered */}
-                    {back !== undefined && (
+                {filter !== undefined && (
+                    <Element>
+                        <Feather
+                            name="sliders"
+                            size={20}
+                            color={Colors.white}
+                        />
+                    </Element>
+                )}
+                {/* onPress should not work when Feather icon arrow-left not rendered */}
+                {back !== undefined && (
+                    <Element onPress={() => navigation.goBack()}>
                         <Feather
                             name="arrow-left"
                             size={20}
                             color={Colors.white}
                         />
-                    )}
-                </Element>
+                    </Element>
+                )}
+                {filter == undefined && back == undefined && <Element />}
                 <HeaderText>{headerText}</HeaderText>
-                <Element>
+                <Element onPress={() => navigation.navigate("Cart")}>
                     <Feather
                         name="shopping-cart"
                         size={20}
