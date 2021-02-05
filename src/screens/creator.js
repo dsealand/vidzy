@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-<<<<<<< HEAD
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -8,8 +7,6 @@ import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import awsmobile from '../../aws-exports';
 import * as queries from '../../graphql/queries';
 
-=======
->>>>>>> uxui
 import VideoStackPage from "../components/videoStackPage";
 
 Amplify.configure(awsmobile);

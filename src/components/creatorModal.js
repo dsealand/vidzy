@@ -61,13 +61,8 @@ const CreatorName = style.Text`
     fontWeight: bold;
 `;
 
-<<<<<<< HEAD
-const CreatorHandle = style.Text`
-    font-size: 12px
-=======
 const CreatorHandel = style.Text`
     font-size: 13px
->>>>>>> uxui
     fontFamily: Helvetica;
     color: ${Colors.lightGrey};
     padding: 10px;
@@ -95,18 +90,9 @@ const creatorModal = ({ navigation, creator, onPressClose }) => {
     return (
         <Container>
             <ModalContainer>
-<<<<<<< HEAD
-                <CreatorName>{creator.username}</CreatorName>
-                <DownArrow onPress={onPressClose}>
-                    <Feather name="arrow-down" size={20} color={Colors.white} />
-                </DownArrow>
-                <CreatorInfo>
-                    <CreatorPhoto source={{uri: creator.photo}} />
-                    <CreatorHandle>@{creator.username}</CreatorHandle>
-=======
                 <TopContainer>
                     <Element />
-                    <CreatorName>{creator.creator.name}</CreatorName>
+                    <CreatorName>{creator.username}</CreatorName>
                     <Element onPress={onPressClose}>
                         <Feather
                             name="arrow-down"
@@ -117,9 +103,8 @@ const creatorModal = ({ navigation, creator, onPressClose }) => {
                 </TopContainer>
 
                 <BottomContainer>
-                    <CreatorPhoto source={creator.creator.photo} />
+                    <CreatorPhoto source={{uri:creator.photo}} />
                     <CreatorHandel>@{creator.creator.username}</CreatorHandel>
->>>>>>> uxui
                     <MoreVideos
                         onPress={onPressClose}
                         onPressOut={() => {
