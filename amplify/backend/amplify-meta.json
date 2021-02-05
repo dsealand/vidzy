@@ -22,7 +22,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-vidzy-dev-95631-deployment/amplify-cfn-templates/auth/vidzy20516b65-cloudformation-template.yml",
         "logicalId": "authvidzy20516b65"
       },
-      "lastPushTimeStamp": "2021-02-03T23:01:35.549Z",
+      "lastPushTimeStamp": "2021-02-05T17:27:33.851Z",
       "output": {
         "AppClientSecret": "141jangejjtt2auu6gmu6iobo2ns22rk4ulngeds7o6f5noilukq",
         "UserPoolId": "us-west-2_RgNCXB1LE",
@@ -30,9 +30,36 @@
         "AppClientID": "9kllal024sjvnf1fc2eu9uprt",
         "IdentityPoolId": "us-west-2:1e487640-0d60-4e3d-9504-d550176a65b3",
         "IdentityPoolName": "vidzy20516b65_identitypool_20516b65__dev",
-        "UserPoolName": "vidzy20516b65_userpool_20516b65"
+        "UserPoolName": "vidzy20516b65_userpool_20516b65",
+        "HostedUIDomain": "vidzyb1730691-b1730691-dev",
+        "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:19006/\"],\"LogoutURLs\":[\"http://localhost:19006/\"]}"
       },
-      "lastPushDirHash": "J5JuoReLweKRBS6b/rqpxRwrNr8="
+      "lastPushDirHash": "7uWqMd0OWnl1G4JbGQ00fYUwWjc="
+    },
+    "userPoolGroups": {
+      "service": "Cognito-UserPool-Groups",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "vidzy20516b65",
+          "attributes": [
+            "UserPoolId",
+            "AppClientIDWeb",
+            "AppClientID",
+            "IdentityPoolId"
+          ]
+        }
+      ],
+      "lastPushTimeStamp": "2021-02-05T17:27:33.851Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-vidzy-dev-95631-deployment/amplify-cfn-templates/auth/template.json",
+        "logicalId": "authuserPoolGroups"
+      },
+      "output": {
+        "huminedev1GroupRole": "arn:aws:iam::440148346084:role/us-west-2_RgNCXB1LE-huminedev1GroupRole"
+      },
+      "lastPushDirHash": "YRNdOTFqB9HqlPfj6jBjCDa+MxY="
     }
   },
   "api": {
@@ -54,12 +81,74 @@
         "GraphQLAPIEndpointOutput": "https://777f6ecfivh73nhjl6lpeknfuy.appsync-api.us-west-2.amazonaws.com/graphql",
         "GraphQLAPIKeyOutput": "da2-b54trzibwbhmjm4gnee7ukusse"
       },
-      "lastPushTimeStamp": "2021-02-03T23:01:36.506Z",
+      "lastPushTimeStamp": "2021-02-05T17:27:33.814Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-vidzy-dev-95631-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apividzy"
       },
       "lastPushDirHash": "Z2Yt8cwNFDo40bbxzsXZburT2rU="
+    },
+    "AdminQueries": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "vidzy20516b65",
+          "attributes": [
+            "UserPoolId"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "AdminQueriesb221712d",
+          "attributes": [
+            "Arn",
+            "Name"
+          ]
+        }
+      ],
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-vidzy-dev-95631-deployment/amplify-cfn-templates/api/admin-queries-cloudformation-template.json",
+        "logicalId": "apiAdminQueries"
+      },
+      "lastPushTimeStamp": "2021-02-05T17:27:33.851Z",
+      "output": {
+        "ApiName": "AdminQueries",
+        "RootUrl": "https://jylyev3uc6.execute-api.us-west-2.amazonaws.com/dev"
+      },
+      "lastPushDirHash": "F3PQtdUXDv0p7Ri8XV3cAnFg8TA="
+    }
+  },
+  "function": {
+    "AdminQueriesb221712d": {
+      "service": "Lambda",
+      "providerPlugin": "awscloudformation",
+      "build": true,
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "vidzy20516b65",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ],
+      "lastBuildTimeStamp": "2021-02-05T17:23:18.069Z",
+      "lastPackageTimeStamp": "2021-02-05T17:23:27.340Z",
+      "distZipFilename": "AdminQueriesb221712d-3731477147384e512f71-build.zip",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-vidzy-dev-95631-deployment/amplify-cfn-templates/function/AdminQueriesb221712d-cloudformation-template.json",
+        "logicalId": "functionAdminQueriesb221712d"
+      },
+      "lastPushTimeStamp": "2021-02-05T17:27:33.851Z",
+      "output": {
+        "Region": "us-west-2",
+        "Arn": "arn:aws:lambda:us-west-2:440148346084:function:AdminQueriesb221712d-dev",
+        "Name": "AdminQueriesb221712d-dev",
+        "LambdaExecutionRole": "AdminQueriesb221712dLambdaRole-dev"
+      },
+      "lastPushDirHash": "zvZ1H0y6dKtG3WVUKCDbFGeunrI="
     }
   }
 }

@@ -7,11 +7,31 @@ const awsmobile = {
     "aws_cognito_region": "us-west-2",
     "aws_user_pools_id": "us-west-2_RgNCXB1LE",
     "aws_user_pools_web_client_id": "7tb31qremv5385hsifdd3ao9k8",
-    "oauth": {},
+    "oauth": {
+        "domain": "vidzyb1730691-b1730691-dev.auth.us-west-2.amazoncognito.com",
+        "scope": [
+            "phone",
+            "email",
+            "openid",
+            "profile",
+            "aws.cognito.signin.user.admin"
+        ],
+        "redirectSignIn": "http://localhost:19006/",
+        "redirectSignOut": "http://localhost:19006/",
+        "responseType": "code"
+    },
+    "federationTarget": "COGNITO_USER_POOLS",
     "aws_appsync_graphqlEndpoint": "https://777f6ecfivh73nhjl6lpeknfuy.appsync-api.us-west-2.amazonaws.com/graphql",
     "aws_appsync_region": "us-west-2",
     "aws_appsync_authenticationType": "API_KEY",
-    "aws_appsync_apiKey": "da2-b54trzibwbhmjm4gnee7ukusse"
+    "aws_appsync_apiKey": "da2-b54trzibwbhmjm4gnee7ukusse",
+    "aws_cloud_logic_custom": [
+        {
+            "name": "AdminQueries",
+            "endpoint": "https://jylyev3uc6.execute-api.us-west-2.amazonaws.com/dev",
+            "region": "us-west-2"
+        }
+    ]
 };
 
 

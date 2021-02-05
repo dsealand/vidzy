@@ -93,7 +93,7 @@
           "userpoolClientWriteAttributes": "email",
           "userpoolClientReadAttributes": "email",
           "userpoolClientLambdaRole": "vidzy220516b65_userpoolclient_lambda_role",
-          "userpoolClientSetAttributes": false,
+          "userpoolClientSetAttributes": true,
           "sharedId": "20516b65",
           "resourceName": "vidzy20516b65",
           "authSelections": "identityPoolAndUserPool",
@@ -109,11 +109,72 @@
               "Arn"
             ]
           },
-          "useDefault": "default",
+          "useDefault": "manual",
           "usernameAttributes": "email",
-          "userPoolGroupList": "",
+          "userPoolGroupList": "huminedev1",
           "serviceName": "Cognito",
           "dependsOn": "",
+          "thirdPartyAuth": true,
+          "authProviders": "",
+          "userPoolGroups": true,
+          "adminQueries": true,
+          "triggers": "{}",
+          "hostedUI": true,
+          "hostedUIDomainName": "vidzyb1730691-b1730691",
+          "authProvidersUserPool": "",
+          "hostedUIProviderMeta": "[]",
+          "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:19006/\"],\"LogoutURLs\":[\"http://localhost:19006/\"]}",
+          "adminQueryGroup": "huminedev1",
+          "parentStack": {
+            "Ref": "AWS::StackId"
+          },
+          "permissions": "",
+          "hostedUIProviderCreds": "[]",
+          "env": "dev"
+        }
+      }
+    },
+    "authuserPoolGroups": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-vidzy-dev-95631-deployment/amplify-cfn-templates/auth/template.json",
+        "Parameters": {
+          "AuthRoleArn": {
+            "Fn::GetAtt": [
+              "AuthRole",
+              "Arn"
+            ]
+          },
+          "UnauthRoleArn": {
+            "Fn::GetAtt": [
+              "UnauthRole",
+              "Arn"
+            ]
+          },
+          "authvidzy20516b65UserPoolId": {
+            "Fn::GetAtt": [
+              "authvidzy20516b65",
+              "Outputs.UserPoolId"
+            ]
+          },
+          "authvidzy20516b65AppClientIDWeb": {
+            "Fn::GetAtt": [
+              "authvidzy20516b65",
+              "Outputs.AppClientIDWeb"
+            ]
+          },
+          "authvidzy20516b65AppClientID": {
+            "Fn::GetAtt": [
+              "authvidzy20516b65",
+              "Outputs.AppClientID"
+            ]
+          },
+          "authvidzy20516b65IdentityPoolId": {
+            "Fn::GetAtt": [
+              "authvidzy20516b65",
+              "Outputs.IdentityPoolId"
+            ]
+          },
           "env": "dev"
         }
       }
@@ -127,6 +188,54 @@
           "AppSyncApiName": "vidzy",
           "S3DeploymentBucket": "amplify-vidzy-dev-95631-deployment",
           "S3DeploymentRootKey": "amplify-appsync-files/b8beec59004978febd5ab732f9aa3efe98b1796b",
+          "env": "dev"
+        }
+      }
+    },
+    "apiAdminQueries": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-vidzy-dev-95631-deployment/amplify-cfn-templates/api/admin-queries-cloudformation-template.json",
+        "Parameters": {
+          "authRoleName": {
+            "Ref": "AuthRoleName"
+          },
+          "unauthRoleName": {
+            "Ref": "UnauthRoleName"
+          },
+          "authvidzy20516b65UserPoolId": {
+            "Fn::GetAtt": [
+              "authvidzy20516b65",
+              "Outputs.UserPoolId"
+            ]
+          },
+          "functionAdminQueriesb221712dArn": {
+            "Fn::GetAtt": [
+              "functionAdminQueriesb221712d",
+              "Outputs.Arn"
+            ]
+          },
+          "functionAdminQueriesb221712dName": {
+            "Fn::GetAtt": [
+              "functionAdminQueriesb221712d",
+              "Outputs.Name"
+            ]
+          },
+          "env": "dev"
+        }
+      }
+    },
+    "functionAdminQueriesb221712d": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-vidzy-dev-95631-deployment/amplify-cfn-templates/function/AdminQueriesb221712d-cloudformation-template.json",
+        "Parameters": {
+          "authvidzy20516b65UserPoolId": {
+            "Fn::GetAtt": [
+              "authvidzy20516b65",
+              "Outputs.UserPoolId"
+            ]
+          },
           "env": "dev"
         }
       }
