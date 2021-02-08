@@ -27,13 +27,8 @@ const VideoPlayer = ({ video, isPlay, orientation }) => {
     return (
         <VideoContainer>
             <ProductVideo
-<<<<<<< HEAD
                 // source={{ uri: "http://d2h74skj6dqe4u.cloudfront.net/test_vid_1.mpd" }}
                 source={{ uri: video }}
-=======
-                /* make sure to change source to uri: for URL */
-                source={video}
->>>>>>> uxui
                 rate={1.0}
                 volume={1.0}
                 isMuted={false}

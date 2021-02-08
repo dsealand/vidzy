@@ -104,7 +104,7 @@ const creatorModal = ({ navigation, creator, onPressClose }) => {
 
                 <BottomContainer>
                     <CreatorPhoto source={{uri:creator.photo}} />
-                    <CreatorHandel>@{creator.creator.username}</CreatorHandel>
+                    <CreatorHandel>@{creator.username}</CreatorHandel>
                     <MoreVideos
                         onPress={onPressClose}
                         onPressOut={() => {

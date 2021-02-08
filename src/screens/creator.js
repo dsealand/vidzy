@@ -15,9 +15,6 @@ const Creator = ({ route, navigation }) => {
     const { creator, back } = route.params;
     const [videoStack, setVideoStack] = useState([]);
 
-    console.log("creator: ");
-    console.log(creator.id);
-
     // video query with useEffect hook and async function, filtered by creator
     useEffect(() => {
         async function getVideos() {

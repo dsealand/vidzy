@@ -95,18 +95,11 @@ const VideoElements = ({
     return (
         <Container>
             <LeftContainer>
-<<<<<<< HEAD
-                {/* replace when schema has brand connected to product */}
-                <BasicText>{product.brandID}</BasicText>
-                <ProductNameText>{product.name}</ProductNameText>
-                <BasicText>$ {product.price}</BasicText>
-=======
                 <ProductInfo onPress={onPressProduct}>
                     <BasicText>{brand.name}</BasicText>
                     <ProductNameText>{product.name}</ProductNameText>
                     <BasicText>$ {product.price}</BasicText>
                 </ProductInfo>
->>>>>>> uxui
             </LeftContainer>
             <RightContainer>
                 <Element onPress={likePress}>

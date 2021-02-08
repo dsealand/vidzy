@@ -8,6 +8,7 @@ import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import awsmobile from './aws-exports';
 import * as mutations from './graphql/mutations';
 import * as queries from './graphql/queries';
+import { withAuthenticator } from 'aws-amplify-react-native'
 
 import Login from "./src/screens/login";
 import SignIn from "./src/screens/signin";
@@ -102,7 +103,7 @@ const testVideo2 = { id: 2, name: "vid2", productID: 30, creatorID: 30, URL: "ht
 const testVideo3 = { id: 3, name: "vid3", productID: 30, creatorID: 30, URL: "https://d2h74skj6dqe4u.cloudfront.net/test_vid_3.mpd" };
 const testVideo4 = { id: 4, name: "vid4", productID: 30, creatorID: 30, URL: "https://d2h74skj6dqe4u.cloudfront.net/test_vid_4.mpd" };
 
-export default function App() {
+export default function withAuthenicator(App) {
     // useEffect(() => {
     //     async function mutate1() {
     //         try {

@@ -10,16 +10,13 @@ import VideoElements from "./videoElements";
 import CreatorModal from "./creatorModal";
 import ProductModal from "./productModal";
 
-<<<<<<< HEAD
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import awsmobile from '../../aws-exports';
 import * as queries from '../../graphql/queries';
 
 Amplify.configure(awsmobile);
-=======
 import creatorAPI from "../data/creatorInfo_api";
 import productAPI from "../data/productInfo_api";
->>>>>>> uxui
 
 const Gradient = style((props) => <LinearGradient {...props} />)`
     height: 100%;
@@ -42,6 +39,7 @@ const VideoCard = ({ navigation, card, isPlay }) => {
     const [creatorModalVisible, setCreatorModalVisible] = useState(false);
     const [productModalVisible, setProductModalVisible] = useState(false);
     const [creator, setCreator] = useState([]);
+    const [product, setProduct] = useState([]);
 
     const width = useWindowDimensions().width;
     const height = useWindowDimensions().height;
@@ -57,7 +55,17 @@ const VideoCard = ({ navigation, card, isPlay }) => {
                 console.log('error1: ', err);
             }
         }
+        async function getProduct() {
+            try {
+                const apiData = await API.graphql(graphqlOperation(queries.getProduct, {id: 30}));
+                const creator = apiData.data.getProduct;
+                setProduct(product);
+            } catch (err) {
+                console.log('error1: ', err);
+            }
+        }
         getCreator();
+        getProduct();
     }, []);
 
     return (        
@@ -70,11 +78,7 @@ const VideoCard = ({ navigation, card, isPlay }) => {
             >
                 <CreatorModal
                     navigation={navigation}
-<<<<<<< HEAD
                     creator={creator}
-=======
-                    creator={creatorAPI[0]}
->>>>>>> uxui
                     onPressClose={() => setCreatorModalVisible(false)}
                 />
             </Modal>
@@ -86,18 +90,14 @@ const VideoCard = ({ navigation, card, isPlay }) => {
             >
                 <ProductModal
                     navigation={navigation}
-                    product={productAPI[0]}
+                    product={product}
                     onPressClose={() => setProductModalVisible(false)}
                 />
             </Modal>
             <VideoPlayer
                 video={card.URL}
                 isPlay={isPlay}
-<<<<<<< HEAD
                 // orientation={card.video.orientation}
-=======
-                orientation={card.orientation}
->>>>>>> uxui
             />
             <Gradient
                 locations={[0, 0.25, 0.75, 1]}
@@ -110,14 +110,10 @@ const VideoCard = ({ navigation, card, isPlay }) => {
                 ]}
             >
                 <VideoElements
-                    creator={card.creator}
-                    product={card.product}
-<<<<<<< HEAD
-                    brand={card.product.brand}
-=======
+                    creator={creator}
+                    product={product}
                     brand={card.brand}
                     videoLiked={card.liked}
->>>>>>> uxui
                     onPressCreator={() => setCreatorModalVisible(true)}
                     onPressProduct={() => setProductModalVisible(true)}
                 />
