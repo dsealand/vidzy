@@ -23,6 +23,12 @@ export const onCreateVideo = /* GraphQL */ `
         }
         brandID
         userID
+        images {
+          nextToken
+        }
+        colors {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -41,30 +47,6 @@ export const onCreateVideo = /* GraphQL */ `
       creatorID
       URL
       orientation
-      userHistory {
-        id
-        videoID
-        userID
-        video {
-          id
-          name
-          productID
-          creatorID
-          URL
-          orientation
-          viewCount
-          createdAt
-          updatedAt
-        }
-        user {
-          id
-          username
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
       viewCount
       createdAt
       updatedAt
@@ -93,6 +75,12 @@ export const onUpdateVideo = /* GraphQL */ `
         }
         brandID
         userID
+        images {
+          nextToken
+        }
+        colors {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -111,30 +99,6 @@ export const onUpdateVideo = /* GraphQL */ `
       creatorID
       URL
       orientation
-      userHistory {
-        id
-        videoID
-        userID
-        video {
-          id
-          name
-          productID
-          creatorID
-          URL
-          orientation
-          viewCount
-          createdAt
-          updatedAt
-        }
-        user {
-          id
-          username
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
       viewCount
       createdAt
       updatedAt
@@ -163,6 +127,12 @@ export const onDeleteVideo = /* GraphQL */ `
         }
         brandID
         userID
+        images {
+          nextToken
+        }
+        colors {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -181,30 +151,6 @@ export const onDeleteVideo = /* GraphQL */ `
       creatorID
       URL
       orientation
-      userHistory {
-        id
-        videoID
-        userID
-        video {
-          id
-          name
-          productID
-          creatorID
-          URL
-          orientation
-          viewCount
-          createdAt
-          updatedAt
-        }
-        user {
-          id
-          username
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
       viewCount
       createdAt
       updatedAt
@@ -329,6 +275,26 @@ export const onCreateProduct = /* GraphQL */ `
       }
       brandID
       userID
+      images {
+        items {
+          id
+          URL
+          productID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      colors {
+        items {
+          id
+          asset
+          productID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -374,6 +340,26 @@ export const onUpdateProduct = /* GraphQL */ `
       }
       brandID
       userID
+      images {
+        items {
+          id
+          URL
+          productID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      colors {
+        items {
+          id
+          asset
+          productID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -419,6 +405,92 @@ export const onDeleteProduct = /* GraphQL */ `
       }
       brandID
       userID
+      images {
+        items {
+          id
+          URL
+          productID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      colors {
+        items {
+          id
+          asset
+          productID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateImageData = /* GraphQL */ `
+  subscription OnCreateImageData {
+    onCreateImageData {
+      id
+      URL
+      productID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateImageData = /* GraphQL */ `
+  subscription OnUpdateImageData {
+    onUpdateImageData {
+      id
+      URL
+      productID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteImageData = /* GraphQL */ `
+  subscription OnDeleteImageData {
+    onDeleteImageData {
+      id
+      URL
+      productID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateColorData = /* GraphQL */ `
+  subscription OnCreateColorData {
+    onCreateColorData {
+      id
+      asset
+      productID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateColorData = /* GraphQL */ `
+  subscription OnUpdateColorData {
+    onUpdateColorData {
+      id
+      asset
+      productID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteColorData = /* GraphQL */ `
+  subscription OnDeleteColorData {
+    onDeleteColorData {
+      id
+      asset
+      productID
       createdAt
       updatedAt
     }
@@ -447,6 +519,12 @@ export const onCreateBrand = /* GraphQL */ `
         }
         brandID
         userID
+        images {
+          nextToken
+        }
+        colors {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -478,6 +556,12 @@ export const onUpdateBrand = /* GraphQL */ `
         }
         brandID
         userID
+        images {
+          nextToken
+        }
+        colors {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -509,9 +593,198 @@ export const onDeleteBrand = /* GraphQL */ `
         }
         brandID
         userID
+        images {
+          nextToken
+        }
+        colors {
+          nextToken
+        }
         createdAt
         updatedAt
       }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateCartProduct = /* GraphQL */ `
+  subscription OnCreateCartProduct {
+    onCreateCartProduct {
+      id
+      quantity
+      color
+      product {
+        id
+        name
+        price
+        description
+        videos {
+          nextToken
+        }
+        brand {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
+        brandID
+        userID
+        images {
+          nextToken
+        }
+        colors {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      productID
+      cartID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateCartProduct = /* GraphQL */ `
+  subscription OnUpdateCartProduct {
+    onUpdateCartProduct {
+      id
+      quantity
+      color
+      product {
+        id
+        name
+        price
+        description
+        videos {
+          nextToken
+        }
+        brand {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
+        brandID
+        userID
+        images {
+          nextToken
+        }
+        colors {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      productID
+      cartID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteCartProduct = /* GraphQL */ `
+  subscription OnDeleteCartProduct {
+    onDeleteCartProduct {
+      id
+      quantity
+      color
+      product {
+        id
+        name
+        price
+        description
+        videos {
+          nextToken
+        }
+        brand {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
+        brandID
+        userID
+        images {
+          nextToken
+        }
+        colors {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      productID
+      cartID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateCart = /* GraphQL */ `
+  subscription OnCreateCart {
+    onCreateCart {
+      id
+      products {
+        items {
+          id
+          quantity
+          color
+          productID
+          cartID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      price
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateCart = /* GraphQL */ `
+  subscription OnUpdateCart {
+    onUpdateCart {
+      id
+      products {
+        items {
+          id
+          quantity
+          color
+          productID
+          cartID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      price
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteCart = /* GraphQL */ `
+  subscription OnDeleteCart {
+    onDeleteCart {
+      id
+      products {
+        items {
+          id
+          quantity
+          color
+          productID
+          cartID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      price
       createdAt
       updatedAt
     }
@@ -522,30 +795,16 @@ export const onCreateUser = /* GraphQL */ `
     onCreateUser {
       id
       username
-      history {
+      cart {
         id
-        videoID
-        userID
-        video {
-          id
-          name
-          productID
-          creatorID
-          URL
-          orientation
-          viewCount
-          createdAt
-          updatedAt
+        products {
+          nextToken
         }
-        user {
-          id
-          username
-          createdAt
-          updatedAt
-        }
+        price
         createdAt
         updatedAt
       }
+      cartID
       createdAt
       updatedAt
     }
@@ -556,30 +815,16 @@ export const onUpdateUser = /* GraphQL */ `
     onUpdateUser {
       id
       username
-      history {
+      cart {
         id
-        videoID
-        userID
-        video {
-          id
-          name
-          productID
-          creatorID
-          URL
-          orientation
-          viewCount
-          createdAt
-          updatedAt
+        products {
+          nextToken
         }
-        user {
-          id
-          username
-          createdAt
-          updatedAt
-        }
+        price
         createdAt
         updatedAt
       }
+      cartID
       createdAt
       updatedAt
     }
@@ -590,210 +835,16 @@ export const onDeleteUser = /* GraphQL */ `
     onDeleteUser {
       id
       username
-      history {
+      cart {
         id
-        videoID
-        userID
-        video {
-          id
-          name
-          productID
-          creatorID
-          URL
-          orientation
-          viewCount
-          createdAt
-          updatedAt
+        products {
+          nextToken
         }
-        user {
-          id
-          username
-          createdAt
-          updatedAt
-        }
+        price
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateVideoUserHistory = /* GraphQL */ `
-  subscription OnCreateVideoUserHistory {
-    onCreateVideoUserHistory {
-      id
-      videoID
-      userID
-      video {
-        id
-        name
-        product {
-          id
-          name
-          price
-          description
-          brandID
-          userID
-          createdAt
-          updatedAt
-        }
-        productID
-        creator {
-          id
-          username
-          photo
-          description
-          createdAt
-          updatedAt
-        }
-        creatorID
-        URL
-        orientation
-        userHistory {
-          id
-          videoID
-          userID
-          createdAt
-          updatedAt
-        }
-        viewCount
-        createdAt
-        updatedAt
-      }
-      user {
-        id
-        username
-        history {
-          id
-          videoID
-          userID
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateVideoUserHistory = /* GraphQL */ `
-  subscription OnUpdateVideoUserHistory {
-    onUpdateVideoUserHistory {
-      id
-      videoID
-      userID
-      video {
-        id
-        name
-        product {
-          id
-          name
-          price
-          description
-          brandID
-          userID
-          createdAt
-          updatedAt
-        }
-        productID
-        creator {
-          id
-          username
-          photo
-          description
-          createdAt
-          updatedAt
-        }
-        creatorID
-        URL
-        orientation
-        userHistory {
-          id
-          videoID
-          userID
-          createdAt
-          updatedAt
-        }
-        viewCount
-        createdAt
-        updatedAt
-      }
-      user {
-        id
-        username
-        history {
-          id
-          videoID
-          userID
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteVideoUserHistory = /* GraphQL */ `
-  subscription OnDeleteVideoUserHistory {
-    onDeleteVideoUserHistory {
-      id
-      videoID
-      userID
-      video {
-        id
-        name
-        product {
-          id
-          name
-          price
-          description
-          brandID
-          userID
-          createdAt
-          updatedAt
-        }
-        productID
-        creator {
-          id
-          username
-          photo
-          description
-          createdAt
-          updatedAt
-        }
-        creatorID
-        URL
-        orientation
-        userHistory {
-          id
-          videoID
-          userID
-          createdAt
-          updatedAt
-        }
-        viewCount
-        createdAt
-        updatedAt
-      }
-      user {
-        id
-        username
-        history {
-          id
-          videoID
-          userID
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
+      cartID
       createdAt
       updatedAt
     }

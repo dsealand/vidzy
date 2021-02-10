@@ -23,6 +23,12 @@ export const getVideo = /* GraphQL */ `
         }
         brandID
         userID
+        images {
+          nextToken
+        }
+        colors {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -41,30 +47,6 @@ export const getVideo = /* GraphQL */ `
       creatorID
       URL
       orientation
-      userHistory {
-        id
-        videoID
-        userID
-        video {
-          id
-          name
-          productID
-          creatorID
-          URL
-          orientation
-          viewCount
-          createdAt
-          updatedAt
-        }
-        user {
-          id
-          username
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
       viewCount
       createdAt
       updatedAt
@@ -103,13 +85,6 @@ export const listVideos = /* GraphQL */ `
         creatorID
         URL
         orientation
-        userHistory {
-          id
-          videoID
-          userID
-          createdAt
-          updatedAt
-        }
         viewCount
         createdAt
         updatedAt
@@ -206,6 +181,26 @@ export const getProduct = /* GraphQL */ `
       }
       brandID
       userID
+      images {
+        items {
+          id
+          URL
+          productID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      colors {
+        items {
+          id
+          asset
+          productID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -235,6 +230,70 @@ export const listProducts = /* GraphQL */ `
         }
         brandID
         userID
+        images {
+          nextToken
+        }
+        colors {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getImageData = /* GraphQL */ `
+  query GetImageData($id: ID!) {
+    getImageData(id: $id) {
+      id
+      URL
+      productID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listImageDatas = /* GraphQL */ `
+  query ListImageDatas(
+    $filter: ModelImageDataFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listImageDatas(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        URL
+        productID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getColorData = /* GraphQL */ `
+  query GetColorData($id: ID!) {
+    getColorData(id: $id) {
+      id
+      asset
+      productID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listColorDatas = /* GraphQL */ `
+  query ListColorDatas(
+    $filter: ModelColorDataFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listColorDatas(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        asset
+        productID
         createdAt
         updatedAt
       }
@@ -265,6 +324,12 @@ export const getBrand = /* GraphQL */ `
         }
         brandID
         userID
+        images {
+          nextToken
+        }
+        colors {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -301,35 +366,132 @@ export const listBrands = /* GraphQL */ `
     }
   }
 `;
+export const getCartProduct = /* GraphQL */ `
+  query GetCartProduct($id: ID!) {
+    getCartProduct(id: $id) {
+      id
+      quantity
+      color
+      product {
+        id
+        name
+        price
+        description
+        videos {
+          nextToken
+        }
+        brand {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
+        brandID
+        userID
+        images {
+          nextToken
+        }
+        colors {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      productID
+      cartID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listCartProducts = /* GraphQL */ `
+  query ListCartProducts(
+    $filter: ModelCartProductFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCartProducts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        quantity
+        color
+        product {
+          id
+          name
+          price
+          description
+          brandID
+          userID
+          createdAt
+          updatedAt
+        }
+        productID
+        cartID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getCart = /* GraphQL */ `
+  query GetCart($id: ID!) {
+    getCart(id: $id) {
+      id
+      products {
+        items {
+          id
+          quantity
+          color
+          productID
+          cartID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      price
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listCarts = /* GraphQL */ `
+  query ListCarts(
+    $filter: ModelCartFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCarts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        products {
+          nextToken
+        }
+        price
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
       id
       username
-      history {
+      cart {
         id
-        videoID
-        userID
-        video {
-          id
-          name
-          productID
-          creatorID
-          URL
-          orientation
-          viewCount
-          createdAt
-          updatedAt
+        products {
+          nextToken
         }
-        user {
-          id
-          username
-          createdAt
-          updatedAt
-        }
+        price
         createdAt
         updatedAt
       }
+      cartID
       createdAt
       updatedAt
     }
@@ -345,13 +507,13 @@ export const listUsers = /* GraphQL */ `
       items {
         id
         username
-        history {
+        cart {
           id
-          videoID
-          userID
+          price
           createdAt
           updatedAt
         }
+        cartID
         createdAt
         updatedAt
       }

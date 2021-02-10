@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { View, Text, TouchableOpacity } from "react-native";
 import style from "styled-components/native";
@@ -10,8 +10,15 @@ import CartProductStack from "../components/cartProductStack";
 import LikedProductStack from "../components/likedProductStack";
 import api from "../data/cart_api";
 
-const cart = api[0];
+import Amplify, { API, graphqlOperation } from 'aws-amplify';
+import awsmobile from '../../aws-exports';
+import * as queries from '../../graphql/queries';
+
+Amplify.configure(awsmobile);
+
+// const cart = api[0];
 const liked = api[1];
+// var cart2 = [];
 
 const Container = style.View`
     justifyContent: flex-end;
@@ -81,6 +88,20 @@ const PriceText = style(BigText)`
 
 const Cart = ({ navigation }) => {
     const [selection, setSelection] = useState("Cart");
+    const [cart, setCart] = useState([]);
+
+    useEffect(() => {
+        async function getCart() {
+            try {
+                const apiData = await API.graphql(graphqlOperation(queries.getCart, {id: 0}));
+                const cart = apiData.data.getCart;
+                setCart(cart);
+            } catch (err) {
+                console.log('cart error: ', err);
+            }
+        }
+        getCart();
+    }, []);
 
     const width = useWindowDimensions().width;
     const height = useWindowDimensions().height;
@@ -132,7 +153,7 @@ const Cart = ({ navigation }) => {
                                 <CheckoutText>Checkout</CheckoutText>
                             </Checkout>
                             <Price>
-                                <PriceText>Total ${cart.total}</PriceText>
+                                <PriceText>Total ${cart.price}</PriceText>
                             </Price>
                         </BottomContainer>
                     )}

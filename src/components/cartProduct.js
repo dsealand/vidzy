@@ -14,6 +14,12 @@ import { Picker } from "@react-native-picker/picker";
 
 import Colors from "./colors";
 
+import Amplify, { API, graphqlOperation } from 'aws-amplify';
+import awsmobile from '../../aws-exports';
+import * as queries from '../../graphql/queries';
+
+Amplify.configure(awsmobile);
+
 const ProductContainer = style.View`
     height: 200px;
     width: 100%;
@@ -103,7 +109,8 @@ const styles = StyleSheet.create({
     },
 });
 
-const cartProduct = ({ product }) => {
+const cartProduct = ({ cartProduct }) => {
+    const [product, setProduct] = useState([]);
     const renderColorListItem = ({ item }) => {
         return (
             <ColorImageSpacer>
@@ -118,6 +125,19 @@ const cartProduct = ({ product }) => {
         );
     };
 
+    useEffect(() => {
+        async function getProduct() {
+            try {
+                const apiData = await API.graphql(graphqlOperation(queries.getProduct, {id: product.productID}));
+                const apiProduct = apiData.data.getProduct;
+                setProduct(apiProduct);
+            } catch (err) {
+                console.log('cart error: ', err);
+            }
+        }
+        getProduct();
+    }, []);
+
     return (
         <ProductContainer>
             <TopContainer>
@@ -128,13 +148,13 @@ const cartProduct = ({ product }) => {
                 </LeftContainer>
                 <RightContainer>
                     <SmallText style={{ fontWeight: "bold" }}>
-                        {product.product.name}
+                        {product.name}
                     </SmallText>
                     <SmallText style={{ color: Colors.lightGrey }}>
-                        {product.product.brand.name}
+                        {product.name}
                     </SmallText>
                     <SmallText style={{ color: Colors.main }}>
-                        $ {product.product.price}
+                        $ {product.price}
                     </SmallText>
                     <View style={{ justifyContent: "center", height: "50%" }}>
                         <FlatList

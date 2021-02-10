@@ -40,6 +40,7 @@ const VideoCard = ({ navigation, card, isPlay }) => {
     const [productModalVisible, setProductModalVisible] = useState(false);
     const [creator, setCreator] = useState([]);
     const [product, setProduct] = useState([]);
+    const [brand, setBrand] = useState([]);
 
     const width = useWindowDimensions().width;
     const height = useWindowDimensions().height;
@@ -48,7 +49,7 @@ const VideoCard = ({ navigation, card, isPlay }) => {
     useEffect(() => {
         async function getCreator() {
             try {
-                const apiData = await API.graphql(graphqlOperation(queries.getCreator, {id: 30}));
+                const apiData = await API.graphql(graphqlOperation(queries.getCreator, {id: card.creatorID}));
                 const creator = apiData.data.getCreator;
                 setCreator(creator);
             } catch (err) {
@@ -57,9 +58,12 @@ const VideoCard = ({ navigation, card, isPlay }) => {
         }
         async function getProduct() {
             try {
-                const apiData = await API.graphql(graphqlOperation(queries.getProduct, {id: 30}));
-                const creator = apiData.data.getProduct;
+                const apiData = await API.graphql(graphqlOperation(queries.getProduct, {id: card.productID}));
+                const product = apiData.data.getProduct;
+                const brandData = await API.graphql(graphqlOperation(queries.getBrand, {id: product.brandID}))
                 setProduct(product);
+                const brand = brandData.data.getBrand;
+                setBrand(brand)
             } catch (err) {
                 console.log('error1: ', err);
             }
@@ -74,7 +78,6 @@ const VideoCard = ({ navigation, card, isPlay }) => {
                 animationType="slide"
                 transparent={true}
                 visible={creatorModalVisible}
-                /* onShow={ trigger API call to get creator info to pass as prop to CreatorModal } */
             >
                 <CreatorModal
                     navigation={navigation}
@@ -86,7 +89,6 @@ const VideoCard = ({ navigation, card, isPlay }) => {
                 animationType="slide"
                 transparent={true}
                 visible={productModalVisible}
-                /* onShow={ trigger API call to get product info to pass as prop to CreatorModal } */
             >
                 <ProductModal
                     navigation={navigation}
@@ -112,8 +114,8 @@ const VideoCard = ({ navigation, card, isPlay }) => {
                 <VideoElements
                     creator={creator}
                     product={product}
-                    brand={card.brand}
-                    videoLiked={card.liked}
+                    brand={brand}
+                    // videoLiked={card.liked}
                     onPressCreator={() => setCreatorModalVisible(true)}
                     onPressProduct={() => setProductModalVisible(true)}
                 />

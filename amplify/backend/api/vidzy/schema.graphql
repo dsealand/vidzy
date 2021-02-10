@@ -9,7 +9,7 @@ type Video @model
     creatorID: ID!
     URL: String!
     orientation: String
-    userHistory: [VideoUserHistory] #@connection(keyName: "byVideoUser", fields: ["id"])
+    # userHistory: [VideoUserHistory] #@connection(keyName: "byVideoUser", fields: ["id"])
     # userLiked: [VideoUserLiked] #@connection(keyName: "byVideo", fields: ["id"])
     viewCount: Int
 }
@@ -22,46 +22,78 @@ type Creator @model {
   videos: [Video] @connection(keyName: "byCreator", fields: ["id"])
 }
 
-type Product @model
-  #@key(name: "byBrand", fields: ["brandID", "name", "price"]) {
-    {
+type Product @model {
     id: ID!
     name: String!
-    price: Int!
-    description: String!
+    price: Float!
+    description: String
     videos: [Video] @connection(keyName: "byProduct", fields: ["id"])
-    brand: Brand! #@connection(fields: ["brandID"])
+    brand: Brand @connection(fields: ["brandID"])
     brandID: ID!
-    # userCart: [ProductUser] #@connection(keyName: "byProduct", fields: ["id"])
     userID: ID
+    images: [ImageData] @connection(keyName: "byProduct", fields: ["id"])
+    colors: [ColorData] @connection(keyName: "byProduct", fields: ["id"])
+}
+
+type ImageData @model
+  @key(name: "byProduct", fields: ["productID", "URL"]) {
+  id: ID!
+  URL: String!
+  productID: ID!
+}
+
+type ColorData @model
+  @key(name: "byProduct", fields: ["productID", "asset"]) {
+  id: ID!
+  asset: String!
+  productID: ID!
 }
 
 type Brand @model {
   id: ID!
   name: String!
   description: String!
-  products: [Product] #@connection(keyName: "byBrand", fields: ["id"])
+  products: [Product]
+}
+
+type CartProduct @model 
+  @key(name: "byCart", fields: ["cartID", "quantity"])
+  {
+  id: ID!
+  quantity: Int
+  color: String
+  product: Product! @connection(fields: ["productID"])
+  productID: ID!
+  cartID: ID!
+}
+
+type Cart @model {
+  id: ID!
+  products: [CartProduct] @connection(keyName: "byCart", fields: ["id"])
+  price: Float
 }
 
 # user model schema
 type User @model {
   id: ID!
   username: String!
-  history: [VideoUserHistory] #@connection(keyName: "byUserHistory", fields: ["id"])
+  cart: Cart @connection(fields: ["cartID"])
+  cartID: ID!
+  # history: [VideoUserHistory] #@connection(keyName: "byUserHistory", fields: ["id"])
   # liked: [VideoUserLiked] #@connection(keyName: "byUserLiked", fields: ["id"])
   # cart: [ProductUser] #@connection(keyName: "byUserCart", fields: ["id"])
 }
 
-type VideoUserHistory @model(queries: null)
-  @key(name: "byVideoUser", fields: ["videoID", "userID"])
-  @key(name: "byUserHistory", fields: ["userID", "videoID"]) {
+# type VideoUserHistory @model(queries: null)
+#   @key(name: "byVideoUser", fields: ["videoID", "userID"])
+#   @key(name: "byUserHistory", fields: ["userID", "videoID"]) {
   
-  id: ID!
-  videoID: ID!
-  userID: ID!
-  video: Video! @connection(fields: ["videoID"])
-  user: User! @connection(fields: ["userID"])
-}
+#   id: ID!
+#   videoID: ID!
+#   userID: ID!
+#   video: Video! @connection(fields: ["videoID"])
+#   user: User! @connection(fields: ["userID"])
+# }
 
 # type VideoUserLiked @model(queries: null)
 #   #@key(name: "byVideo", fields: ["videoID", "userID"])

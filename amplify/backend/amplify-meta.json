@@ -22,7 +22,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-vidzy-dev-95631-deployment/amplify-cfn-templates/auth/vidzy20516b65-cloudformation-template.yml",
         "logicalId": "authvidzy20516b65"
       },
-      "lastPushTimeStamp": "2021-02-05T17:27:33.851Z",
+      "lastPushTimeStamp": "2021-02-10T03:13:41.608Z",
       "output": {
         "AppClientSecret": "141jangejjtt2auu6gmu6iobo2ns22rk4ulngeds7o6f5noilukq",
         "UserPoolId": "us-west-2_RgNCXB1LE",
@@ -51,7 +51,7 @@
           ]
         }
       ],
-      "lastPushTimeStamp": "2021-02-05T17:27:33.851Z",
+      "lastPushTimeStamp": "2021-02-10T03:13:41.616Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-vidzy-dev-95631-deployment/amplify-cfn-templates/auth/template.json",
         "logicalId": "authuserPoolGroups"
@@ -81,74 +81,13 @@
         "GraphQLAPIEndpointOutput": "https://777f6ecfivh73nhjl6lpeknfuy.appsync-api.us-west-2.amazonaws.com/graphql",
         "GraphQLAPIKeyOutput": "da2-b54trzibwbhmjm4gnee7ukusse"
       },
-      "lastPushTimeStamp": "2021-02-05T17:27:33.814Z",
+      "lastPushTimeStamp": "2021-02-10T03:13:43.635Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-vidzy-dev-95631-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apividzy"
       },
-      "lastPushDirHash": "Z2Yt8cwNFDo40bbxzsXZburT2rU="
-    },
-    "AdminQueries": {
-      "service": "API Gateway",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "auth",
-          "resourceName": "vidzy20516b65",
-          "attributes": [
-            "UserPoolId"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "AdminQueriesb221712d",
-          "attributes": [
-            "Arn",
-            "Name"
-          ]
-        }
-      ],
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-vidzy-dev-95631-deployment/amplify-cfn-templates/api/admin-queries-cloudformation-template.json",
-        "logicalId": "apiAdminQueries"
-      },
-      "lastPushTimeStamp": "2021-02-05T17:27:33.851Z",
-      "output": {
-        "ApiName": "AdminQueries",
-        "RootUrl": "https://jylyev3uc6.execute-api.us-west-2.amazonaws.com/dev"
-      },
-      "lastPushDirHash": "F3PQtdUXDv0p7Ri8XV3cAnFg8TA="
+      "lastPushDirHash": "1B1TLU7OG5p/sYwXSjvcNQ73zy8="
     }
   },
-  "function": {
-    "AdminQueriesb221712d": {
-      "service": "Lambda",
-      "providerPlugin": "awscloudformation",
-      "build": true,
-      "dependsOn": [
-        {
-          "category": "auth",
-          "resourceName": "vidzy20516b65",
-          "attributes": [
-            "UserPoolId"
-          ]
-        }
-      ],
-      "lastBuildTimeStamp": "2021-02-05T17:23:18.069Z",
-      "lastPackageTimeStamp": "2021-02-05T17:23:27.340Z",
-      "distZipFilename": "AdminQueriesb221712d-3731477147384e512f71-build.zip",
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-vidzy-dev-95631-deployment/amplify-cfn-templates/function/AdminQueriesb221712d-cloudformation-template.json",
-        "logicalId": "functionAdminQueriesb221712d"
-      },
-      "lastPushTimeStamp": "2021-02-05T17:27:33.851Z",
-      "output": {
-        "Region": "us-west-2",
-        "Arn": "arn:aws:lambda:us-west-2:440148346084:function:AdminQueriesb221712d-dev",
-        "Name": "AdminQueriesb221712d-dev",
-        "LambdaExecutionRole": "AdminQueriesb221712dLambdaRole-dev"
-      },
-      "lastPushDirHash": "zvZ1H0y6dKtG3WVUKCDbFGeunrI="
-    }
-  }
+  "function": {}
 }

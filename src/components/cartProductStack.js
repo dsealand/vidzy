@@ -29,6 +29,8 @@ const Seperator = style.View`
 `;
 
 const cartProductStack = ({ cart }) => {
+    console.log("cart");
+    console.log(cart);
     const itemSeperator = () => {
         return (
             <Seperator>

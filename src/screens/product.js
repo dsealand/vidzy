@@ -1,16 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
+import Amplify, { API, graphqlOperation } from 'aws-amplify';
+import awsmobile from '../../aws-exports';
+import * as queries from '../../graphql/queries';
 
 import VideoStackPage from "../components/videoStackPage";
 
-import api from "../data/productStack_api";
+// import api from "../data/productStack_api";
+
+Amplify.configure(awsmobile);
 
 const Product = ({ route, navigation }) => {
     const { product, back } = route.params;
+    const [videoStack, setVideoStack] = useState([]);
+
+    // video query with useEffect hook and async function
+    useEffect(() => {
+        async function getVideos() {
+            try {
+                const apiData = await API.graphql(graphqlOperation(queries.listVideos, {
+                    filter: {
+                        productID: {
+                            eq: product.id
+                        }
+                    }
+                }));
+                const videos = apiData.data.listVideos.items;
+                setVideoStack(videos);
+            } catch (err) {
+                console.log('error1: ', err);
+            }
+        }
+        getVideos();
+    }, []);
+
     return (
         <VideoStackPage
             navigation={navigation}
-            headerText={product.product.name}
-            videoStack={api}
+            headerText={product.name}
+            videoStack={videoStack}
             back={back}
         />
     );

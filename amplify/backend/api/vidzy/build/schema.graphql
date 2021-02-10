@@ -7,7 +7,6 @@ type Video {
   creatorID: ID!
   URL: String!
   orientation: String
-  userHistory: [VideoUserHistory]
   viewCount: Int
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
@@ -26,12 +25,30 @@ type Creator {
 type Product {
   id: ID!
   name: String!
-  price: Int!
-  description: String!
+  price: Float!
+  description: String
   videos(URL: ModelStringKeyConditionInput, filter: ModelVideoFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelVideoConnection
-  brand: Brand!
+  brand: Brand
   brandID: ID!
   userID: ID
+  images(URL: ModelStringKeyConditionInput, filter: ModelImageDataFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelImageDataConnection
+  colors(asset: ModelStringKeyConditionInput, filter: ModelColorDataFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelColorDataConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type ImageData {
+  id: ID!
+  URL: String!
+  productID: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type ColorData {
+  id: ID!
+  asset: String!
+  productID: ID!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 }
@@ -45,20 +62,30 @@ type Brand {
   updatedAt: AWSDateTime!
 }
 
-type User {
+type CartProduct {
   id: ID!
-  username: String!
-  history: [VideoUserHistory]
+  quantity: Int
+  color: String
+  product: Product!
+  productID: ID!
+  cartID: ID!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 }
 
-type VideoUserHistory {
+type Cart {
   id: ID!
-  videoID: ID!
-  userID: ID!
-  video: Video!
-  user: User!
+  products(quantity: ModelIntKeyConditionInput, filter: ModelCartProductFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelCartProductConnection
+  price: Float
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type User {
+  id: ID!
+  username: String!
+  cart: Cart
+  cartID: ID!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 }
@@ -179,8 +206,16 @@ type Query {
   listCreators(filter: ModelCreatorFilterInput, limit: Int, nextToken: String): ModelCreatorConnection
   getProduct(id: ID!): Product
   listProducts(filter: ModelProductFilterInput, limit: Int, nextToken: String): ModelProductConnection
+  getImageData(id: ID!): ImageData
+  listImageDatas(filter: ModelImageDataFilterInput, limit: Int, nextToken: String): ModelImageDataConnection
+  getColorData(id: ID!): ColorData
+  listColorDatas(filter: ModelColorDataFilterInput, limit: Int, nextToken: String): ModelColorDataConnection
   getBrand(id: ID!): Brand
   listBrands(filter: ModelBrandFilterInput, limit: Int, nextToken: String): ModelBrandConnection
+  getCartProduct(id: ID!): CartProduct
+  listCartProducts(filter: ModelCartProductFilterInput, limit: Int, nextToken: String): ModelCartProductConnection
+  getCart(id: ID!): Cart
+  listCarts(filter: ModelCartFilterInput, limit: Int, nextToken: String): ModelCartConnection
   getUser(id: ID!): User
   listUsers(filter: ModelUserFilterInput, limit: Int, nextToken: String): ModelUserConnection
 }
@@ -219,15 +254,24 @@ type Mutation {
   createProduct(input: CreateProductInput!, condition: ModelProductConditionInput): Product
   updateProduct(input: UpdateProductInput!, condition: ModelProductConditionInput): Product
   deleteProduct(input: DeleteProductInput!, condition: ModelProductConditionInput): Product
+  createImageData(input: CreateImageDataInput!, condition: ModelImageDataConditionInput): ImageData
+  updateImageData(input: UpdateImageDataInput!, condition: ModelImageDataConditionInput): ImageData
+  deleteImageData(input: DeleteImageDataInput!, condition: ModelImageDataConditionInput): ImageData
+  createColorData(input: CreateColorDataInput!, condition: ModelColorDataConditionInput): ColorData
+  updateColorData(input: UpdateColorDataInput!, condition: ModelColorDataConditionInput): ColorData
+  deleteColorData(input: DeleteColorDataInput!, condition: ModelColorDataConditionInput): ColorData
   createBrand(input: CreateBrandInput!, condition: ModelBrandConditionInput): Brand
   updateBrand(input: UpdateBrandInput!, condition: ModelBrandConditionInput): Brand
   deleteBrand(input: DeleteBrandInput!, condition: ModelBrandConditionInput): Brand
+  createCartProduct(input: CreateCartProductInput!, condition: ModelCartProductConditionInput): CartProduct
+  updateCartProduct(input: UpdateCartProductInput!, condition: ModelCartProductConditionInput): CartProduct
+  deleteCartProduct(input: DeleteCartProductInput!, condition: ModelCartProductConditionInput): CartProduct
+  createCart(input: CreateCartInput!, condition: ModelCartConditionInput): Cart
+  updateCart(input: UpdateCartInput!, condition: ModelCartConditionInput): Cart
+  deleteCart(input: DeleteCartInput!, condition: ModelCartConditionInput): Cart
   createUser(input: CreateUserInput!, condition: ModelUserConditionInput): User
   updateUser(input: UpdateUserInput!, condition: ModelUserConditionInput): User
   deleteUser(input: DeleteUserInput!, condition: ModelUserConditionInput): User
-  createVideoUserHistory(input: CreateVideoUserHistoryInput!, condition: ModelVideoUserHistoryConditionInput): VideoUserHistory
-  updateVideoUserHistory(input: UpdateVideoUserHistoryInput!, condition: ModelVideoUserHistoryConditionInput): VideoUserHistory
-  deleteVideoUserHistory(input: DeleteVideoUserHistoryInput!, condition: ModelVideoUserHistoryConditionInput): VideoUserHistory
 }
 
 input ModelVideoConditionInput {
@@ -252,15 +296,24 @@ type Subscription {
   onCreateProduct: Product @aws_subscribe(mutations: ["createProduct"])
   onUpdateProduct: Product @aws_subscribe(mutations: ["updateProduct"])
   onDeleteProduct: Product @aws_subscribe(mutations: ["deleteProduct"])
+  onCreateImageData: ImageData @aws_subscribe(mutations: ["createImageData"])
+  onUpdateImageData: ImageData @aws_subscribe(mutations: ["updateImageData"])
+  onDeleteImageData: ImageData @aws_subscribe(mutations: ["deleteImageData"])
+  onCreateColorData: ColorData @aws_subscribe(mutations: ["createColorData"])
+  onUpdateColorData: ColorData @aws_subscribe(mutations: ["updateColorData"])
+  onDeleteColorData: ColorData @aws_subscribe(mutations: ["deleteColorData"])
   onCreateBrand: Brand @aws_subscribe(mutations: ["createBrand"])
   onUpdateBrand: Brand @aws_subscribe(mutations: ["updateBrand"])
   onDeleteBrand: Brand @aws_subscribe(mutations: ["deleteBrand"])
+  onCreateCartProduct: CartProduct @aws_subscribe(mutations: ["createCartProduct"])
+  onUpdateCartProduct: CartProduct @aws_subscribe(mutations: ["updateCartProduct"])
+  onDeleteCartProduct: CartProduct @aws_subscribe(mutations: ["deleteCartProduct"])
+  onCreateCart: Cart @aws_subscribe(mutations: ["createCart"])
+  onUpdateCart: Cart @aws_subscribe(mutations: ["updateCart"])
+  onDeleteCart: Cart @aws_subscribe(mutations: ["deleteCart"])
   onCreateUser: User @aws_subscribe(mutations: ["createUser"])
   onUpdateUser: User @aws_subscribe(mutations: ["updateUser"])
   onDeleteUser: User @aws_subscribe(mutations: ["deleteUser"])
-  onCreateVideoUserHistory: VideoUserHistory @aws_subscribe(mutations: ["createVideoUserHistory"])
-  onUpdateVideoUserHistory: VideoUserHistory @aws_subscribe(mutations: ["updateVideoUserHistory"])
-  onDeleteVideoUserHistory: VideoUserHistory @aws_subscribe(mutations: ["deleteVideoUserHistory"])
 }
 
 type ModelCreatorConnection {
@@ -313,7 +366,7 @@ type ModelProductConnection {
 input ModelProductFilterInput {
   id: ModelIDInput
   name: ModelStringInput
-  price: ModelIntInput
+  price: ModelFloatInput
   description: ModelStringInput
   brandID: ModelIDInput
   userID: ModelIDInput
@@ -325,8 +378,8 @@ input ModelProductFilterInput {
 input CreateProductInput {
   id: ID
   name: String!
-  price: Int!
-  description: String!
+  price: Float!
+  description: String
   brandID: ID!
   userID: ID
 }
@@ -334,7 +387,7 @@ input CreateProductInput {
 input UpdateProductInput {
   id: ID!
   name: String
-  price: Int
+  price: Float
   description: String
   brandID: ID
   userID: ID
@@ -346,13 +399,89 @@ input DeleteProductInput {
 
 input ModelProductConditionInput {
   name: ModelStringInput
-  price: ModelIntInput
+  price: ModelFloatInput
   description: ModelStringInput
   brandID: ModelIDInput
   userID: ModelIDInput
   and: [ModelProductConditionInput]
   or: [ModelProductConditionInput]
   not: ModelProductConditionInput
+}
+
+type ModelImageDataConnection {
+  items: [ImageData]
+  nextToken: String
+}
+
+input ModelImageDataFilterInput {
+  id: ModelIDInput
+  URL: ModelStringInput
+  productID: ModelIDInput
+  and: [ModelImageDataFilterInput]
+  or: [ModelImageDataFilterInput]
+  not: ModelImageDataFilterInput
+}
+
+input CreateImageDataInput {
+  id: ID
+  URL: String!
+  productID: ID!
+}
+
+input UpdateImageDataInput {
+  id: ID!
+  URL: String
+  productID: ID
+}
+
+input DeleteImageDataInput {
+  id: ID
+}
+
+input ModelImageDataConditionInput {
+  URL: ModelStringInput
+  productID: ModelIDInput
+  and: [ModelImageDataConditionInput]
+  or: [ModelImageDataConditionInput]
+  not: ModelImageDataConditionInput
+}
+
+type ModelColorDataConnection {
+  items: [ColorData]
+  nextToken: String
+}
+
+input ModelColorDataFilterInput {
+  id: ModelIDInput
+  asset: ModelStringInput
+  productID: ModelIDInput
+  and: [ModelColorDataFilterInput]
+  or: [ModelColorDataFilterInput]
+  not: ModelColorDataFilterInput
+}
+
+input CreateColorDataInput {
+  id: ID
+  asset: String!
+  productID: ID!
+}
+
+input UpdateColorDataInput {
+  id: ID!
+  asset: String
+  productID: ID
+}
+
+input DeleteColorDataInput {
+  id: ID
+}
+
+input ModelColorDataConditionInput {
+  asset: ModelStringInput
+  productID: ModelIDInput
+  and: [ModelColorDataConditionInput]
+  or: [ModelColorDataConditionInput]
+  not: ModelColorDataConditionInput
 }
 
 type ModelBrandConnection {
@@ -393,6 +522,86 @@ input ModelBrandConditionInput {
   not: ModelBrandConditionInput
 }
 
+type ModelCartProductConnection {
+  items: [CartProduct]
+  nextToken: String
+}
+
+input ModelCartProductFilterInput {
+  id: ModelIDInput
+  quantity: ModelIntInput
+  color: ModelStringInput
+  productID: ModelIDInput
+  cartID: ModelIDInput
+  and: [ModelCartProductFilterInput]
+  or: [ModelCartProductFilterInput]
+  not: ModelCartProductFilterInput
+}
+
+input CreateCartProductInput {
+  id: ID
+  quantity: Int
+  color: String
+  productID: ID!
+  cartID: ID!
+}
+
+input UpdateCartProductInput {
+  id: ID!
+  quantity: Int
+  color: String
+  productID: ID
+  cartID: ID
+}
+
+input DeleteCartProductInput {
+  id: ID
+}
+
+input ModelCartProductConditionInput {
+  quantity: ModelIntInput
+  color: ModelStringInput
+  productID: ModelIDInput
+  cartID: ModelIDInput
+  and: [ModelCartProductConditionInput]
+  or: [ModelCartProductConditionInput]
+  not: ModelCartProductConditionInput
+}
+
+type ModelCartConnection {
+  items: [Cart]
+  nextToken: String
+}
+
+input ModelCartFilterInput {
+  id: ModelIDInput
+  price: ModelFloatInput
+  and: [ModelCartFilterInput]
+  or: [ModelCartFilterInput]
+  not: ModelCartFilterInput
+}
+
+input CreateCartInput {
+  id: ID
+  price: Float
+}
+
+input UpdateCartInput {
+  id: ID!
+  price: Float
+}
+
+input DeleteCartInput {
+  id: ID
+}
+
+input ModelCartConditionInput {
+  price: ModelFloatInput
+  and: [ModelCartConditionInput]
+  or: [ModelCartConditionInput]
+  not: ModelCartConditionInput
+}
+
 type ModelUserConnection {
   items: [User]
   nextToken: String
@@ -401,6 +610,7 @@ type ModelUserConnection {
 input ModelUserFilterInput {
   id: ModelIDInput
   username: ModelStringInput
+  cartID: ModelIDInput
   and: [ModelUserFilterInput]
   or: [ModelUserFilterInput]
   not: ModelUserFilterInput
@@ -409,11 +619,13 @@ input ModelUserFilterInput {
 input CreateUserInput {
   id: ID
   username: String!
+  cartID: ID!
 }
 
 input UpdateUserInput {
   id: ID!
   username: String
+  cartID: ID
 }
 
 input DeleteUserInput {
@@ -422,33 +634,10 @@ input DeleteUserInput {
 
 input ModelUserConditionInput {
   username: ModelStringInput
+  cartID: ModelIDInput
   and: [ModelUserConditionInput]
   or: [ModelUserConditionInput]
   not: ModelUserConditionInput
-}
-
-input CreateVideoUserHistoryInput {
-  id: ID
-  videoID: ID!
-  userID: ID!
-}
-
-input UpdateVideoUserHistoryInput {
-  id: ID!
-  videoID: ID
-  userID: ID
-}
-
-input DeleteVideoUserHistoryInput {
-  id: ID
-}
-
-input ModelVideoUserHistoryConditionInput {
-  videoID: ModelIDInput
-  userID: ModelIDInput
-  and: [ModelVideoUserHistoryConditionInput]
-  or: [ModelVideoUserHistoryConditionInput]
-  not: ModelVideoUserHistoryConditionInput
 }
 
 input ModelStringKeyConditionInput {
@@ -461,12 +650,11 @@ input ModelStringKeyConditionInput {
   beginsWith: String
 }
 
-input ModelIDKeyConditionInput {
-  eq: ID
-  le: ID
-  lt: ID
-  ge: ID
-  gt: ID
-  between: [ID]
-  beginsWith: ID
+input ModelIntKeyConditionInput {
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
 }

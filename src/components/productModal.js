@@ -175,7 +175,7 @@ const renderColorListItem = ({ item }) => {
         <ImageSpacer style={{ width: "20%" }}>
             <View style={styles.shadow}>
                 <ColorImageBorder>
-                    <View style={{ flex: 1, backgroundColor: item.color }} />
+                    <View style={{ flex: 1, backgroundColor: item.asset }} />
                 </ColorImageBorder>
             </View>
         </ImageSpacer>
@@ -187,13 +187,20 @@ const renderSectionHeader = ({ section }) => {
 };
 
 const productModal = ({ navigation, product, onPressClose }) => {
+    // construct array for image and color data
+    const data = [{id: 0, title: "Images", data: [{
+        id: 0, title: "Images", list: product.images.items}]},
+        {id: 1, title: "Colors", data: [{
+        id: 1, title: "Colors", list: product.colors.items}]}];
+    
+    console.log(data);
     return (
         <Container>
             <ModalContainer>
                 <TopContainer>
-                    <BigText>{product.product.name}</BigText>
+                    <BigText>{product.name}</BigText>
                     <TopRightContainer>
-                        <PriceText>$ {product.product.price}</PriceText>
+                        <PriceText>$ {product.price}</PriceText>
                         <TouchableOpacity onPress={onPressClose}>
                             <Feather
                                 name="arrow-down"
@@ -206,7 +213,7 @@ const productModal = ({ navigation, product, onPressClose }) => {
 
                 <ProductScroll>
                     <SectionList
-                        sections={product.product.data}
+                        sections={data}
                         renderSectionHeader={renderSectionHeader}
                         renderItem={renderSection}
                         stickySectionHeadersEnabled={false}
