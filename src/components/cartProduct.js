@@ -16,6 +16,7 @@ import Colors from "./colors";
 
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import awsmobile from '../../aws-exports';
+import * as mutations from '../../graphql/mutations';
 import * as queries from '../../graphql/queries';
 
 Amplify.configure(awsmobile);
@@ -111,19 +112,25 @@ const styles = StyleSheet.create({
 
 const cartProduct = ({ cartProduct }) => {
     const [product, setProduct] = useState([]);
+    const [quantity, setQuantity] = useState();
+    const [exists, setExists] = useState(true);
 
     useEffect(() => {
         async function getProduct() {
             try {
-                const apiData = await API.graphql(graphqlOperation(queries.listVideos, {id: cartProduct.productID}));
-                const productData = apiData.data;
+                const apiData = await API.graphql(graphqlOperation(queries.getProduct, { id: cartProduct.productID }));
+                const productData = apiData.data.getProduct;
                 setProduct(productData);
+                setQuantity(cartProduct.quantity);
             } catch (err) {
                 console.log('error1: ', err);
             }
         }
         getProduct();
     }, []);
+
+    console.log("product");
+    console.log(product);
 
     const renderColorListItem = ({ item }) => {
         return (
@@ -138,8 +145,7 @@ const cartProduct = ({ cartProduct }) => {
             </ColorImageSpacer>
         );
     };
-
-    return (
+    if (exists) { return (
         <ProductContainer>
             <TopContainer>
                 <LeftContainer>
@@ -169,7 +175,21 @@ const cartProduct = ({ cartProduct }) => {
             </TopContainer>
             <BottomContainer>
                 <Element>
-                    <Feather name="trash-2" size={20} color={Colors.main} />
+                    <Feather
+                        name="trash-2"
+                        size={20}
+                        color={Colors.main}
+                        onPress={
+                            async () => {
+                                setQuantity(0);
+                                setExists(false);
+                                try {
+                                    await API.graphql(graphqlOperation(mutations.deleteCartProduct, { input: { id: cartProduct.id } }))
+                                } catch (err) {
+                                    console.log("minus quantity error: ", err);
+                                }
+                            }
+                        } />
                     <SmallText> Delete</SmallText>
                 </Element>
                 <QuantityContainer>
@@ -178,14 +198,56 @@ const cartProduct = ({ cartProduct }) => {
                             name="minus"
                             size={20}
                             color={Colors.main}
-                            /*onPress={ quantity -= 1 || delete } */
+                            onPress={
+                                async () => {
+                                    if (quantity > 1) {
+                                        setQuantity(quantity - 1);
+                                        try {
+                                            await API.graphql(graphqlOperation(mutations.updateCartProduct, {
+                                                input: {
+                                                    id: cartProduct.id,
+                                                    quantity: quantity,
+                                                }
+                                            }))
+                                        } catch (err) {
+                                            console.log("minus quantity error: ", err);
+                                        }
+                                    } else {
+                                        setQuantity(0);
+                                        setExists(false);
+                                        try {
+                                            await API.graphql(graphqlOperation(mutations.deleteCartProduct, { input: { id: cartProduct.id } }))
+                                        } catch (err) {
+                                            console.log("minus quantity error: ", err);
+                                        }
+                                    }
+                                }
+                            }
                         />
                     </Element>
                     <SmallText style={{ fontWeight: "bold" }}>
-                        {cartProduct.quantity}
+                        {quantity}
                     </SmallText>
                     <Element>
-                        <Feather name="plus" size={20} color={Colors.main} />
+                        <Feather
+                            name="plus"
+                            size={20}
+                            color={Colors.main}
+                            onPress={
+                                async () => {
+                                    setQuantity(quantity + 1);
+                                    try {
+                                        await API.graphql(graphqlOperation(mutations.updateCartProduct, {
+                                            input: {
+                                                id: cartProduct.id,
+                                                quantity: quantity
+                                            }
+                                        }))
+                                    } catch (err) {
+                                        console.log("error: ", err);
+                                    }
+                                }
+                            } />
                     </Element>
                 </QuantityContainer>
                 <Element>
@@ -194,7 +256,11 @@ const cartProduct = ({ cartProduct }) => {
                 </Element>
             </BottomContainer>
         </ProductContainer>
-    );
+    )}
+    else {
+        // this should eventually be an error page if a cart loads incorrectly
+        return (<View />)
+    }
 };
 
 export default cartProduct;

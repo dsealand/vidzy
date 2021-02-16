@@ -13,7 +13,7 @@ import { Feather } from "@expo/vector-icons";
 
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import awsmobile from '../../aws-exports';
-import * as mutations from '../../graphql/queries';
+import * as mutations from '../../graphql/mutations';
 
 import Colors from "./colors";
 
@@ -238,7 +238,7 @@ const productModal = ({ navigation, product, onPressClose, addCartMutation }) =>
                         onPress={
                             async () => {
                                 try {
-                                    await API.graphql(graphqlOperation(mutations.createCartProduct, {input: {id: 0, cartID: 0, quantity: 0, productID: 30}}));
+                                    await API.graphql(graphqlOperation(mutations.createCartProduct, {input: {id: 1, cartID: 0, quantity: 5, productID: 30}}));
                                 } catch (err) {
                                     console.log('addCartMutation error: ', err);
                                 }

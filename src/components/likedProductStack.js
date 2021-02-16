@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import {
     View,
@@ -13,6 +13,7 @@ import { useWindowDimensions } from "react-native";
 
 import Colors from "./colors";
 import ProductModal from "./productModal";
+import LikedProduct from "./likedProduct";
 
 import productAPI from "../data/productInfo_api";
 
@@ -72,18 +73,7 @@ const styles = StyleSheet.create({
 const LikedProductStack = ({ navigation, liked }) => {
     const [productModalVisible, setProductModalVisible] = useState(false);
 
-    const renderItem = ({ item }) => (
-        <ProductContainer>
-            <TopContainer>
-                <View style={styles.shadow}>
-                    <ImageBorder onPress={() => setProductModalVisible(true)} />
-                </View>
-            </TopContainer>
-            <BottomContainer>
-                <SmallText>{item.product.name}</SmallText>
-            </BottomContainer>
-        </ProductContainer>
-    );
+    const renderItem = ({ item }) => <LikedProduct likedProduct={item} />;
 
     return (
         <View>
@@ -92,11 +82,10 @@ const LikedProductStack = ({ navigation, liked }) => {
                 transparent={true}
                 visible={productModalVisible}
                 transparent={true}
-                /* onShow={ trigger API call to get product info to pass as prop to CreatorModal } */
             >
                 <ProductModal
                     navigation={navigation}
-                    product={productAPI[0]}
+                    product={product}
                     onPressClose={() => setProductModalVisible(false)}
                 />
             </Modal>

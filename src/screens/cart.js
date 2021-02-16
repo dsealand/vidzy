@@ -142,7 +142,7 @@ const Cart = ({ navigation }) => {
                     {selection === "Liked" && (
                         <LikedProductStack
                             navigation={navigation}
-                            liked={liked}
+                            liked={cart}
                         />
                     )}
                 </ProductContainer>

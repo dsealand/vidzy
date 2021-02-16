@@ -21,7 +21,7 @@ const Line = style.View`
     backgroundColor: ${Colors.lighterGrey};
 `;
 
-const separator = style.View`
+const Seperator = style.View`
     height: 30px;
     width: 100%;
     justifyContent: center;
@@ -29,38 +29,14 @@ const separator = style.View`
 `;
 
 const cartProductStack = ({ cart }) => {
-    // const [productData, setProductData] = useState([]);
-
-    // useEffect(() => {
-    //     console.log("useEffect cartproduct");
-    //     setProductData(cart);
-    // }, []);
-
-    console.log("cart");
-    console.log(cart);
-    console.log(cart.cartProducts);
-    console.log(cart.cartProducts["items"]);
-
-    // useEffect(() => {
-    //     async function getProduct() {
-    //         try {
-    //             const apiData = await API.graphql(graphqlOperation(queries.listVideos, {id: cartProduct.productID}));
-    //             const productData = apiData.data;
-    //             setProduct(productData);
-    //         } catch (err) {
-    //             console.log('error1: ', err);
-    //         }
-    //     }
-    //     getProduct();
-    // }, []);
-
-    const itemseparator = () => {
+    const itemSeperator = () => {
         return (
-            <separator>
+            <Seperator>
                 <Line />
-            </separator>
+            </Seperator>
         );
     };
+    
     const renderItem = ({ item }) => <CartProduct cartProduct={item} />;
 
     return (
@@ -69,7 +45,7 @@ const cartProductStack = ({ cart }) => {
             data={cart.cartProducts.items}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
-            ItemSeparatorComponent={itemseparator}
+            ItemSeparatorComponent={itemSeperator}
         />
     );
 };
