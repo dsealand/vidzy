@@ -11,7 +11,13 @@ import {
 import style from "styled-components/native";
 import { Feather } from "@expo/vector-icons";
 
+import Amplify, { API, graphqlOperation } from 'aws-amplify';
+import awsmobile from '../../aws-exports';
+import * as mutations from '../../graphql/queries';
+
 import Colors from "./colors";
+
+Amplify.configure(awsmobile);
 
 const Container = style.View`
     flexDirection: column;
@@ -182,11 +188,19 @@ const renderColorListItem = ({ item }) => {
     );
 };
 
+async function addCartMutation() {
+    try {
+        await API.graphql(graphqlOperation(mutations.createCartProduct, {input: {id: 0, cartID: 0, quantity: 0, productID: 30}}));
+    } catch (err) {
+        console.log('addCartMutation error: ', err);
+    }
+}
+
 const renderSectionHeader = ({ section }) => {
     return <SectionHeaderText>{section.title}</SectionHeaderText>;
 };
 
-const productModal = ({ navigation, product, onPressClose }) => {
+const productModal = ({ navigation, product, onPressClose, addCartMutation }) => {
     // construct array for image and color data
     const data = [{id: 0, title: "Images", data: [{
         id: 0, title: "Images", list: product.images.items}]},
@@ -220,7 +234,16 @@ const productModal = ({ navigation, product, onPressClose }) => {
                     />
                 </ProductScroll>
                 <BottomContainer>
-                    <AddToCart>
+                    <AddToCart
+                        onPress={
+                            async () => {
+                                try {
+                                    await API.graphql(graphqlOperation(mutations.createCartProduct, {input: {id: 0, cartID: 0, quantity: 0, productID: 30}}));
+                                } catch (err) {
+                                    console.log('addCartMutation error: ', err);
+                                }
+                            }
+                        }>
                         <AddToCartText>Add To Cart</AddToCartText>
                     </AddToCart>
                     <MoreVideos

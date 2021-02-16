@@ -435,11 +435,81 @@ export const listCartProducts = /* GraphQL */ `
     }
   }
 `;
+export const getLikedProduct = /* GraphQL */ `
+  query GetLikedProduct($id: ID!) {
+    getLikedProduct(id: $id) {
+      id
+      quantity
+      color
+      product {
+        id
+        name
+        price
+        description
+        videos {
+          nextToken
+        }
+        brand {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
+        brandID
+        userID
+        images {
+          nextToken
+        }
+        colors {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      productID
+      cartID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listLikedProducts = /* GraphQL */ `
+  query ListLikedProducts(
+    $filter: ModelLikedProductFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listLikedProducts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        quantity
+        color
+        product {
+          id
+          name
+          price
+          description
+          brandID
+          userID
+          createdAt
+          updatedAt
+        }
+        productID
+        cartID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getCart = /* GraphQL */ `
   query GetCart($id: ID!) {
     getCart(id: $id) {
       id
-      products {
+      price
+      cartProducts {
         items {
           id
           quantity
@@ -451,7 +521,18 @@ export const getCart = /* GraphQL */ `
         }
         nextToken
       }
-      price
+      likedProducts {
+        items {
+          id
+          quantity
+          color
+          productID
+          cartID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -466,10 +547,13 @@ export const listCarts = /* GraphQL */ `
     listCarts(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        products {
+        price
+        cartProducts {
           nextToken
         }
-        price
+        likedProducts {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -484,10 +568,13 @@ export const getUser = /* GraphQL */ `
       username
       cart {
         id
-        products {
+        price
+        cartProducts {
           nextToken
         }
-        price
+        likedProducts {
+          nextToken
+        }
         createdAt
         updatedAt
       }

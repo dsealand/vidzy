@@ -73,10 +73,22 @@ type CartProduct {
   updatedAt: AWSDateTime!
 }
 
+type LikedProduct {
+  id: ID!
+  quantity: Int
+  color: String
+  product: Product!
+  productID: ID!
+  cartID: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
 type Cart {
   id: ID!
-  products(quantity: ModelIntKeyConditionInput, filter: ModelCartProductFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelCartProductConnection
   price: Float
+  cartProducts(filter: ModelCartProductFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelCartProductConnection
+  likedProducts(filter: ModelLikedProductFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelLikedProductConnection
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 }
@@ -214,6 +226,8 @@ type Query {
   listBrands(filter: ModelBrandFilterInput, limit: Int, nextToken: String): ModelBrandConnection
   getCartProduct(id: ID!): CartProduct
   listCartProducts(filter: ModelCartProductFilterInput, limit: Int, nextToken: String): ModelCartProductConnection
+  getLikedProduct(id: ID!): LikedProduct
+  listLikedProducts(filter: ModelLikedProductFilterInput, limit: Int, nextToken: String): ModelLikedProductConnection
   getCart(id: ID!): Cart
   listCarts(filter: ModelCartFilterInput, limit: Int, nextToken: String): ModelCartConnection
   getUser(id: ID!): User
@@ -266,6 +280,9 @@ type Mutation {
   createCartProduct(input: CreateCartProductInput!, condition: ModelCartProductConditionInput): CartProduct
   updateCartProduct(input: UpdateCartProductInput!, condition: ModelCartProductConditionInput): CartProduct
   deleteCartProduct(input: DeleteCartProductInput!, condition: ModelCartProductConditionInput): CartProduct
+  createLikedProduct(input: CreateLikedProductInput!, condition: ModelLikedProductConditionInput): LikedProduct
+  updateLikedProduct(input: UpdateLikedProductInput!, condition: ModelLikedProductConditionInput): LikedProduct
+  deleteLikedProduct(input: DeleteLikedProductInput!, condition: ModelLikedProductConditionInput): LikedProduct
   createCart(input: CreateCartInput!, condition: ModelCartConditionInput): Cart
   updateCart(input: UpdateCartInput!, condition: ModelCartConditionInput): Cart
   deleteCart(input: DeleteCartInput!, condition: ModelCartConditionInput): Cart
@@ -308,6 +325,9 @@ type Subscription {
   onCreateCartProduct: CartProduct @aws_subscribe(mutations: ["createCartProduct"])
   onUpdateCartProduct: CartProduct @aws_subscribe(mutations: ["updateCartProduct"])
   onDeleteCartProduct: CartProduct @aws_subscribe(mutations: ["deleteCartProduct"])
+  onCreateLikedProduct: LikedProduct @aws_subscribe(mutations: ["createLikedProduct"])
+  onUpdateLikedProduct: LikedProduct @aws_subscribe(mutations: ["updateLikedProduct"])
+  onDeleteLikedProduct: LikedProduct @aws_subscribe(mutations: ["deleteLikedProduct"])
   onCreateCart: Cart @aws_subscribe(mutations: ["createCart"])
   onUpdateCart: Cart @aws_subscribe(mutations: ["updateCart"])
   onDeleteCart: Cart @aws_subscribe(mutations: ["deleteCart"])
@@ -568,6 +588,52 @@ input ModelCartProductConditionInput {
   not: ModelCartProductConditionInput
 }
 
+type ModelLikedProductConnection {
+  items: [LikedProduct]
+  nextToken: String
+}
+
+input ModelLikedProductFilterInput {
+  id: ModelIDInput
+  quantity: ModelIntInput
+  color: ModelStringInput
+  productID: ModelIDInput
+  cartID: ModelIDInput
+  and: [ModelLikedProductFilterInput]
+  or: [ModelLikedProductFilterInput]
+  not: ModelLikedProductFilterInput
+}
+
+input CreateLikedProductInput {
+  id: ID
+  quantity: Int
+  color: String
+  productID: ID!
+  cartID: ID!
+}
+
+input UpdateLikedProductInput {
+  id: ID!
+  quantity: Int
+  color: String
+  productID: ID
+  cartID: ID
+}
+
+input DeleteLikedProductInput {
+  id: ID
+}
+
+input ModelLikedProductConditionInput {
+  quantity: ModelIntInput
+  color: ModelStringInput
+  productID: ModelIDInput
+  cartID: ModelIDInput
+  and: [ModelLikedProductConditionInput]
+  or: [ModelLikedProductConditionInput]
+  not: ModelLikedProductConditionInput
+}
+
 type ModelCartConnection {
   items: [Cart]
   nextToken: String
@@ -648,13 +714,4 @@ input ModelStringKeyConditionInput {
   gt: String
   between: [String]
   beginsWith: String
-}
-
-input ModelIntKeyConditionInput {
-  eq: Int
-  le: Int
-  lt: Int
-  ge: Int
-  gt: Int
-  between: [Int]
 }

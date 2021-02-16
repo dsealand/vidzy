@@ -133,10 +133,6 @@
                     {
                         "AttributeName": "cartID",
                         "AttributeType": "S"
-                    },
-                    {
-                        "AttributeName": "quantity",
-                        "AttributeType": "N"
                     }
                 ],
                 "StreamSpecification": {
@@ -189,15 +185,11 @@
                 },
                 "GlobalSecondaryIndexes": [
                     {
-                        "IndexName": "byCart",
+                        "IndexName": "byCartProduct",
                         "KeySchema": [
                             {
                                 "AttributeName": "cartID",
                                 "KeyType": "HASH"
-                            },
-                            {
-                                "AttributeName": "quantity",
-                                "KeyType": "RANGE"
                             }
                         ],
                         "Projection": {

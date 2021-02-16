@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import {
     View,
@@ -111,32 +111,33 @@ const styles = StyleSheet.create({
 
 const cartProduct = ({ cartProduct }) => {
     const [product, setProduct] = useState([]);
+
+    useEffect(() => {
+        async function getProduct() {
+            try {
+                const apiData = await API.graphql(graphqlOperation(queries.listVideos, {id: cartProduct.productID}));
+                const productData = apiData.data;
+                setProduct(productData);
+            } catch (err) {
+                console.log('error1: ', err);
+            }
+        }
+        getProduct();
+    }, []);
+
     const renderColorListItem = ({ item }) => {
         return (
             <ColorImageSpacer>
                 <View style={styles.shadow}>
                     <ColorImageCircle>
                         <View
-                            style={{ flex: 1, backgroundColor: item.color }}
+                            style={{ flex: 1, backgroundColor: item.asset }}
                         />
                     </ColorImageCircle>
                 </View>
             </ColorImageSpacer>
         );
     };
-
-    useEffect(() => {
-        async function getProduct() {
-            try {
-                const apiData = await API.graphql(graphqlOperation(queries.getProduct, {id: product.productID}));
-                const apiProduct = apiData.data.getProduct;
-                setProduct(apiProduct);
-            } catch (err) {
-                console.log('cart error: ', err);
-            }
-        }
-        getProduct();
-    }, []);
 
     return (
         <ProductContainer>
@@ -158,7 +159,7 @@ const cartProduct = ({ cartProduct }) => {
                     </SmallText>
                     <View style={{ justifyContent: "center", height: "50%" }}>
                         <FlatList
-                            data={product.product.colors}
+                            data={product.colors}
                             renderItem={renderColorListItem}
                             horizontal={true}
                             keyExtractor={(item) => item.id}
@@ -181,7 +182,7 @@ const cartProduct = ({ cartProduct }) => {
                         />
                     </Element>
                     <SmallText style={{ fontWeight: "bold" }}>
-                        {product.quantity}
+                        {cartProduct.quantity}
                     </SmallText>
                     <Element>
                         <Feather name="plus" size={20} color={Colors.main} />

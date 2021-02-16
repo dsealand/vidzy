@@ -57,7 +57,18 @@ type Brand @model {
 }
 
 type CartProduct @model 
-  @key(name: "byCart", fields: ["cartID", "quantity"])
+  @key(name: "byCartProduct", fields: ["cartID"])
+  {
+  id: ID!
+  quantity: Int
+  color: String
+  product: Product! @connection(fields: ["productID"])
+  productID: ID!
+  cartID: ID!
+}
+
+type LikedProduct @model 
+  @key(name: "byCartLiked", fields: ["cartID"])
   {
   id: ID!
   quantity: Int
@@ -69,8 +80,9 @@ type CartProduct @model
 
 type Cart @model {
   id: ID!
-  products: [CartProduct] @connection(keyName: "byCart", fields: ["id"])
   price: Float
+  cartProducts: [CartProduct] @connection(keyName: "byCartProduct", fields: ["id"])
+  likedProducts: [LikedProduct] @connection(keyName: "byCartLiked", fields: ["id"])
 }
 
 # user model schema

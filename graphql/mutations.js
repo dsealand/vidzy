@@ -787,6 +787,132 @@ export const deleteCartProduct = /* GraphQL */ `
     }
   }
 `;
+export const createLikedProduct = /* GraphQL */ `
+  mutation CreateLikedProduct(
+    $input: CreateLikedProductInput!
+    $condition: ModelLikedProductConditionInput
+  ) {
+    createLikedProduct(input: $input, condition: $condition) {
+      id
+      quantity
+      color
+      product {
+        id
+        name
+        price
+        description
+        videos {
+          nextToken
+        }
+        brand {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
+        brandID
+        userID
+        images {
+          nextToken
+        }
+        colors {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      productID
+      cartID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateLikedProduct = /* GraphQL */ `
+  mutation UpdateLikedProduct(
+    $input: UpdateLikedProductInput!
+    $condition: ModelLikedProductConditionInput
+  ) {
+    updateLikedProduct(input: $input, condition: $condition) {
+      id
+      quantity
+      color
+      product {
+        id
+        name
+        price
+        description
+        videos {
+          nextToken
+        }
+        brand {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
+        brandID
+        userID
+        images {
+          nextToken
+        }
+        colors {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      productID
+      cartID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteLikedProduct = /* GraphQL */ `
+  mutation DeleteLikedProduct(
+    $input: DeleteLikedProductInput!
+    $condition: ModelLikedProductConditionInput
+  ) {
+    deleteLikedProduct(input: $input, condition: $condition) {
+      id
+      quantity
+      color
+      product {
+        id
+        name
+        price
+        description
+        videos {
+          nextToken
+        }
+        brand {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+        }
+        brandID
+        userID
+        images {
+          nextToken
+        }
+        colors {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      productID
+      cartID
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createCart = /* GraphQL */ `
   mutation CreateCart(
     $input: CreateCartInput!
@@ -794,7 +920,8 @@ export const createCart = /* GraphQL */ `
   ) {
     createCart(input: $input, condition: $condition) {
       id
-      products {
+      price
+      cartProducts {
         items {
           id
           quantity
@@ -806,7 +933,18 @@ export const createCart = /* GraphQL */ `
         }
         nextToken
       }
-      price
+      likedProducts {
+        items {
+          id
+          quantity
+          color
+          productID
+          cartID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -819,7 +957,8 @@ export const updateCart = /* GraphQL */ `
   ) {
     updateCart(input: $input, condition: $condition) {
       id
-      products {
+      price
+      cartProducts {
         items {
           id
           quantity
@@ -831,7 +970,18 @@ export const updateCart = /* GraphQL */ `
         }
         nextToken
       }
-      price
+      likedProducts {
+        items {
+          id
+          quantity
+          color
+          productID
+          cartID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -844,7 +994,8 @@ export const deleteCart = /* GraphQL */ `
   ) {
     deleteCart(input: $input, condition: $condition) {
       id
-      products {
+      price
+      cartProducts {
         items {
           id
           quantity
@@ -856,7 +1007,18 @@ export const deleteCart = /* GraphQL */ `
         }
         nextToken
       }
-      price
+      likedProducts {
+        items {
+          id
+          quantity
+          color
+          productID
+          cartID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -872,10 +1034,13 @@ export const createUser = /* GraphQL */ `
       username
       cart {
         id
-        products {
+        price
+        cartProducts {
           nextToken
         }
-        price
+        likedProducts {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -895,10 +1060,13 @@ export const updateUser = /* GraphQL */ `
       username
       cart {
         id
-        products {
+        price
+        cartProducts {
           nextToken
         }
-        price
+        likedProducts {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -918,10 +1086,13 @@ export const deleteUser = /* GraphQL */ `
       username
       cart {
         id
-        products {
+        price
+        cartProducts {
           nextToken
         }
-        price
+        likedProducts {
+          nextToken
+        }
         createdAt
         updatedAt
       }

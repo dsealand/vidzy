@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import {
     View,
@@ -29,8 +29,31 @@ const Seperator = style.View`
 `;
 
 const cartProductStack = ({ cart }) => {
+    // const [productData, setProductData] = useState([]);
+
+    // useEffect(() => {
+    //     console.log("useEffect cartproduct");
+    //     setProductData(cart);
+    // }, []);
+
     console.log("cart");
     console.log(cart);
+    console.log(cart.cartProducts);
+    console.log(cart.cartProducts["items"]);
+
+    // useEffect(() => {
+    //     async function getProduct() {
+    //         try {
+    //             const apiData = await API.graphql(graphqlOperation(queries.listVideos, {id: cartProduct.productID}));
+    //             const productData = apiData.data;
+    //             setProduct(productData);
+    //         } catch (err) {
+    //             console.log('error1: ', err);
+    //         }
+    //     }
+    //     getProduct();
+    // }, []);
+
     const itemSeperator = () => {
         return (
             <Seperator>
@@ -38,12 +61,12 @@ const cartProductStack = ({ cart }) => {
             </Seperator>
         );
     };
-    const renderItem = ({ item }) => <CartProduct product={item} />;
+    const renderItem = ({ item }) => <CartProduct cartProduct={item} />;
 
     return (
         <FlatList
             style={{ width: "100%" }}
-            data={cart.products}
+            data={cart.cartProducts.items}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
             ItemSeparatorComponent={itemSeperator}
