@@ -88,7 +88,7 @@ const PriceText = style(BigText)`
 
 const Cart = ({ navigation }) => {
     const [selection, setSelection] = useState("Cart");
-    const [cart, setCart] = useState([]);
+    const [cart, setCart] = useState(false);
 
     useEffect(() => {
         async function getCart() {
@@ -114,7 +114,7 @@ const Cart = ({ navigation }) => {
         likedColor = Colors.main;
     }
 
-    return (
+    if (cart) { return (
         <View>
             <Header>
                 <Element onPress={() => navigation.goBack()}>
@@ -160,7 +160,13 @@ const Cart = ({ navigation }) => {
                 </BottomContainer>
             </Container>
         </View>
-    );
+    )}
+
+    else {
+        // this should eventually be an error page if a cart loads incorrectly
+        return (<View/>)
+    }
+
 };
 
 export default Cart;
