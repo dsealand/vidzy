@@ -21,7 +21,7 @@ const Line = style.View`
     backgroundColor: ${Colors.lighterGrey};
 `;
 
-const Seperator = style.View`
+const separator = style.View`
     height: 30px;
     width: 100%;
     justifyContent: center;
@@ -54,11 +54,11 @@ const cartProductStack = ({ cart }) => {
     //     getProduct();
     // }, []);
 
-    const itemSeperator = () => {
+    const itemseparator = () => {
         return (
-            <Seperator>
+            <separator>
                 <Line />
-            </Seperator>
+            </separator>
         );
     };
     const renderItem = ({ item }) => <CartProduct cartProduct={item} />;
@@ -69,7 +69,7 @@ const cartProductStack = ({ cart }) => {
             data={cart.cartProducts.items}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
-            ItemSeparatorComponent={itemSeperator}
+            ItemSeparatorComponent={itemseparator}
         />
     );
 };

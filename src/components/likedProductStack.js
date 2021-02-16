@@ -53,7 +53,7 @@ const SmallText = style.Text`
     fontWeight: bold;
 `;
 
-const Seperator = style.View`
+const separator = style.View`
     height: 30px;
     width: 100%;
     justifyContent: center;
@@ -102,11 +102,11 @@ const LikedProductStack = ({ navigation, liked }) => {
             </Modal>
             <FlatList
                 style={{ width: "100%" }}
-                data={liked.products}
+                data={liked.likedProducts.items}
                 renderItem={renderItem}
                 numColumns={2}
                 keyExtractor={(item) => item.id}
-                ItemSeparatorComponent={Seperator}
+                ItemSeparatorComponent={separator}
             />
         </View>
     );
