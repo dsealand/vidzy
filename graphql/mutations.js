@@ -913,6 +913,135 @@ export const deleteLikedProduct = /* GraphQL */ `
     }
   }
 `;
+export const createLikedVideo = /* GraphQL */ `
+  mutation CreateLikedVideo(
+    $input: CreateLikedVideoInput!
+    $condition: ModelLikedVideoConditionInput
+  ) {
+    createLikedVideo(input: $input, condition: $condition) {
+      id
+      userID
+      video {
+        id
+        name
+        product {
+          id
+          name
+          price
+          description
+          brandID
+          userID
+          createdAt
+          updatedAt
+        }
+        productID
+        creator {
+          id
+          username
+          photo
+          description
+          createdAt
+          updatedAt
+        }
+        creatorID
+        URL
+        orientation
+        viewCount
+        createdAt
+        updatedAt
+      }
+      videoID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateLikedVideo = /* GraphQL */ `
+  mutation UpdateLikedVideo(
+    $input: UpdateLikedVideoInput!
+    $condition: ModelLikedVideoConditionInput
+  ) {
+    updateLikedVideo(input: $input, condition: $condition) {
+      id
+      userID
+      video {
+        id
+        name
+        product {
+          id
+          name
+          price
+          description
+          brandID
+          userID
+          createdAt
+          updatedAt
+        }
+        productID
+        creator {
+          id
+          username
+          photo
+          description
+          createdAt
+          updatedAt
+        }
+        creatorID
+        URL
+        orientation
+        viewCount
+        createdAt
+        updatedAt
+      }
+      videoID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteLikedVideo = /* GraphQL */ `
+  mutation DeleteLikedVideo(
+    $input: DeleteLikedVideoInput!
+    $condition: ModelLikedVideoConditionInput
+  ) {
+    deleteLikedVideo(input: $input, condition: $condition) {
+      id
+      userID
+      video {
+        id
+        name
+        product {
+          id
+          name
+          price
+          description
+          brandID
+          userID
+          createdAt
+          updatedAt
+        }
+        productID
+        creator {
+          id
+          username
+          photo
+          description
+          createdAt
+          updatedAt
+        }
+        creatorID
+        URL
+        orientation
+        viewCount
+        createdAt
+        updatedAt
+      }
+      videoID
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createCart = /* GraphQL */ `
   mutation CreateCart(
     $input: CreateCartInput!
@@ -1045,6 +1174,16 @@ export const createUser = /* GraphQL */ `
         updatedAt
       }
       cartID
+      likedVideos {
+        items {
+          id
+          userID
+          videoID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -1071,6 +1210,16 @@ export const updateUser = /* GraphQL */ `
         updatedAt
       }
       cartID
+      likedVideos {
+        items {
+          id
+          userID
+          videoID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -1097,6 +1246,16 @@ export const deleteUser = /* GraphQL */ `
         updatedAt
       }
       cartID
+      likedVideos {
+        items {
+          id
+          userID
+          videoID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }

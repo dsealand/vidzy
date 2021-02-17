@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { useWindowDimensions, Modal } from "react-native";
+import { View, useWindowDimensions, Modal } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import style from "styled-components/native";
 
@@ -41,6 +41,9 @@ const VideoCard = ({ navigation, card, isPlay }) => {
     const [creator, setCreator] = useState([]);
     const [product, setProduct] = useState([]);
     const [brand, setBrand] = useState([]);
+    const [liked, setLiked] = useState(false);
+    const [loaded, setLoaded] = useState(false);
+    const [likedVideoID, setlikedVideoID] = useState();
 
     const width = useWindowDimensions().width;
     const height = useWindowDimensions().height;
@@ -68,11 +71,36 @@ const VideoCard = ({ navigation, card, isPlay }) => {
                 console.log('error1: ', err);
             }
         }
+        async function isLiked() {
+            try {
+                const apiData = await API.graphql(graphqlOperation(queries.listLikedVideos, {
+                    filter: {
+                        videoID: {
+                            eq: card.id
+                        },
+                        userID: {
+                            eq: 0
+                        }
+                    }
+                }));
+                if (apiData.data.listLikedVideos.items.length != 0) {
+                    setlikedVideoID(apiData.data.listLikedVideos.items[0].id)
+                    setLiked(true);
+                    console.log(likedVideoID);
+                } else {
+                    setLiked(false);
+                }
+            } catch (err) {
+                console.log('likedVideos query error: ', err);
+            }
+            setLoaded(true);
+        }
         getCreator();
         getProduct();
+        isLiked();
     }, []);
 
-    return (        
+    if (loaded) { return (        
         <VideoContainer style={{ height: height, width: width }}>
             <Modal
                 animationType="slide"
@@ -115,13 +143,19 @@ const VideoCard = ({ navigation, card, isPlay }) => {
                     creator={creator}
                     product={product}
                     brand={brand}
-                    // videoLiked={card.liked}
+                    videoLiked={liked}
+                    likedVideoID={likedVideoID}
+                    videoID={card.id}
                     onPressCreator={() => setCreatorModalVisible(true)}
                     onPressProduct={() => setProductModalVisible(true)}
                 />
             </Gradient>
         </VideoContainer>
     );
-};
+} else {
+    return(
+        <View/>
+    )
+}}
 
 export default VideoCard;

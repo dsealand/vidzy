@@ -110,10 +110,11 @@ const styles = StyleSheet.create({
     },
 });
 
-const cartProduct = ({ cartProduct }) => {
+const cartProduct = ({ cartProduct, likedProduct }) => {
     const [product, setProduct] = useState([]);
     const [quantity, setQuantity] = useState();
     const [exists, setExists] = useState(true);
+    const [liked, setLiked] = useState(false);
 
     useEffect(() => {
         async function getProduct() {
@@ -129,8 +130,8 @@ const cartProduct = ({ cartProduct }) => {
         getProduct();
     }, []);
 
-    console.log("product");
-    console.log(product);
+    // console.log("product");
+    // console.log(product);
 
     const renderColorListItem = ({ item }) => {
         return (
@@ -251,7 +252,15 @@ const cartProduct = ({ cartProduct }) => {
                     </Element>
                 </QuantityContainer>
                 <Element>
-                    <Feather name="heart" size={20} color={Colors.main} />
+                    <Feather
+                        name="heart"
+                        size={20}
+                        color={Colors.main}
+                        onPress={
+                            async () => {
+
+                            }
+                        }/>
                     <SmallText> Like</SmallText>
                 </Element>
             </BottomContainer>

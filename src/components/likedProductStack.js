@@ -77,7 +77,7 @@ const LikedProductStack = ({ navigation, liked }) => {
 
     return (
         <View>
-            <Modal
+            {/* <Modal
                 animationType="slide"
                 transparent={true}
                 visible={productModalVisible}
@@ -88,7 +88,7 @@ const LikedProductStack = ({ navigation, liked }) => {
                     product={product}
                     onPressClose={() => setProductModalVisible(false)}
                 />
-            </Modal>
+            </Modal> */}
             <FlatList
                 style={{ width: "100%" }}
                 data={liked.likedProducts.items}

@@ -504,6 +504,75 @@ export const listLikedProducts = /* GraphQL */ `
     }
   }
 `;
+export const getLikedVideo = /* GraphQL */ `
+  query GetLikedVideo($id: ID!) {
+    getLikedVideo(id: $id) {
+      id
+      userID
+      video {
+        id
+        name
+        product {
+          id
+          name
+          price
+          description
+          brandID
+          userID
+          createdAt
+          updatedAt
+        }
+        productID
+        creator {
+          id
+          username
+          photo
+          description
+          createdAt
+          updatedAt
+        }
+        creatorID
+        URL
+        orientation
+        viewCount
+        createdAt
+        updatedAt
+      }
+      videoID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listLikedVideos = /* GraphQL */ `
+  query ListLikedVideos(
+    $filter: ModelLikedVideoFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listLikedVideos(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userID
+        video {
+          id
+          name
+          productID
+          creatorID
+          URL
+          orientation
+          viewCount
+          createdAt
+          updatedAt
+        }
+        videoID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getCart = /* GraphQL */ `
   query GetCart($id: ID!) {
     getCart(id: $id) {
@@ -579,6 +648,16 @@ export const getUser = /* GraphQL */ `
         updatedAt
       }
       cartID
+      likedVideos {
+        items {
+          id
+          userID
+          videoID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -601,6 +680,9 @@ export const listUsers = /* GraphQL */ `
           updatedAt
         }
         cartID
+        likedVideos {
+          nextToken
+        }
         createdAt
         updatedAt
       }

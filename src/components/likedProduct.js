@@ -76,16 +76,14 @@ const styles = StyleSheet.create({
 
 const likedProduct = ({ likedProduct }) => {
     const [product, setProduct] = useState([]);
-    const [quantity, setQuantity] = useState();
-    const [exists, setExists] = useState(true);
+    // const [exists, setExists] = useState(true);
 
     useEffect(() => {
         async function getProduct() {
             try {
-                const apiData = await API.graphql(graphqlOperation(queries.getProduct, { id: cartProduct.productID }));
+                const apiData = await API.graphql(graphqlOperation(queries.getProduct, { id: likedProduct.productID }));
                 const productData = apiData.data.getProduct;
                 setProduct(productData);
-                setQuantity(cartProduct.quantity);
             } catch (err) {
                 console.log('error1: ', err);
             }
@@ -93,25 +91,21 @@ const likedProduct = ({ likedProduct }) => {
         getProduct();
     }, []);
 
-    console.log("product");
-    console.log(product);
+    // console.log("product");
+    // console.log(product);
 
-    if (exists) { return (
+    return (
         <ProductContainer>
             <TopContainer>
                 <View style={styles.shadow}>
-                    <ImageBorder onPress={() => setProductModalVisible(true)} />
+                    {/* <ImageBorder onPress={() => setProductModalVisible(true)} /> */}
                 </View>
             </TopContainer>
             <BottomContainer>
-                <SmallText>{item.name}</SmallText>
+                <SmallText>{product.name}</SmallText>
             </BottomContainer>
         </ProductContainer>
-    )}
-    else {
-        // this should eventually be an error page if a cart loads incorrectly
-        return (<View />)
-    }
+    )
 };
 
 export default likedProduct;

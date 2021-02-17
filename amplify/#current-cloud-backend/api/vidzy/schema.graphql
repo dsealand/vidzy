@@ -78,6 +78,15 @@ type LikedProduct @model
   cartID: ID!
 }
 
+type LikedVideo @model
+  @key(name: "byUserLiked", fields: ["userID"])
+  {
+  id: ID!
+  userID: ID!
+  video: Video! @connection(fields: ["videoID"])
+  videoID: ID!
+}
+
 type Cart @model {
   id: ID!
   price: Float
@@ -91,6 +100,7 @@ type User @model {
   username: String!
   cart: Cart @connection(fields: ["cartID"])
   cartID: ID!
+  likedVideos: [LikedVideo] @connection(keyName: "byUserLiked", fields: ["id"])
   # history: [VideoUserHistory] #@connection(keyName: "byUserHistory", fields: ["id"])
   # liked: [VideoUserLiked] #@connection(keyName: "byUserLiked", fields: ["id"])
   # cart: [ProductUser] #@connection(keyName: "byUserCart", fields: ["id"])

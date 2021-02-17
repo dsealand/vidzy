@@ -841,6 +841,126 @@ export const onDeleteLikedProduct = /* GraphQL */ `
     }
   }
 `;
+export const onCreateLikedVideo = /* GraphQL */ `
+  subscription OnCreateLikedVideo {
+    onCreateLikedVideo {
+      id
+      userID
+      video {
+        id
+        name
+        product {
+          id
+          name
+          price
+          description
+          brandID
+          userID
+          createdAt
+          updatedAt
+        }
+        productID
+        creator {
+          id
+          username
+          photo
+          description
+          createdAt
+          updatedAt
+        }
+        creatorID
+        URL
+        orientation
+        viewCount
+        createdAt
+        updatedAt
+      }
+      videoID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateLikedVideo = /* GraphQL */ `
+  subscription OnUpdateLikedVideo {
+    onUpdateLikedVideo {
+      id
+      userID
+      video {
+        id
+        name
+        product {
+          id
+          name
+          price
+          description
+          brandID
+          userID
+          createdAt
+          updatedAt
+        }
+        productID
+        creator {
+          id
+          username
+          photo
+          description
+          createdAt
+          updatedAt
+        }
+        creatorID
+        URL
+        orientation
+        viewCount
+        createdAt
+        updatedAt
+      }
+      videoID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteLikedVideo = /* GraphQL */ `
+  subscription OnDeleteLikedVideo {
+    onDeleteLikedVideo {
+      id
+      userID
+      video {
+        id
+        name
+        product {
+          id
+          name
+          price
+          description
+          brandID
+          userID
+          createdAt
+          updatedAt
+        }
+        productID
+        creator {
+          id
+          username
+          photo
+          description
+          createdAt
+          updatedAt
+        }
+        creatorID
+        URL
+        orientation
+        viewCount
+        createdAt
+        updatedAt
+      }
+      videoID
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateCart = /* GraphQL */ `
   subscription OnCreateCart {
     onCreateCart {
@@ -961,6 +1081,16 @@ export const onCreateUser = /* GraphQL */ `
         updatedAt
       }
       cartID
+      likedVideos {
+        items {
+          id
+          userID
+          videoID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -984,6 +1114,16 @@ export const onUpdateUser = /* GraphQL */ `
         updatedAt
       }
       cartID
+      likedVideos {
+        items {
+          id
+          userID
+          videoID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -1007,6 +1147,16 @@ export const onDeleteUser = /* GraphQL */ `
         updatedAt
       }
       cartID
+      likedVideos {
+        items {
+          id
+          userID
+          videoID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }

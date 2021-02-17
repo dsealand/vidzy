@@ -6,6 +6,15 @@ import { Feather } from "@expo/vector-icons";
 
 import Colors from "./colors";
 
+import Amplify, { API, graphqlOperation } from 'aws-amplify';
+import awsmobile from '../../aws-exports';
+import * as mutations from '../../graphql/mutations';
+import * as queries from '../../graphql/queries';
+
+import UUIDGenerator from 'react-native-uuid-generator';
+
+Amplify.configure(awsmobile);
+
 const Container = style.View`
     flexDirection: row;
     justifyContent: space-between;
@@ -72,17 +81,35 @@ const VideoElements = ({
     product,
     brand,
     videoLiked,
+    likedVideoID,
+    videoID,
     onPressCreator,
     onPressProduct,
 }) => {
     const [liked, setLiked] = useState(videoLiked);
+    const [likedID, setLikedID] = useState(likedVideoID);
 
     /* add code here to update users liked videos */
-    const likePress = () => {
+
+    async function likePress() {
         if (liked) {
             setLiked(false);
+            try {
+                await API.graphql(graphqlOperation(mutations.deleteLikedVideo, {input: {id: likedVideoID}}));
+            } catch (err) {
+                console.log('error1: ', err);
+            }
+            console.log("deleted likedVideo object with id: ", likedID);
         } else {
             setLiked(true);
+            try {
+                const apiData = await API.graphql(graphqlOperation(mutations.createLikedVideo, {input: {videoID: videoID, userID: 0}}));
+                setLikedID(apiData.data.createLikedVideo.id);
+                // console.log("set likedID: ", apiData.data);
+            } catch (err) {
+                console.log('error1: ', err);
+            }
+            // console.log("created new likedVideo object with id: ", likedID);
         }
     };
 

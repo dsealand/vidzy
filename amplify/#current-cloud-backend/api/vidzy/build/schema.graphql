@@ -84,6 +84,15 @@ type LikedProduct {
   updatedAt: AWSDateTime!
 }
 
+type LikedVideo {
+  id: ID!
+  userID: ID!
+  video: Video!
+  videoID: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
 type Cart {
   id: ID!
   price: Float
@@ -98,6 +107,7 @@ type User {
   username: String!
   cart: Cart
   cartID: ID!
+  likedVideos(filter: ModelLikedVideoFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelLikedVideoConnection
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 }
@@ -228,6 +238,8 @@ type Query {
   listCartProducts(filter: ModelCartProductFilterInput, limit: Int, nextToken: String): ModelCartProductConnection
   getLikedProduct(id: ID!): LikedProduct
   listLikedProducts(filter: ModelLikedProductFilterInput, limit: Int, nextToken: String): ModelLikedProductConnection
+  getLikedVideo(id: ID!): LikedVideo
+  listLikedVideos(filter: ModelLikedVideoFilterInput, limit: Int, nextToken: String): ModelLikedVideoConnection
   getCart(id: ID!): Cart
   listCarts(filter: ModelCartFilterInput, limit: Int, nextToken: String): ModelCartConnection
   getUser(id: ID!): User
@@ -283,6 +295,9 @@ type Mutation {
   createLikedProduct(input: CreateLikedProductInput!, condition: ModelLikedProductConditionInput): LikedProduct
   updateLikedProduct(input: UpdateLikedProductInput!, condition: ModelLikedProductConditionInput): LikedProduct
   deleteLikedProduct(input: DeleteLikedProductInput!, condition: ModelLikedProductConditionInput): LikedProduct
+  createLikedVideo(input: CreateLikedVideoInput!, condition: ModelLikedVideoConditionInput): LikedVideo
+  updateLikedVideo(input: UpdateLikedVideoInput!, condition: ModelLikedVideoConditionInput): LikedVideo
+  deleteLikedVideo(input: DeleteLikedVideoInput!, condition: ModelLikedVideoConditionInput): LikedVideo
   createCart(input: CreateCartInput!, condition: ModelCartConditionInput): Cart
   updateCart(input: UpdateCartInput!, condition: ModelCartConditionInput): Cart
   deleteCart(input: DeleteCartInput!, condition: ModelCartConditionInput): Cart
@@ -328,6 +343,9 @@ type Subscription {
   onCreateLikedProduct: LikedProduct @aws_subscribe(mutations: ["createLikedProduct"])
   onUpdateLikedProduct: LikedProduct @aws_subscribe(mutations: ["updateLikedProduct"])
   onDeleteLikedProduct: LikedProduct @aws_subscribe(mutations: ["deleteLikedProduct"])
+  onCreateLikedVideo: LikedVideo @aws_subscribe(mutations: ["createLikedVideo"])
+  onUpdateLikedVideo: LikedVideo @aws_subscribe(mutations: ["updateLikedVideo"])
+  onDeleteLikedVideo: LikedVideo @aws_subscribe(mutations: ["deleteLikedVideo"])
   onCreateCart: Cart @aws_subscribe(mutations: ["createCart"])
   onUpdateCart: Cart @aws_subscribe(mutations: ["updateCart"])
   onDeleteCart: Cart @aws_subscribe(mutations: ["deleteCart"])
@@ -632,6 +650,44 @@ input ModelLikedProductConditionInput {
   and: [ModelLikedProductConditionInput]
   or: [ModelLikedProductConditionInput]
   not: ModelLikedProductConditionInput
+}
+
+type ModelLikedVideoConnection {
+  items: [LikedVideo]
+  nextToken: String
+}
+
+input ModelLikedVideoFilterInput {
+  id: ModelIDInput
+  userID: ModelIDInput
+  videoID: ModelIDInput
+  and: [ModelLikedVideoFilterInput]
+  or: [ModelLikedVideoFilterInput]
+  not: ModelLikedVideoFilterInput
+}
+
+input CreateLikedVideoInput {
+  id: ID
+  userID: ID!
+  videoID: ID!
+}
+
+input UpdateLikedVideoInput {
+  id: ID!
+  userID: ID
+  videoID: ID
+}
+
+input DeleteLikedVideoInput {
+  id: ID
+}
+
+input ModelLikedVideoConditionInput {
+  userID: ModelIDInput
+  videoID: ModelIDInput
+  and: [ModelLikedVideoConditionInput]
+  or: [ModelLikedVideoConditionInput]
+  not: ModelLikedVideoConditionInput
 }
 
 type ModelCartConnection {

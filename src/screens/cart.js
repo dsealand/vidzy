@@ -17,7 +17,7 @@ import * as queries from '../../graphql/queries';
 Amplify.configure(awsmobile);
 
 // const cart = api[0];
-const liked = api[1];
+// const liked = api[1];
 // var cart2 = [];
 
 const Container = style.View`

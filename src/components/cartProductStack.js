@@ -37,7 +37,7 @@ const cartProductStack = ({ cart }) => {
         );
     };
     
-    const renderItem = ({ item }) => <CartProduct cartProduct={item} />;
+    const renderItem = ({ item }) => <CartProduct cartProduct={item} likedProduct={item} />;
 
     return (
         <FlatList
