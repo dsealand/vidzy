@@ -120,7 +120,7 @@ const Cart = ({ navigation }) => {
                 <Element onPress={() => navigation.goBack()}>
                     <Feather name="arrow-left" size={20} color={Colors.main} />
                 </Element>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                     onPress={() => {
                         setSelection("Cart");
                     }}
@@ -133,18 +133,18 @@ const Cart = ({ navigation }) => {
                     }}
                 >
                     <BigText style={{ color: likedColor }}>Liked</BigText>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <Element />
             </Header>
             <Container style={{ width: width, height: height }}>
                 <ProductContainer>
                     {selection === "Cart" && <CartProductStack cart={cart} />}
-                    {selection === "Liked" && (
+                    {/* {selection === "Liked" && (
                         <LikedProductStack
                             navigation={navigation}
                             liked={cart}
                         />
-                    )}
+                    )} */}
                 </ProductContainer>
                 <BottomContainer style={{ height: "15%" }}>
                     {selection === "Cart" && (

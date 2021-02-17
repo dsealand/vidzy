@@ -99,7 +99,7 @@ const VideoElements = ({
             } catch (err) {
                 console.log('error1: ', err);
             }
-            console.log("deleted likedVideo object with id: ", likedID);
+            // console.log("deleted likedVideo object with id: ", likedID);
         } else {
             setLiked(true);
             try {

@@ -251,7 +251,7 @@ const cartProduct = ({ cartProduct, likedProduct }) => {
                             } />
                     </Element>
                 </QuantityContainer>
-                <Element>
+                {/* <Element>
                     <Feather
                         name="heart"
                         size={20}
@@ -262,7 +262,7 @@ const cartProduct = ({ cartProduct, likedProduct }) => {
                             }
                         }/>
                     <SmallText> Like</SmallText>
-                </Element>
+                </Element> */}
             </BottomContainer>
         </ProductContainer>
     )}
