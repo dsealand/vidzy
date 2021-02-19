@@ -18,11 +18,6 @@
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
       "customAuth": false,
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-vidzy-dev-95631-deployment/amplify-cfn-templates/auth/vidzyf6a62934-cloudformation-template.yml",
-        "logicalId": "authvidzyf6a62934"
-      },
-      "lastPushTimeStamp": "2021-02-19T20:28:27.279Z",
       "output": {
         "AppClientSecret": "bi7kuqsqq3a7ob6lmql59brrr5blnahlkrq3bgdge3fo4tf46dq",
         "UserPoolId": "us-west-2_ooFJljxdL",
@@ -32,7 +27,11 @@
         "IdentityPoolName": "vidzyf6a62934_identitypool_f6a62934__dev",
         "UserPoolName": "vidzyf6a62934_userpool_f6a62934"
       },
-      "lastPushDirHash": "7/T0WTj5E9iJmCfAQjPSwEKijHY="
+      "lastPushTimeStamp": "2021-02-19T22:14:27.046Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-vidzy-dev-95631-deployment/amplify-cfn-templates/auth/vidzyf6a62934-cloudformation-template.yml",
+        "logicalId": "authvidzyf6a62934"
+      }
     }
   },
   "api": {
@@ -54,12 +53,11 @@
         "GraphQLAPIEndpointOutput": "https://777f6ecfivh73nhjl6lpeknfuy.appsync-api.us-west-2.amazonaws.com/graphql",
         "GraphQLAPIKeyOutput": "da2-b54trzibwbhmjm4gnee7ukusse"
       },
-      "lastPushTimeStamp": "2021-02-19T20:28:27.270Z",
+      "lastPushTimeStamp": "2021-02-19T22:14:27.049Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-vidzy-dev-95631-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apividzy"
-      },
-      "lastPushDirHash": "8sjnLJUm++kQfkW/bK0QDqE5IyU="
+      }
     }
   },
   "function": {}

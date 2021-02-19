@@ -1,5 +1,11 @@
-#set( $limit = $util.defaultIfNull($context.args.limit, 100) )
-#set( $query = {
+#if( $util.isNull($ctx.source.id) )
+  #set( $result = {
+  "items":   []
+} )
+  #return($result)
+#else
+  #set( $limit = $util.defaultIfNull($context.args.limit, 100) )
+  #set( $query = {
   "expression": "#partitionKey = :partitionKey",
   "expressionNames": {
       "#partitionKey": "productID"
@@ -10,67 +16,68 @@
     }
   }
 } )
-## [Start] Applying Key Condition **
-#if( !$util.isNull($ctx.args.asset) && !$util.isNull($ctx.args.asset.beginsWith) )
-  #set( $query.expression = "$query.expression AND begins_with(#sortKey, :sortKey)" )
-  $util.qr($query.expressionNames.put("#sortKey", "asset"))
-  $util.qr($query.expressionValues.put(":sortKey", { "S": "$ctx.args.asset.beginsWith" }))
-#end
-#if( !$util.isNull($ctx.args.asset) && !$util.isNull($ctx.args.asset.between) )
-  #set( $query.expression = "$query.expression AND #sortKey BETWEEN :sortKey0 AND :sortKey1" )
-  $util.qr($query.expressionNames.put("#sortKey", "asset"))
-  $util.qr($query.expressionValues.put(":sortKey0", { "S": "$ctx.args.asset.between[0]" }))
-  $util.qr($query.expressionValues.put(":sortKey1", { "S": "$ctx.args.asset.between[1]" }))
-#end
-#if( !$util.isNull($ctx.args.asset) && !$util.isNull($ctx.args.asset.eq) )
-  #set( $query.expression = "$query.expression AND #sortKey = :sortKey" )
-  $util.qr($query.expressionNames.put("#sortKey", "asset"))
-  $util.qr($query.expressionValues.put(":sortKey", { "S": "$ctx.args.asset.eq" }))
-#end
-#if( !$util.isNull($ctx.args.asset) && !$util.isNull($ctx.args.asset.lt) )
-  #set( $query.expression = "$query.expression AND #sortKey < :sortKey" )
-  $util.qr($query.expressionNames.put("#sortKey", "asset"))
-  $util.qr($query.expressionValues.put(":sortKey", { "S": "$ctx.args.asset.lt" }))
-#end
-#if( !$util.isNull($ctx.args.asset) && !$util.isNull($ctx.args.asset.le) )
-  #set( $query.expression = "$query.expression AND #sortKey <= :sortKey" )
-  $util.qr($query.expressionNames.put("#sortKey", "asset"))
-  $util.qr($query.expressionValues.put(":sortKey", { "S": "$ctx.args.asset.le" }))
-#end
-#if( !$util.isNull($ctx.args.asset) && !$util.isNull($ctx.args.asset.gt) )
-  #set( $query.expression = "$query.expression AND #sortKey > :sortKey" )
-  $util.qr($query.expressionNames.put("#sortKey", "asset"))
-  $util.qr($query.expressionValues.put(":sortKey", { "S": "$ctx.args.asset.gt" }))
-#end
-#if( !$util.isNull($ctx.args.asset) && !$util.isNull($ctx.args.asset.ge) )
-  #set( $query.expression = "$query.expression AND #sortKey >= :sortKey" )
-  $util.qr($query.expressionNames.put("#sortKey", "asset"))
-  $util.qr($query.expressionValues.put(":sortKey", { "S": "$ctx.args.asset.ge" }))
-#end
-## [End] Applying Key Condition **
+  ## [Start] Applying Key Condition **
+  #if( !$util.isNull($ctx.args.asset) && !$util.isNull($ctx.args.asset.beginsWith) )
+    #set( $query.expression = "$query.expression AND begins_with(#sortKey, :sortKey)" )
+    $util.qr($query.expressionNames.put("#sortKey", "asset"))
+    $util.qr($query.expressionValues.put(":sortKey", { "S": "$ctx.args.asset.beginsWith" }))
+  #end
+  #if( !$util.isNull($ctx.args.asset) && !$util.isNull($ctx.args.asset.between) )
+    #set( $query.expression = "$query.expression AND #sortKey BETWEEN :sortKey0 AND :sortKey1" )
+    $util.qr($query.expressionNames.put("#sortKey", "asset"))
+    $util.qr($query.expressionValues.put(":sortKey0", { "S": "$ctx.args.asset.between[0]" }))
+    $util.qr($query.expressionValues.put(":sortKey1", { "S": "$ctx.args.asset.between[1]" }))
+  #end
+  #if( !$util.isNull($ctx.args.asset) && !$util.isNull($ctx.args.asset.eq) )
+    #set( $query.expression = "$query.expression AND #sortKey = :sortKey" )
+    $util.qr($query.expressionNames.put("#sortKey", "asset"))
+    $util.qr($query.expressionValues.put(":sortKey", { "S": "$ctx.args.asset.eq" }))
+  #end
+  #if( !$util.isNull($ctx.args.asset) && !$util.isNull($ctx.args.asset.lt) )
+    #set( $query.expression = "$query.expression AND #sortKey < :sortKey" )
+    $util.qr($query.expressionNames.put("#sortKey", "asset"))
+    $util.qr($query.expressionValues.put(":sortKey", { "S": "$ctx.args.asset.lt" }))
+  #end
+  #if( !$util.isNull($ctx.args.asset) && !$util.isNull($ctx.args.asset.le) )
+    #set( $query.expression = "$query.expression AND #sortKey <= :sortKey" )
+    $util.qr($query.expressionNames.put("#sortKey", "asset"))
+    $util.qr($query.expressionValues.put(":sortKey", { "S": "$ctx.args.asset.le" }))
+  #end
+  #if( !$util.isNull($ctx.args.asset) && !$util.isNull($ctx.args.asset.gt) )
+    #set( $query.expression = "$query.expression AND #sortKey > :sortKey" )
+    $util.qr($query.expressionNames.put("#sortKey", "asset"))
+    $util.qr($query.expressionValues.put(":sortKey", { "S": "$ctx.args.asset.gt" }))
+  #end
+  #if( !$util.isNull($ctx.args.asset) && !$util.isNull($ctx.args.asset.ge) )
+    #set( $query.expression = "$query.expression AND #sortKey >= :sortKey" )
+    $util.qr($query.expressionNames.put("#sortKey", "asset"))
+    $util.qr($query.expressionValues.put(":sortKey", { "S": "$ctx.args.asset.ge" }))
+  #end
+  ## [End] Applying Key Condition **
 {
-  "version": "2018-05-29",
-  "operation": "Query",
-  "query":   $util.toJson($query),
-  "scanIndexForward":   #if( $context.args.sortDirection )
-    #if( $context.args.sortDirection == "ASC" )
+      "version": "2018-05-29",
+      "operation": "Query",
+      "query":     $util.toJson($query),
+      "scanIndexForward":     #if( $context.args.sortDirection )
+      #if( $context.args.sortDirection == "ASC" )
 true
-    #else
+      #else
 false
-    #end
-  #else
+      #end
+    #else
 true
-  #end,
-  "filter":   #if( $context.args.filter )
+    #end,
+      "filter":     #if( $context.args.filter )
 $util.transform.toDynamoDBFilterExpression($ctx.args.filter)
-  #else
+    #else
 null
-  #end,
-  "limit": $limit,
-  "nextToken":   #if( $context.args.nextToken )
+    #end,
+      "limit": $limit,
+      "nextToken":     #if( $context.args.nextToken )
 $util.toJson($context.args.nextToken)
-  #else
+    #else
 null
-  #end,
-  "index": "byProduct"
-}
+    #end,
+      "index": "byProduct"
+  }
+#end

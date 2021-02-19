@@ -65,6 +65,7 @@ type Brand {
 type CartProduct {
   id: ID!
   quantity: Int
+  price: Float
   color: String
   product: Product!
   productID: ID!
@@ -568,6 +569,7 @@ type ModelCartProductConnection {
 input ModelCartProductFilterInput {
   id: ModelIDInput
   quantity: ModelIntInput
+  price: ModelFloatInput
   color: ModelStringInput
   productID: ModelIDInput
   cartID: ModelIDInput
@@ -579,6 +581,7 @@ input ModelCartProductFilterInput {
 input CreateCartProductInput {
   id: ID
   quantity: Int
+  price: Float
   color: String
   productID: ID!
   cartID: ID!
@@ -587,6 +590,7 @@ input CreateCartProductInput {
 input UpdateCartProductInput {
   id: ID!
   quantity: Int
+  price: Float
   color: String
   productID: ID
   cartID: ID
@@ -598,6 +602,7 @@ input DeleteCartProductInput {
 
 input ModelCartProductConditionInput {
   quantity: ModelIntInput
+  price: ModelFloatInput
   color: ModelStringInput
   productID: ModelIDInput
   cartID: ModelIDInput
