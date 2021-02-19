@@ -8,7 +8,8 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
-amplify/.config/*
 
 # macOS
 .DS_Store
+amplify/.config/local-aws-info.json
+amplify/.config/local-env-info.json
