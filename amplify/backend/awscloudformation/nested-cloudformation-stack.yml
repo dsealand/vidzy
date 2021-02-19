@@ -68,15 +68,15 @@
         }
       }
     },
-    "authvidzy20516b65": {
+    "authvidzyf6a62934": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-vidzy-dev-95631-deployment/amplify-cfn-templates/auth/vidzy20516b65-cloudformation-template.yml",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-vidzy-dev-95631-deployment/amplify-cfn-templates/auth/vidzyf6a62934-cloudformation-template.yml",
         "Parameters": {
-          "identityPoolName": "vidzy20516b65_identitypool_20516b65",
+          "identityPoolName": "vidzyf6a62934_identitypool_f6a62934",
           "allowUnauthenticatedIdentities": false,
-          "resourceNameTruncated": "vidzy20516b65",
-          "userPoolName": "vidzy20516b65_userpool_20516b65",
+          "resourceNameTruncated": "vidzyf6a62934",
+          "userPoolName": "vidzyf6a62934_userpool_f6a62934",
           "autoVerifiedAttributes": "email",
           "mfaConfiguration": "OFF",
           "mfaTypes": "SMS Text Message",
@@ -92,10 +92,10 @@
           "userpoolClientRefreshTokenValidity": 30,
           "userpoolClientWriteAttributes": "email",
           "userpoolClientReadAttributes": "email",
-          "userpoolClientLambdaRole": "vidzy220516b65_userpoolclient_lambda_role",
-          "userpoolClientSetAttributes": true,
-          "sharedId": "20516b65",
-          "resourceName": "vidzy20516b65",
+          "userpoolClientLambdaRole": "vidzyff6a62934_userpoolclient_lambda_role",
+          "userpoolClientSetAttributes": false,
+          "sharedId": "f6a62934",
+          "resourceName": "vidzyf6a62934",
           "authSelections": "identityPoolAndUserPool",
           "authRoleArn": {
             "Fn::GetAtt": [
@@ -109,72 +109,15 @@
               "Arn"
             ]
           },
-          "useDefault": "manual",
-          "usernameAttributes": "email",
-          "userPoolGroupList": "huminedev1",
-          "serviceName": "Cognito",
-          "dependsOn": "",
-          "thirdPartyAuth": true,
-          "authProviders": "",
-          "userPoolGroups": true,
-          "adminQueries": true,
+          "useDefault": "default",
           "triggers": "{}",
-          "hostedUI": true,
-          "hostedUIDomainName": "vidzyb1730691-b1730691",
-          "authProvidersUserPool": "",
-          "hostedUIProviderMeta": "[]",
-          "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:19006/\"],\"LogoutURLs\":[\"http://localhost:19006/\"]}",
-          "adminQueryGroup": "huminedev1",
+          "userPoolGroupList": "",
+          "serviceName": "Cognito",
           "parentStack": {
             "Ref": "AWS::StackId"
           },
           "permissions": "",
-          "hostedUIProviderCreds": "[]",
-          "env": "dev"
-        }
-      }
-    },
-    "authuserPoolGroups": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-vidzy-dev-95631-deployment/amplify-cfn-templates/auth/template.json",
-        "Parameters": {
-          "AuthRoleArn": {
-            "Fn::GetAtt": [
-              "AuthRole",
-              "Arn"
-            ]
-          },
-          "UnauthRoleArn": {
-            "Fn::GetAtt": [
-              "UnauthRole",
-              "Arn"
-            ]
-          },
-          "authvidzy20516b65UserPoolId": {
-            "Fn::GetAtt": [
-              "authvidzy20516b65",
-              "Outputs.UserPoolId"
-            ]
-          },
-          "authvidzy20516b65AppClientIDWeb": {
-            "Fn::GetAtt": [
-              "authvidzy20516b65",
-              "Outputs.AppClientIDWeb"
-            ]
-          },
-          "authvidzy20516b65AppClientID": {
-            "Fn::GetAtt": [
-              "authvidzy20516b65",
-              "Outputs.AppClientID"
-            ]
-          },
-          "authvidzy20516b65IdentityPoolId": {
-            "Fn::GetAtt": [
-              "authvidzy20516b65",
-              "Outputs.IdentityPoolId"
-            ]
-          },
+          "dependsOn": "",
           "env": "dev"
         }
       }
@@ -196,7 +139,7 @@
       "DependsOn": [
         "AuthRole",
         "UnauthRole",
-        "authvidzy20516b65"
+        "authvidzyf6a62934"
       ],
       "Type": "AWS::Lambda::Function",
       "Properties": {
@@ -279,7 +222,7 @@
         },
         "idpId": {
           "Fn::GetAtt": [
-            "authvidzy20516b65",
+            "authvidzyf6a62934",
             "Outputs.IdentityPoolId"
           ]
         },

@@ -13,53 +13,26 @@
     }
   },
   "auth": {
-    "vidzy20516b65": {
+    "vidzyf6a62934": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
       "customAuth": false,
       "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-vidzy-dev-95631-deployment/amplify-cfn-templates/auth/vidzy20516b65-cloudformation-template.yml",
-        "logicalId": "authvidzy20516b65"
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-vidzy-dev-95631-deployment/amplify-cfn-templates/auth/vidzyf6a62934-cloudformation-template.yml",
+        "logicalId": "authvidzyf6a62934"
       },
-      "lastPushTimeStamp": "2021-02-16T21:42:24.115Z",
+      "lastPushTimeStamp": "2021-02-19T20:28:27.279Z",
       "output": {
-        "AppClientSecret": "141jangejjtt2auu6gmu6iobo2ns22rk4ulngeds7o6f5noilukq",
-        "UserPoolId": "us-west-2_RgNCXB1LE",
-        "AppClientIDWeb": "7tb31qremv5385hsifdd3ao9k8",
-        "AppClientID": "9kllal024sjvnf1fc2eu9uprt",
-        "IdentityPoolId": "us-west-2:1e487640-0d60-4e3d-9504-d550176a65b3",
-        "IdentityPoolName": "vidzy20516b65_identitypool_20516b65__dev",
-        "UserPoolName": "vidzy20516b65_userpool_20516b65",
-        "HostedUIDomain": "vidzyb1730691-b1730691-dev",
-        "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:19006/\"],\"LogoutURLs\":[\"http://localhost:19006/\"]}"
+        "AppClientSecret": "bi7kuqsqq3a7ob6lmql59brrr5blnahlkrq3bgdge3fo4tf46dq",
+        "UserPoolId": "us-west-2_ooFJljxdL",
+        "AppClientIDWeb": "3j0b8l7fo4mrtsf88qqa7gl272",
+        "AppClientID": "716ff8hb7n6lbochi54le8f6ua",
+        "IdentityPoolId": "us-west-2:235d20b7-b31e-4e56-be78-bf89f18e3e73",
+        "IdentityPoolName": "vidzyf6a62934_identitypool_f6a62934__dev",
+        "UserPoolName": "vidzyf6a62934_userpool_f6a62934"
       },
-      "lastPushDirHash": "7uWqMd0OWnl1G4JbGQ00fYUwWjc="
-    },
-    "userPoolGroups": {
-      "service": "Cognito-UserPool-Groups",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "auth",
-          "resourceName": "vidzy20516b65",
-          "attributes": [
-            "UserPoolId",
-            "AppClientIDWeb",
-            "AppClientID",
-            "IdentityPoolId"
-          ]
-        }
-      ],
-      "lastPushTimeStamp": "2021-02-16T21:42:24.122Z",
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-vidzy-dev-95631-deployment/amplify-cfn-templates/auth/template.json",
-        "logicalId": "authuserPoolGroups"
-      },
-      "output": {
-        "huminedev1GroupRole": "arn:aws:iam::440148346084:role/us-west-2_RgNCXB1LE-huminedev1GroupRole"
-      },
-      "lastPushDirHash": "YRNdOTFqB9HqlPfj6jBjCDa+MxY="
+      "lastPushDirHash": "7/T0WTj5E9iJmCfAQjPSwEKijHY="
     }
   },
   "api": {
@@ -81,7 +54,7 @@
         "GraphQLAPIEndpointOutput": "https://777f6ecfivh73nhjl6lpeknfuy.appsync-api.us-west-2.amazonaws.com/graphql",
         "GraphQLAPIKeyOutput": "da2-b54trzibwbhmjm4gnee7ukusse"
       },
-      "lastPushTimeStamp": "2021-02-16T21:42:25.381Z",
+      "lastPushTimeStamp": "2021-02-19T20:28:27.270Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-vidzy-dev-95631-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apividzy"
