@@ -61,6 +61,7 @@ type CartProduct @model
   {
   id: ID!
   quantity: Int
+  price: Float
   color: String
   product: Product! @connection(fields: ["productID"])
   productID: ID!
