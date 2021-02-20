@@ -188,17 +188,11 @@ const renderColorListItem = ({ item }) => {
     );
 };
 
-async function addCartMutation() {
-    try {
-        await API.graphql(graphqlOperation(mutations.createCartProduct, {input: {id: 0, cartID: 0, quantity: 0, productID: 30}}));
-    } catch (err) {
-        console.log('addCartMutation error: ', err);
-    }
-}
-
 const renderSectionHeader = ({ section }) => {
     return <SectionHeaderText>{section.title}</SectionHeaderText>;
 };
+
+// TODO: get cartID from user, update createCartProduct mutation with cartID
 
 const productModal = ({ navigation, product, onPressClose, addCartMutation }) => {
     // construct array for image and color data
@@ -238,7 +232,7 @@ const productModal = ({ navigation, product, onPressClose, addCartMutation }) =>
                         onPress={
                             async () => {
                                 try {
-                                    await API.graphql(graphqlOperation(mutations.createCartProduct, {input: {id: 1, cartID: 0, quantity: 5, productID: 30}}));
+                                    await API.graphql(graphqlOperation(mutations.createCartProduct, {input: {cartID: 0, quantity: 1, productID: product.id, price: product.price}}));
                                 } catch (err) {
                                     console.log('addCartMutation error: ', err);
                                 }

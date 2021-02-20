@@ -612,6 +612,7 @@ export const onCreateCartProduct = /* GraphQL */ `
     onCreateCartProduct {
       id
       quantity
+      price
       color
       product {
         id
@@ -651,6 +652,7 @@ export const onUpdateCartProduct = /* GraphQL */ `
     onUpdateCartProduct {
       id
       quantity
+      price
       color
       product {
         id
@@ -690,6 +692,7 @@ export const onDeleteCartProduct = /* GraphQL */ `
     onDeleteCartProduct {
       id
       quantity
+      price
       color
       product {
         id
@@ -970,6 +973,7 @@ export const onCreateCart = /* GraphQL */ `
         items {
           id
           quantity
+          price
           color
           productID
           cartID
@@ -1004,6 +1008,7 @@ export const onUpdateCart = /* GraphQL */ `
         items {
           id
           quantity
+          price
           color
           productID
           cartID
@@ -1038,6 +1043,7 @@ export const onDeleteCart = /* GraphQL */ `
         items {
           id
           quantity
+          price
           color
           productID
           cartID

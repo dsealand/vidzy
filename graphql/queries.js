@@ -371,6 +371,7 @@ export const getCartProduct = /* GraphQL */ `
     getCartProduct(id: $id) {
       id
       quantity
+      price
       color
       product {
         id
@@ -415,6 +416,7 @@ export const listCartProducts = /* GraphQL */ `
       items {
         id
         quantity
+        price
         color
         product {
           id
@@ -582,6 +584,7 @@ export const getCart = /* GraphQL */ `
         items {
           id
           quantity
+          price
           color
           productID
           cartID

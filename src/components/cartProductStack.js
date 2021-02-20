@@ -28,7 +28,7 @@ const Seperator = style.View`
     alignItems: center;
 `;
 
-const cartProductStack = ({ cart }) => {
+const cartProductStack = ({ cart, handlerFunction }) => {
     const itemSeperator = () => {
         return (
             <Seperator>
@@ -37,7 +37,7 @@ const cartProductStack = ({ cart }) => {
         );
     };
     
-    const renderItem = ({ item }) => <CartProduct cartProduct={item} likedProduct={item} />;
+    const renderItem = ({ item }) => <CartProduct cartProduct={item} likedProduct={item} handler={handlerFunction} />;
 
     return (
         <FlatList

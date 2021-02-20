@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     },
 });
 
-const cartProduct = ({ cartProduct, likedProduct }) => {
+const cartProduct = ({ cartProduct, likedProduct, handler }) => {
     const [product, setProduct] = useState([]);
     const [quantity, setQuantity] = useState();
     const [exists, setExists] = useState(true);
@@ -181,6 +181,7 @@ const cartProduct = ({ cartProduct, likedProduct }) => {
                         size={20}
                         color={Colors.main}
                         onPress={
+                            handler(),
                             async () => {
                                 setQuantity(0);
                                 setExists(false);
@@ -200,6 +201,7 @@ const cartProduct = ({ cartProduct, likedProduct }) => {
                             size={20}
                             color={Colors.main}
                             onPress={
+                                handler(),
                                 async () => {
                                     if (quantity > 1) {
                                         setQuantity(quantity - 1);
@@ -235,6 +237,7 @@ const cartProduct = ({ cartProduct, likedProduct }) => {
                             size={20}
                             color={Colors.main}
                             onPress={
+                                handler(),
                                 async () => {
                                     setQuantity(quantity + 1);
                                     try {

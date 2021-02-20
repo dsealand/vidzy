@@ -13,6 +13,7 @@ import api from "../data/cart_api";
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import awsmobile from '../../aws-exports';
 import * as queries from '../../graphql/queries';
+import * as subscriptions from '../../graphql/subscriptions';
 
 Amplify.configure(awsmobile);
 
@@ -89,19 +90,52 @@ const PriceText = style(BigText)`
 const Cart = ({ navigation }) => {
     const [selection, setSelection] = useState("Cart");
     const [cart, setCart] = useState(false);
+    const [price, setPrice] = useState();
+    const [flag, setFlag] = useState(false);
+    // const [cartData, setCartData] = useState();
+
+    function handler() {
+        // setFlag(!flag);
+    }
 
     useEffect(() => {
+        setFlag(!flag);        
+
         async function getCart() {
             try {
-                const apiData = await API.graphql(graphqlOperation(queries.getCart, {id: 0}));
+                const apiData = await API.graphql(graphqlOperation(queries.getCart, { id: 0 }));
                 const cart = apiData.data.getCart;
+                var result = (cart.cartProducts.items).reduce(function (tot, arr) {
+                    // return the sum with previous value
+                    return tot + arr.price * arr.quantity;
+
+                    // set initial value as 0
+                }, 0);
+                setPrice(result);
                 setCart(cart);
             } catch (err) {
                 console.log('cart error: ', err);
             }
         }
         getCart();
+
+        // const subscription = API.graphql(graphqlOperation(subscriptions.onUpdateCart)).subscribe({
+        //     next: data => {
+        //         console.log("subscription");
+        //         console.log(data.data.onUpdateCart);
+        //         setCartData(data.data.onUpdateCart);
+        //         console.log(cartData);
+        //     }
+        // });
+        // return () => {
+        //     subscription.unsubscribe();
+        // }
     }, []);
+
+    // var result = (cart.cartProducts.items).reduce(function (tot, arr) {
+    //     return tot + arr.price * arr.quantity;
+    // }, 0);
+    // setPrice(result);
 
     const width = useWindowDimensions().width;
     const height = useWindowDimensions().height;
@@ -114,13 +148,14 @@ const Cart = ({ navigation }) => {
         likedColor = Colors.main;
     }
 
-    if (cart) { return (
-        <View>
-            <Header>
-                <Element onPress={() => navigation.goBack()}>
-                    <Feather name="arrow-left" size={20} color={Colors.main} />
-                </Element>
-                {/* <TouchableOpacity
+    if (cart) {
+        return (
+            <View>
+                <Header>
+                    <Element onPress={() => navigation.goBack()}>
+                        <Feather name="arrow-left" size={20} color={Colors.main} />
+                    </Element>
+                    {/* <TouchableOpacity
                     onPress={() => {
                         setSelection("Cart");
                     }}
@@ -134,37 +169,38 @@ const Cart = ({ navigation }) => {
                 >
                     <BigText style={{ color: likedColor }}>Liked</BigText>
                 </TouchableOpacity> */}
-                <Element />
-            </Header>
-            <Container style={{ width: width, height: height }}>
-                <ProductContainer>
-                    {selection === "Cart" && <CartProductStack cart={cart} />}
-                    {/* {selection === "Liked" && (
+                    <Element />
+                </Header>
+                <Container style={{ width: width, height: height }}>
+                    <ProductContainer>
+                        {selection === "Cart" && <CartProductStack cart={cart} handlerFunction={handler} />}
+                        {/* {selection === "Liked" && (
                         <LikedProductStack
                             navigation={navigation}
                             liked={cart}
                         />
                     )} */}
-                </ProductContainer>
-                <BottomContainer style={{ height: "15%" }}>
-                    {selection === "Cart" && (
-                        <BottomContainer>
-                            <Checkout>
-                                <CheckoutText>Checkout</CheckoutText>
-                            </Checkout>
-                            <Price>
-                                <PriceText>Total ${cart.price}</PriceText>
-                            </Price>
-                        </BottomContainer>
-                    )}
-                </BottomContainer>
-            </Container>
-        </View>
-    )}
+                    </ProductContainer>
+                    <BottomContainer style={{ height: "15%" }}>
+                        {selection === "Cart" && (
+                            <BottomContainer>
+                                <Checkout>
+                                    <CheckoutText>Checkout</CheckoutText>
+                                </Checkout>
+                                <Price>
+                                    <PriceText>Total ${price}</PriceText>
+                                </Price>
+                            </BottomContainer>
+                        )}
+                    </BottomContainer>
+                </Container>
+            </View>
+        )
+    }
 
     else {
         // this should eventually be an error page if a cart loads incorrectly
-        return (<View/>)
+        return (<View />)
     }
 
 };

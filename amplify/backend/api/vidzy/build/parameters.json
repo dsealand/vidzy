@@ -2,5 +2,5 @@
     "CreateAPIKey": 1,
     "AppSyncApiName": "vidzy",
     "S3DeploymentBucket": "amplify-vidzy-dev-95631-deployment",
-    "S3DeploymentRootKey": "amplify-appsync-files/ebf2ee7d4297519587b37b3daae118933b3c9472"
+    "S3DeploymentRootKey": "amplify-appsync-files/81a639ab4e701b4e465856742cae9e0eae9ea9ab"
 }

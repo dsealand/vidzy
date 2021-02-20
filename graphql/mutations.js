@@ -669,6 +669,7 @@ export const createCartProduct = /* GraphQL */ `
     createCartProduct(input: $input, condition: $condition) {
       id
       quantity
+      price
       color
       product {
         id
@@ -711,6 +712,7 @@ export const updateCartProduct = /* GraphQL */ `
     updateCartProduct(input: $input, condition: $condition) {
       id
       quantity
+      price
       color
       product {
         id
@@ -753,6 +755,7 @@ export const deleteCartProduct = /* GraphQL */ `
     deleteCartProduct(input: $input, condition: $condition) {
       id
       quantity
+      price
       color
       product {
         id
@@ -1054,6 +1057,7 @@ export const createCart = /* GraphQL */ `
         items {
           id
           quantity
+          price
           color
           productID
           cartID
@@ -1091,6 +1095,7 @@ export const updateCart = /* GraphQL */ `
         items {
           id
           quantity
+          price
           color
           productID
           cartID
@@ -1128,6 +1133,7 @@ export const deleteCart = /* GraphQL */ `
         items {
           id
           quantity
+          price
           color
           productID
           cartID
