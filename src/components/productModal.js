@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import {
     View,
@@ -195,12 +195,41 @@ const renderSectionHeader = ({ section }) => {
 // TODO: get cartID from user, update createCartProduct mutation with cartID
 
 const productModal = ({ navigation, product, onPressClose, addCartMutation }) => {
+    const [cartProducts, setCartProducts] = useState();
+    useEffect(() => {
+        async function getCart() {
+            try {
+                // repace id with cartID from user
+                const apiData = await API.graphql(graphqlOperation(queries.getCartProducts, {
+                    filter: {
+                        userID: {
+                            eq: 0
+                        },
+                        productID: {
+                            eq: product.id
+                        }
+                    }
+                }));
+                const cartData = apiData.data.getCartProducts.items;
+                setCartProducts(cartData);
+            } catch (err) {
+                console.log('error1: ', err);
+            }
+        }
+    }, []);
+
     // construct array for image and color data
-    const data = [{id: 0, title: "Images", data: [{
-        id: 0, title: "Images", list: product.images.items}]},
-        {id: 1, title: "Colors", data: [{
-        id: 1, title: "Colors", list: product.colors.items}]}];
-    
+    const data = [{
+        id: 0, title: "Images", data: [{
+            id: 0, title: "Images", list: product.images.items
+        }]
+    },
+    {
+        id: 1, title: "Colors", data: [{
+            id: 1, title: "Colors", list: product.colors.items
+        }]
+    }];
+
     console.log(data);
     return (
         <Container>
@@ -231,10 +260,19 @@ const productModal = ({ navigation, product, onPressClose, addCartMutation }) =>
                     <AddToCart
                         onPress={
                             async () => {
-                                try {
-                                    await API.graphql(graphqlOperation(mutations.createCartProduct, {input: {cartID: 0, quantity: 1, productID: product.id, price: product.price}}));
-                                } catch (err) {
-                                    console.log('addCartMutation error: ', err);
+                                if (cartProducts.length == 0) {
+                                    try {
+                                        await API.graphql(graphqlOperation(mutations.createCartProduct, { input: { cartID: 0, quantity: 1, productID: product.id, price: product.price } }));
+                                    } catch (err) {
+                                        console.log('addToCart new error: ', err);
+                                    }
+                                } else {
+                                    const quantity = cartProducts[0].quantity + 1;
+                                    try {
+                                        await API.graphql(graphqlOperation(mutations.updateCartProduct, { input: { cartID: 0, quantity: quantity}}));
+                                    } catch (err) {
+                                        console.log('addToCart existing error: ', err);
+                                    }
                                 }
                             }
                         }>
