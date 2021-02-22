@@ -97,7 +97,7 @@ const ColorImageCircle = style(TouchableOpacity)`
 
 const SmallText = style.Text`
     font-size: 14px
-    fontFamily: Helvetica;
+    fontFamily: Circular-Std;
     color: ${Colors.black};
 `;
 

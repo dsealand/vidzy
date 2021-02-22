@@ -56,14 +56,14 @@ const CreatorPhoto = style.Image`
 
 const CreatorName = style.Text`
     font-size: 17px
-    fontFamily: Helvetica;
+    fontFamily: Circular-Std;
     color: ${Colors.white};
     fontWeight: bold;
 `;
 
 const CreatorHandel = style.Text`
     font-size: 13px
-    fontFamily: Helvetica;
+    fontFamily: Circular-Std;
     color: ${Colors.lightGrey};
     padding: 10px;
 `;
@@ -79,7 +79,7 @@ const MoreVideos = style(TouchableOpacity)`
 
 const MoreVideosText = style.Text`
     font-size: 13px
-    fontFamily: Helvetica;
+    fontFamily: Circular-Std;
     color: ${Colors.white};
     fontWeight: bold;
 `;

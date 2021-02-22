@@ -70,14 +70,14 @@ const ProductScroll = style.View`
 
 const BigText = style.Text`
     font-size: 17px
-    fontFamily: Helvetica;
+    fontFamily: Circular-Std;
     color: ${Colors.black};
     fontWeight: bold;
 `;
 
 const PriceText = style.Text`
     font-size: 15px;
-    fontFamily: Helvetica;
+    fontFamily: Circular-Std;
     color: ${Colors.main};
     fontWeight: bold;
 `;
@@ -108,7 +108,7 @@ const MoreVideosText = style(BigText)`
 
 const SectionHeaderText = style.Text`
     font-size: 13px;
-    fontFamily: Helvetica;
+    fontFamily: Circular-Std;
     color: ${Colors.black};
     fontWeight: bold;
 `;

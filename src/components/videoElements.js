@@ -60,7 +60,7 @@ const Element = style.TouchableOpacity`
 
 const BasicText = style.Text`
     font-size: 14px
-    fontFamily: Helvetica;
+    fontFamily: Circular-Std;
     color: ${Colors.white};
     textShadowRadius: 1px;
     textShadowColor: ${Colors.darkGrey};

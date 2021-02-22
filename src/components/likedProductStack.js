@@ -49,7 +49,7 @@ const BottomContainer = style.View`
 
 const SmallText = style.Text`
     font-size: 14px
-    fontFamily: Helvetica;
+    fontFamily: Circular-Std;
     color: ${Colors.black};
     fontWeight: bold;
 `;

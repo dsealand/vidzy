@@ -9,6 +9,8 @@ import awsmobile from './aws-exports';
 import * as mutations from './graphql/mutations';
 import * as queries from './graphql/queries';
 import { withAuthenticator, AmplifyTheme, Authenticator, Auth } from 'aws-amplify-react-native'
+import AppLoading from 'expo-app-loading';
+import * as Font from 'expo-font';
 
 import Login from "./src/screens/login";
 import SignIn from "./src/screens/signin";
@@ -28,6 +30,28 @@ const Stack = createStackNavigator();
 // <Authenticator theme={MyTheme} />
 
 function App() {
+    const [fontsLoaded, setFontsLoaded] = useState(false);
+
+    async function loadFonts() {
+        await Font.loadAsync({
+            'Circular-Std': require('./src/assets/fonts/CircularStd-Medium.ttf'),
+        }).then(() => setFontsLoaded(true));
+        // setFontsLoaded(true);
+    }
+
+    useEffect(() => {
+        async function loadFonts() {
+            await Font.loadAsync({
+                'Circular-Std': require('./src/assets/fonts/CircularStd-Medium.ttf'),
+            }).then(() => setFontsLoaded(true));
+            console.log("fontsLoaded", fontsLoaded);
+        }
+        loadFonts();
+    })
+    
+    if (!fontsLoaded) {
+        return <AppLoading />;
+    } else { 
     return (
         <NavigationContainer>
             <Stack.Navigator initialRouteName="Login">
@@ -69,6 +93,6 @@ function App() {
             </Stack.Navigator>
         </NavigationContainer>
     );
-}
+}}
 
 export default App;

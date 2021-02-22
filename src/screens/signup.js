@@ -34,7 +34,7 @@ const Header = style.View`
 
 const HeaderText = style.Text`
     font-size: 50px
-    fontFamily: Helvetica;
+    fontFamily: Circular-Std;
     color: ${Colors.black};
     fontWeight: bold;
 `;
@@ -56,14 +56,14 @@ const LoginInfo = style(TextInput)`
     height: 100%;
     width: 90%
     font-size: 20px
-    fontFamily: Helvetica;
+    fontFamily: Circular-Std;
     color: ${Colors.main};
     fontWeight: bold;
 `;
 
 const BigText = style.Text`
     font-size: 20px
-    fontFamily: Helvetica;
+    fontFamily: Circular-Std;
     color: ${Colors.black};
     fontWeight: bold;
 `;
@@ -90,7 +90,7 @@ const Terms = style.View`
 
 const SmallText = style.Text`
     font-size: 15px
-    fontFamily: Helvetica;
+    fontFamily: Circular-Std;
     color: ${Colors.black};
     fontWeight: bold;
 `;

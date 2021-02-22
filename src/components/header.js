@@ -12,7 +12,7 @@ const Header = ({ text }) => {
 const styles = StyleSheet.create({
     logo: {
         fontSize: 80,
-        fontFamily: "Helvetica",
+        fontFamily: "Circular-Std",
         fontWeight: "bold",
         color: Colors.darkGrey,
         textShadowOffset: { width: 2, height: 2 },

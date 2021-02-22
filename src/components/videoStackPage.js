@@ -18,7 +18,7 @@ const Header = style.View`
 `;
 
 const HeaderText = style.Text`
-    fontFamily: Helvetica;
+    fontFamily: Circular-Std;
     color: ${Colors.white};
     textShadowRadius: 1px;
     textShadowColor: ${Colors.darkGrey};

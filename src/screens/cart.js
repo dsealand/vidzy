@@ -46,7 +46,7 @@ const ProductContainer = style.View`
 
 const BigText = style.Text`
     font-size: 17px;
-    fontFamily: Helvetica;
+    fontFamily: Circular-Std;
     color: ${Colors.black};
     fontWeight: bold;
 `;

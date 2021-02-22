@@ -22,7 +22,7 @@ const Logo = style.View`
 
 const LogoText = style.Text`
     font-size: 80px
-    fontFamily: Helvetica;
+    fontFamily: Circular-Std;
     color: ${Colors.main};
     fontWeight: bold;
 `;
@@ -36,7 +36,7 @@ const Slogan = style.View`
 
 const BigText = style.Text`
     font-size: 20px
-    fontFamily: Helvetica;
+    fontFamily: Circular-Std;
     color: ${Colors.black};
     fontWeight: bold;
 `;
@@ -69,7 +69,7 @@ const SignUp = style.View`
 
 const SignUpText = style.Text`
     font-size: 15px
-    fontFamily: Helvetica;
+    fontFamily: Circular-Std;
     color: ${Colors.black};
     fontWeight: bold;
 `;
