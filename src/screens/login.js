@@ -74,7 +74,7 @@ const SignUpText = style.Text`
     fontWeight: bold;
 `;
 
-const Login = ({ navigation }) => {
+const Login = ({ navigation, updateAuth }) => {
     const width = useWindowDimensions().width;
     const height = useWindowDimensions().height;
 
