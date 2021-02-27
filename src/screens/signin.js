@@ -11,9 +11,6 @@ import { useWindowDimensions } from "react-native";
 import style from "styled-components/native";
 import { Feather, Ionicons } from "@expo/vector-icons";
 
-import Amplify, { Auth } from 'aws-amplify';
-import awsmobile from '../../aws-exports';
-
 import Colors from "../components/colors";
 
 const Container = style(KeyboardAvoidingView)`
@@ -98,23 +95,12 @@ const TermsText = style.Text`
     fontWeight: bold;
 `;
 
-Amplify.configure(awsmobile);
-
 const SignIn = ({ navigation }) => {
-    const [username, onChangeUsername] = React.useState("");
+    const [email, onChangeEmail] = React.useState("");
     const [password, onChangePassword] = React.useState("");
 
     const width = useWindowDimensions().width;
     const height = useWindowDimensions().height;
-
-    async function signIn() {
-        try {
-            const user = await Auth.signIn(username, password);
-            navigation.navigate("ForYou");
-        } catch (error) {
-            console.log('error signing in', error);
-        }
-    }
 
     return (
         <Container behavior="padding" style={{ width: width, height: height }}>
@@ -125,7 +111,7 @@ const SignIn = ({ navigation }) => {
                 <HeaderText>Sign in</HeaderText>
             </Header>
             <CenterContainer>
-                {/* <ButtonsContainer>
+                <ButtonsContainer>
                     <BasicButton>
                         <BigText>Sign in with </BigText>
                         <Ionicons
@@ -144,14 +130,14 @@ const SignIn = ({ navigation }) => {
                             color="#4285F4"
                         />
                     </BasicButton>
-                </ButtonsContainer> */}
+                </ButtonsContainer>
                 <ButtonsContainer>
                     <BasicButton>
                         <LoginInfo
-                            onChangeText={(text) => onChangeUsername(text)}
-                            value={username}
-                            placeholder={"username"}
-                            keyboardType={"default"}
+                            onChangeText={(text) => onChangeEmail(text)}
+                            value={email}
+                            placeholder={"email address"}
+                            keyboardType={"email-address"}
                             returnKeyType={"done"}
                             placeholderTextColor={Colors.lightGrey}
                             autoCorrect={false}
@@ -170,23 +156,6 @@ const SignIn = ({ navigation }) => {
                             autoCorrect={false}
                             clearTextOnFocus={true}
                         />
-                    </BasicButton>
-                    <BasicButton
-                        style={{ backgroundColor: Colors.main }}
-                        onPress={() => {
-                            signIn();
-                            // async () => {
-                            //     try {
-                            //         const user = await Auth.signIn(username, password);
-                            //     } catch (error) {
-                            //         console.log('error signing in', error);
-                            //     }
-                            // }
-                        }}
-                    >
-                        <BigText style={{ color: Colors.white }}>
-                            Login
-                    </BigText>
                     </BasicButton>
                 </ButtonsContainer>
             </CenterContainer>

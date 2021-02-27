@@ -11,9 +11,6 @@ import { useWindowDimensions } from "react-native";
 import style from "styled-components/native";
 import { Feather, Ionicons } from "@expo/vector-icons";
 
-import Amplify, { Auth } from 'aws-amplify';
-import awsmobile from '../../aws-exports';
-
 import Colors from "../components/colors";
 
 const Container = style(KeyboardAvoidingView)`
@@ -98,30 +95,12 @@ const SmallText = style.Text`
     fontWeight: bold;
 `;
 
-Amplify.configure(awsmobile);
-
 const SignUp = ({ navigation }) => {
     const [email, onChangeEmail] = React.useState("");
-    const [username, onChangeUsername] = React.useState("");
     const [password, onChangePassword] = React.useState("");
 
     const width = useWindowDimensions().width;
     const height = useWindowDimensions().height;
-
-    async function signUp() {
-        try {
-            const { user } = await Auth.signUp({
-                username,
-                password,
-                attributes: {
-                    email,
-                }
-            });
-            console.log(user);
-        } catch (error) {
-            console.log('error signing up:', error);
-        }
-    }
 
     return (
         <Container behavior="padding" style={{ width: width, height: height }}>
@@ -132,7 +111,7 @@ const SignUp = ({ navigation }) => {
                 <HeaderText>Sign up</HeaderText>
             </Header>
             <CenterContainer>
-                {/* <ButtonsContainer>
+                <ButtonsContainer>
                     <BasicButton>
                         <BigText>Sign up with </BigText>
                         <Ionicons
@@ -151,68 +130,22 @@ const SignUp = ({ navigation }) => {
                             color="#4285F4"
                         />
                     </BasicButton>
-                </ButtonsContainer> */}
+                </ButtonsContainer>
                 <ButtonsContainer>
-                    <BasicButton>
-                        <LoginInfo
-                            onChangeText={(text) => onChangeUsername(text)}
-                            value={username}
-                            placeholder={"username"}
-                            keyboardType={"default"}
-                            returnKeyType={"done"}
-                            placeholderTextColor={Colors.lightGrey}
-                            autoCorrect={false}
-                            clearButtonMode={"while-editing"}
-                        />
-                    </BasicButton>
+                    <SmallText style={{ color: Colors.lightGrey }}>
+                        or get a link emailed to you
+                    </SmallText>
                     <BasicButton>
                         <LoginInfo
                             onChangeText={(text) => onChangeEmail(text)}
                             value={email}
-                            placeholder={"email"}
+                            placeholder={"email address"}
                             keyboardType={"email-address"}
-                            returnKeyType={"done"}
+                            returnKeyType={"send"}
                             placeholderTextColor={Colors.lightGrey}
                             autoCorrect={false}
                             clearButtonMode={"while-editing"}
                         />
-                    </BasicButton>
-                    <BasicButton>
-                        <LoginInfo
-                            onChangeText={(text) => onChangePassword(text)}
-                            value={password}
-                            placeholder={"password"}
-                            keyboardType={"default"}
-                            returnKeyType={"done"}
-                            placeholderTextColor={Colors.lightGrey}
-                            secureTextEntry={true}
-                            autoCorrect={false}
-                            clearTextOnFocus={true}
-                        />
-                    </BasicButton>
-                    <BasicButton
-                        style={{ backgroundColor: Colors.main }}
-                        onPress={() => {
-                            signUp();
-                            // async () => {
-                            //     try {
-                            //         const data = await Auth.signUp({
-                            //             username,
-                            //             password,
-                            //             attributes: {
-                            //                 email,
-                            //             }
-                            //         });
-                            //         console.log(data);
-                            //     } catch (error) {
-                            //         console.log('error signing up:', error);
-                            //     }
-                            // }
-                        }}
-                    >
-                        <BigText style={{ color: Colors.white }}>
-                            Register
-                        </BigText>
                     </BasicButton>
                 </ButtonsContainer>
             </CenterContainer>
