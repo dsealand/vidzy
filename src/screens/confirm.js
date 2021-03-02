@@ -97,21 +97,29 @@ const TermsText = style.Text`
     fontWeight: bold;
 `;
 
-const SignIn = ({ navigation }) => {
+const Confirm = ({ navigation }) => {
     const [username, onChangeUsername] = React.useState("");
-    const [password, onChangePassword] = React.useState("");
+    const [code, onChangeCode] = React.useState("");
 
     const width = useWindowDimensions().width;
     const height = useWindowDimensions().height;
 
-    async function signIn() {
+
+    async function confirmSignUp() {
         try {
-            const user = await Auth.signIn(username, password);
+          await Auth.confirmSignUp(username, code);
+          navigation.navigate("ForYou");
         } catch (error) {
-            if (error.code == 'UserNotConfirmedException') {
-                navigation.navigate("Confirm");
-            }
-            console.log('error signing in', error);
+            console.log('error confirming sign up', error);
+        }
+    }
+
+    async function resendConfirmationCode() {
+        try {
+            await Auth.resendSignUp(username);
+            console.log('code resent successfully');
+        } catch (err) {
+            console.log('error resending code: ', err);
         }
     }
 
@@ -121,7 +129,7 @@ const SignIn = ({ navigation }) => {
                 <Feather name="arrow-left" size={20} color={Colors.main} />
             </BackButton>
             <Header>
-                <HeaderText>Sign in</HeaderText>
+                <HeaderText>Confirm Account</HeaderText>
             </Header>
             <CenterContainer>
                 <ButtonsContainer>
@@ -134,26 +142,30 @@ const SignIn = ({ navigation }) => {
                             returnKeyType={"done"}
                             placeholderTextColor={Colors.lightGrey}
                             autoCorrect={false}
-                            clearButtonMode={"while-editing"}
+                            clearTextOnFocus={true}
                         />
                     </BasicButton>
                     <BasicButton>
                         <LoginInfo
-                            onChangeText={(text) => onChangePassword(text)}
-                            value={password}
-                            placeholder={"password"}
+                            onChangeText={(text) => onChangeCode(text)}
+                            value={code}
+                            placeholder={"code"}
                             keyboardType={"default"}
                             returnKeyType={"done"}
                             placeholderTextColor={Colors.lightGrey}
-                            secureTextEntry={true}
                             autoCorrect={false}
                             clearTextOnFocus={true}
                         />
                     </BasicButton>
-                    <BasicButton onClick={() => 
-                        console.log("sign in"),
-                        signIn()}>
-                        <BigText style={{ color: Colors.main }}>Login</BigText>
+                    <BasicButton onPress={() => 
+                        console.log("confirm"),
+                        confirmSignUp()}>
+                        <BigText style={{ color: Colors.main }}>Confirm</BigText>
+                    </BasicButton>
+                    <BasicButton onPress={() => 
+                        console.log("confirm"),
+                        resendConfirmationCode()}>
+                        <BigText style={{ color: Colors.main }}>Refresh Code</BigText>
                     </BasicButton>
                 </ButtonsContainer>
             </CenterContainer>
@@ -169,4 +181,4 @@ const SignIn = ({ navigation }) => {
     );
 };
 
-export default SignIn;
+export default Confirm;

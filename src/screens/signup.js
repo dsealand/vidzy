@@ -13,6 +13,8 @@ import { Feather, Ionicons } from "@expo/vector-icons";
 
 import Colors from "../components/colors";
 
+import { Auth } from "aws-amplify";
+
 const Container = style(KeyboardAvoidingView)`
     justifyContent: center;
     alignItems: center;
@@ -97,55 +99,96 @@ const SmallText = style.Text`
 
 const SignUp = ({ navigation }) => {
     const [email, onChangeEmail] = React.useState("");
+    const [username, onChangeUsername] = React.useState("");
     const [password, onChangePassword] = React.useState("");
 
     const width = useWindowDimensions().width;
     const height = useWindowDimensions().height;
+
+    async function signUp() {
+        console.log("signup");
+        try {
+            const data = await Auth.signUp({
+                username,
+                password,
+                attributes: {
+                    email,          // optional
+                }
+            });
+            console.log(data);
+        } catch (error) {
+            if (error.code == 'UsernameExistsException') {
+                signIn();
+            }
+            console.log('error signing up:', error);
+        }
+    }
+
+    async function signIn() {
+        try {
+            const user = await Auth.signIn(username, password);
+        } catch (error) {
+            if (error.code == 'UserNotConfirmedException') {
+                navigation.navigate("Confirm");
+            }
+            console.log('error signing in', error);
+        }
+    }
 
     return (
         <Container behavior="padding" style={{ width: width, height: height }}>
             <BackButton onPress={() => navigation.goBack()}>
                 <Feather name="arrow-left" size={20} color={Colors.main} />
             </BackButton>
-            <Header>
+            {/* <Header>
                 <HeaderText>Sign up</HeaderText>
-            </Header>
+            </Header> */}
             <CenterContainer>
                 <ButtonsContainer>
-                    <BasicButton>
-                        <BigText>Sign up with </BigText>
-                        <Ionicons
-                            name="logo-apple"
-                            size={20}
-                            color={Colors.black}
-                        />
-                    </BasicButton>
-                    <BasicButton>
-                        <BigText style={{ color: "#4285F4" }}>
-                            Sign up with{" "}
-                        </BigText>
-                        <Ionicons
-                            name="logo-google"
-                            size={20}
-                            color="#4285F4"
-                        />
-                    </BasicButton>
-                </ButtonsContainer>
-                <ButtonsContainer>
                     <SmallText style={{ color: Colors.lightGrey }}>
-                        or get a link emailed to you
+                        Register your vidzy account
                     </SmallText>
+                    <BasicButton>
+                        <LoginInfo
+                            onChangeText={(text) => onChangeUsername(text)}
+                            value={username}
+                            placeholder={"username"}
+                            keyboardType={"default"}
+                            returnKeyType={"send"}
+                            placeholderTextColor={Colors.lightGrey}
+                            autoCorrect={false}
+                            clearButtonMode={"while-editing"}
+                        />
+                    </BasicButton>
                     <BasicButton>
                         <LoginInfo
                             onChangeText={(text) => onChangeEmail(text)}
                             value={email}
-                            placeholder={"email address"}
+                            placeholder={"email-address"}
                             keyboardType={"email-address"}
                             returnKeyType={"send"}
                             placeholderTextColor={Colors.lightGrey}
                             autoCorrect={false}
                             clearButtonMode={"while-editing"}
                         />
+                    </BasicButton>
+                    <BasicButton>
+                        <LoginInfo
+                            onChangeText={(text) => onChangePassword(text)}
+                            secureTextEntry={true}
+                            value={password}
+                            placeholder={"password"}
+                            keyboardType={"default"}
+                            returnKeyType={"send"}
+                            placeholderTextColor={Colors.lightGrey}
+                            autoCorrect={false}
+                            clearButtonMode={"while-editing"}
+                        />
+                    </BasicButton>
+                    <BasicButton onClick={() => 
+                        console.log("sign up"),
+                        signUp()}>
+                        <BigText style={{ color: Colors.main }}>Register</BigText>
                     </BasicButton>
                 </ButtonsContainer>
             </CenterContainer>

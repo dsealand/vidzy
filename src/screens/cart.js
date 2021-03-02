@@ -10,7 +10,7 @@ import CartProductStack from "../components/cartProductStack";
 import LikedProductStack from "../components/likedProductStack";
 import api from "../data/cart_api";
 
-import Amplify, { API, graphqlOperation } from 'aws-amplify';
+import Amplify, { API, graphqlOperation, Auth } from 'aws-amplify';
 import awsmobile from '../../aws-exports';
 import * as queries from '../../graphql/queries';
 import * as subscriptions from '../../graphql/subscriptions';
@@ -98,8 +98,17 @@ const Cart = ({ navigation }) => {
         // setFlag(!flag);
     }
 
+    async function signOut() {
+        try {
+            await Auth.signOut();
+            navigation.navigate("Login");
+        } catch (error) {
+            console.log('error signing out: ', error);
+        }
+    }
+
     useEffect(() => {
-        setFlag(!flag);        
+        setFlag(!flag);
 
         async function getCart() {
             try {
@@ -155,21 +164,9 @@ const Cart = ({ navigation }) => {
                     <Element onPress={() => navigation.goBack()}>
                         <Feather name="arrow-left" size={20} color={Colors.main} />
                     </Element>
-                    {/* <TouchableOpacity
-                    onPress={() => {
-                        setSelection("Cart");
-                    }}
-                >
-                    <BigText style={{ color: cartColor }}>Cart</BigText>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => {
-                        setSelection("Liked");
-                    }}
-                >
-                    <BigText style={{ color: likedColor }}>Liked</BigText>
-                </TouchableOpacity> */}
-                    <Element />
+                    <Element onPress={() => signOut()}>
+                        <BigText style={{ color: Colors.main }}>Log Out</BigText>
+                    </Element>
                 </Header>
                 <Container style={{ width: width, height: height }}>
                     <ProductContainer>
@@ -194,7 +191,7 @@ const Cart = ({ navigation }) => {
                         )}
                     </BottomContainer>
                 </Container>
-            </View>
+            </View >
         )
     }
 

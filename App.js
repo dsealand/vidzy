@@ -19,6 +19,7 @@ import ForYou from "./src/screens/forYou";
 import Creator from "./src/screens/creator";
 import Product from "./src/screens/product";
 import Cart from "./src/screens/cart";
+import Confirm from "./src/screens/confirm";
 
 Amplify.configure(awsmobile);
 
@@ -44,55 +45,60 @@ function App() {
             await Font.loadAsync({
                 'Circular-Std': require('./src/assets/fonts/CircularStd-Medium.ttf'),
             }).then(() => setFontsLoaded(true));
-            console.log("fontsLoaded", fontsLoaded);
         }
         loadFonts();
     })
-    
+
     if (!fontsLoaded) {
         return <AppLoading />;
-    } else { 
-    return (
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName="Login">
-                <Stack.Screen
-                    name="Login"
-                    component={Login}
-                    options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                    name="SignIn"
-                    component={SignIn}
-                    options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                    name="SignUp"
-                    component={SignUp}
-                    options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                    name="ForYou"
-                    component={ForYou}
-                    options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                    name="Creator"
-                    component={Creator}
-                    options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                    name="Product"
-                    component={Product}
-                    options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                    name="Cart"
-                    component={Cart}
-                    options={{ headerShown: false }}
-                />
-            </Stack.Navigator>
-        </NavigationContainer>
-    );
-}}
+    } else {
+        return (
+            <NavigationContainer>
+                <Stack.Navigator initialRouteName="Login">
+                    <Stack.Screen
+                        name="Login"
+                        component={Login}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name="SignIn"
+                        component={SignIn}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name="SignUp"
+                        component={SignUp}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name="Confirm"
+                        component={Confirm}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name="ForYou"
+                        component={ForYou}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name="Creator"
+                        component={Creator}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name="Product"
+                        component={Product}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name="Cart"
+                        component={Cart}
+                        options={{ headerShown: false }}
+                    />
+                </Stack.Navigator>
+            </NavigationContainer>
+        );
+    }
+}
 
 export default App;

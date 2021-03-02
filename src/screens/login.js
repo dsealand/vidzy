@@ -5,7 +5,12 @@ import { useWindowDimensions } from "react-native";
 import style from "styled-components/native";
 import { Feather } from "@expo/vector-icons";
 
+import Amplify, { Auth } from 'aws-amplify';
+import awsmobile from '../../aws-exports';
+
 import Colors from "../components/colors";
+
+Amplify.configure(awsmobile)
 
 const Container = style.View`
     justifyContent: center;
