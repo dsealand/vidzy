@@ -86,7 +86,6 @@ const VideoCard = ({ navigation, card, isPlay }) => {
                 if (apiData.data.listLikedVideos.items != 0) {
                     setlikedVideoID(apiData.data.listLikedVideos.items[0].id)
                     setLiked(true);
-                    console.log(likedVideoID);
                 } else {
                     setLiked(false);
                 }

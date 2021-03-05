@@ -101,6 +101,11 @@ const SmallText = style.Text`
     color: ${Colors.black};
 `;
 
+const TouchText = style(TouchableOpacity)`
+    backgroundColor: ${Colors.white}
+
+`
+
 const styles = StyleSheet.create({
     shadow: {
         shadowColor: Colors.darkGrey,
@@ -130,6 +135,16 @@ const cartProduct = ({ cartProduct, likedProduct, handler }) => {
         getProduct();
     }, []);
 
+    async function deleteItem() {
+        setQuantity(0);
+        setExists(false);
+        try {
+            await API.graphql(graphqlOperation(mutations.deleteCartProduct, { input: { id: cartProduct.id } }))
+        } catch (err) {
+            console.log("minus quantity error: ", err);
+        }
+    }
+
     // console.log("product");
     // console.log(product);
 
@@ -146,115 +161,104 @@ const cartProduct = ({ cartProduct, likedProduct, handler }) => {
             </ColorImageSpacer>
         );
     };
-    if (exists) { return (
-        <ProductContainer>
-            <TopContainer>
-                <LeftContainer>
-                    <View style={styles.shadow}>
-                        <ImageBorder />
-                    </View>
-                </LeftContainer>
-                <RightContainer>
-                    <SmallText style={{ fontWeight: "bold" }}>
-                        {product.name}
-                    </SmallText>
-                    <SmallText style={{ color: Colors.lightGrey }}>
-                        {product.name}
-                    </SmallText>
-                    <SmallText style={{ color: Colors.main }}>
-                        $ {product.price}
-                    </SmallText>
-                    <View style={{ justifyContent: "center", height: "50%" }}>
-                        <FlatList
-                            data={product.colors}
-                            renderItem={renderColorListItem}
-                            horizontal={true}
-                            keyExtractor={(item) => item.id}
-                        />
-                    </View>
-                </RightContainer>
-            </TopContainer>
-            <BottomContainer>
-                <Element>
-                    <Feather
-                        name="trash-2"
-                        size={20}
-                        color={Colors.main}
-                        onPress={
-                            handler(),
-                            async () => {
-                                setQuantity(0);
-                                setExists(false);
-                                try {
-                                    await API.graphql(graphqlOperation(mutations.deleteCartProduct, { input: { id: cartProduct.id } }))
-                                } catch (err) {
-                                    console.log("minus quantity error: ", err);
-                                }
-                            }
-                        } />
-                    <SmallText> Delete</SmallText>
-                </Element>
-                <QuantityContainer>
-                    <Element>
+    if (exists) {
+        return (
+            <ProductContainer>
+                <TopContainer>
+                    <LeftContainer>
+                        <View style={styles.shadow}>
+                            <ImageBorder />
+                        </View>
+                    </LeftContainer>
+                    <RightContainer>
+                        <SmallText style={{ fontWeight: "bold" }}>
+                            {product.name}
+                        </SmallText>
+                        <SmallText style={{ color: Colors.lightGrey }}>
+                            {product.name}
+                        </SmallText>
+                        <SmallText style={{ color: Colors.main }}>
+                            $ {product.price}
+                        </SmallText>
+                        <View style={{ justifyContent: "center", height: "50%" }}>
+                            <FlatList
+                                data={product.colors}
+                                renderItem={renderColorListItem}
+                                horizontal={true}
+                                keyExtractor={(item) => item.id}
+                            />
+                        </View>
+                    </RightContainer>
+                </TopContainer>
+                <BottomContainer>
+                    <Element onPress={() => deleteItem()}>
                         <Feather
-                            name="minus"
+                            name="trash-2"
                             size={20}
                             color={Colors.main}
-                            onPress={
-                                handler(),
-                                async () => {
-                                    if (quantity > 1) {
-                                        setQuantity(quantity - 1);
+                        />
+                        <SmallText> Delete</SmallText>
+                    </Element>
+                    <QuantityContainer>
+                        <Element>
+                            <Feather
+                                name="minus"
+                                size={20}
+                                color={Colors.main}
+                                onPress={
+                                    async () => {
+                                        if (quantity > 1) {
+                                            setQuantity(quantity - 1);
+                                            try {
+                                                await API.graphql(graphqlOperation(mutations.updateCartProduct, {
+                                                    input: {
+                                                        id: cartProduct.id,
+                                                        quantity: quantity,
+                                                    }
+                                                }))
+                                            } catch (err) {
+                                                console.log("minus quantity error: ", err);
+                                            }
+                                        } else {
+                                            setQuantity(0);
+                                            setExists(false);
+                                            try {
+                                                await API.graphql(graphqlOperation(mutations.deleteCartProduct, { input: { id: cartProduct.id } }))
+                                            } catch (err) {
+                                                console.log("minus quantity error: ", err);
+                                            }
+                                        }
+                                    }
+                                }
+                            />
+                        </Element>
+                        <SmallText style={{ fontWeight: "bold" }}>
+                            {quantity}
+                        </SmallText>
+                        <Element>
+                            <Feather
+                                name="plus"
+                                size={20}
+                                color={Colors.main}
+                                onPress={
+                                    handler(),
+                                    async () => {
+                                        setQuantity(quantity + 1);
                                         try {
                                             await API.graphql(graphqlOperation(mutations.updateCartProduct, {
                                                 input: {
                                                     id: cartProduct.id,
-                                                    quantity: quantity,
+                                                    quantity: quantity
                                                 }
                                             }))
                                         } catch (err) {
-                                            console.log("minus quantity error: ", err);
-                                        }
-                                    } else {
-                                        setQuantity(0);
-                                        setExists(false);
-                                        try {
-                                            await API.graphql(graphqlOperation(mutations.deleteCartProduct, { input: { id: cartProduct.id } }))
-                                        } catch (err) {
-                                            console.log("minus quantity error: ", err);
+                                            console.log("error: ", err);
                                         }
                                     }
-                                }
-                            }
-                        />
-                    </Element>
-                    <SmallText style={{ fontWeight: "bold" }}>
-                        {quantity}
-                    </SmallText>
-                    <Element>
-                        <Feather
-                            name="plus"
-                            size={20}
-                            color={Colors.main}
-                            onPress={
-                                handler(),
-                                async () => {
-                                    setQuantity(quantity + 1);
-                                    try {
-                                        await API.graphql(graphqlOperation(mutations.updateCartProduct, {
-                                            input: {
-                                                id: cartProduct.id,
-                                                quantity: quantity
-                                            }
-                                        }))
-                                    } catch (err) {
-                                        console.log("error: ", err);
-                                    }
-                                }
-                            } />
-                    </Element>
-                </QuantityContainer>
-                {/* <Element>
+                                } />
+                        </Element>
+                    </QuantityContainer>
+                    {/* <Element>
                     <Feather
                         name="heart"
                         size={20}
@@ -266,9 +270,10 @@ const cartProduct = ({ cartProduct, likedProduct, handler }) => {
                         }/>
                     <SmallText> Like</SmallText>
                 </Element> */}
-            </BottomContainer>
-        </ProductContainer>
-    )}
+                </BottomContainer>
+            </ProductContainer>
+        )
+    }
     else {
         // this should eventually be an error page if a cart loads incorrectly
         return (<View />)

@@ -107,6 +107,8 @@ const SignIn = ({ navigation }) => {
     async function signIn() {
         try {
             const user = await Auth.signIn(username, password);
+            // console.log(user);
+            navigation.navigate("ForYou");
         } catch (error) {
             if (error.code == 'UserNotConfirmedException') {
                 navigation.navigate("Confirm");
@@ -135,6 +137,7 @@ const SignIn = ({ navigation }) => {
                             placeholderTextColor={Colors.lightGrey}
                             autoCorrect={false}
                             clearButtonMode={"while-editing"}
+                            autoCapitalize={'none'}
                         />
                     </BasicButton>
                     <BasicButton>
@@ -148,11 +151,12 @@ const SignIn = ({ navigation }) => {
                             secureTextEntry={true}
                             autoCorrect={false}
                             clearTextOnFocus={true}
+                            autoCapitalize={'none'}
                         />
                     </BasicButton>
-                    <BasicButton onClick={() => 
-                        console.log("sign in"),
-                        signIn()}>
+                    <BasicButton onPress={() => {
+                        signIn(),
+                        console.log("sign in")}}>
                         <BigText style={{ color: Colors.main }}>Login</BigText>
                     </BasicButton>
                 </ButtonsContainer>

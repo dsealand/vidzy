@@ -104,11 +104,20 @@ const Confirm = ({ navigation }) => {
     const width = useWindowDimensions().width;
     const height = useWindowDimensions().height;
 
+    async function createUser() {
+        try {
+            const cart = await API.graphql(graphqlOperation(mutations.createCart, { input: {} }));
+            await API.graphql(graphqlOperation(mutations.createUser, { input: { username: username, cartID: cart.ID } }));
+        } catch (err) {
+            console.log('addToCart new error: ', err);
+        }
+    }
 
     async function confirmSignUp() {
         try {
-          await Auth.confirmSignUp(username, code);
-          navigation.navigate("ForYou");
+            await Auth.confirmSignUp(username, code);
+            createUser();
+            navigation.navigate("ForYou");
         } catch (error) {
             console.log('error confirming sign up', error);
         }
@@ -143,6 +152,7 @@ const Confirm = ({ navigation }) => {
                             placeholderTextColor={Colors.lightGrey}
                             autoCorrect={false}
                             clearTextOnFocus={true}
+                            autoCapitalize={'none'}
                         />
                     </BasicButton>
                     <BasicButton>
@@ -155,16 +165,19 @@ const Confirm = ({ navigation }) => {
                             placeholderTextColor={Colors.lightGrey}
                             autoCorrect={false}
                             clearTextOnFocus={true}
+                            autoCapitalize={'none'}
                         />
                     </BasicButton>
-                    <BasicButton onPress={() => 
+                    <BasicButton onPress={() => {
                         console.log("confirm"),
-                        confirmSignUp()}>
+                            confirmSignUp()
+                    }}>
                         <BigText style={{ color: Colors.main }}>Confirm</BigText>
                     </BasicButton>
-                    <BasicButton onPress={() => 
+                    <BasicButton onPress={() => {
                         console.log("confirm"),
-                        resendConfirmationCode()}>
+                            resendConfirmationCode()
+                    }}>
                         <BigText style={{ color: Colors.main }}>Refresh Code</BigText>
                     </BasicButton>
                 </ButtonsContainer>

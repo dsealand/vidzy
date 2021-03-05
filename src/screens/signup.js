@@ -115,7 +115,12 @@ const SignUp = ({ navigation }) => {
                     email,          // optional
                 }
             });
-            console.log(data);
+            if (data.userConfirmed == false) {
+                navigation.navigate("Confirm");
+            } else {
+                navigation.navigate("ForYou");
+            }
+            // console.log(data);
         } catch (error) {
             if (error.code == 'UsernameExistsException') {
                 signIn();
@@ -158,6 +163,7 @@ const SignUp = ({ navigation }) => {
                             placeholderTextColor={Colors.lightGrey}
                             autoCorrect={false}
                             clearButtonMode={"while-editing"}
+                            autoCapitalize={'none'}
                         />
                     </BasicButton>
                     <BasicButton>
@@ -170,6 +176,7 @@ const SignUp = ({ navigation }) => {
                             placeholderTextColor={Colors.lightGrey}
                             autoCorrect={false}
                             clearButtonMode={"while-editing"}
+                            autoCapitalize={'none'}
                         />
                     </BasicButton>
                     <BasicButton>
@@ -183,11 +190,12 @@ const SignUp = ({ navigation }) => {
                             placeholderTextColor={Colors.lightGrey}
                             autoCorrect={false}
                             clearButtonMode={"while-editing"}
+                            autoCapitalize={'none'}
                         />
                     </BasicButton>
-                    <BasicButton onClick={() => 
+                    <BasicButton onPress={() => {
                         console.log("sign up"),
-                        signUp()}>
+                        signUp()}}>
                         <BigText style={{ color: Colors.main }}>Register</BigText>
                     </BasicButton>
                 </ButtonsContainer>

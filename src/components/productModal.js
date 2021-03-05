@@ -11,9 +11,10 @@ import {
 import style from "styled-components/native";
 import { Feather } from "@expo/vector-icons";
 
-import Amplify, { API, graphqlOperation } from 'aws-amplify';
+import Amplify, { API, graphqlOperation, Auth } from 'aws-amplify';
 import awsmobile from '../../aws-exports';
 import * as mutations from '../../graphql/mutations';
+import * as queries from '../../graphql/queries';
 
 import Colors from "./colors";
 
@@ -194,28 +195,46 @@ const renderSectionHeader = ({ section }) => {
 
 // TODO: get cartID from user, update createCartProduct mutation with cartID
 
-const productModal = ({ navigation, product, onPressClose, addCartMutation }) => {
-    const [cartProducts, setCartProducts] = useState();
+const productModal = ({ navigation, product, onPressClose }) => {
+    const [cartLength, setCartLength] = useState(0);
+    const [cartQuantity, setCartQuantity] = useState(0);
+    
+    // get cart data for add to cart button behavior
     useEffect(() => {
         async function getCart() {
             try {
                 // repace id with cartID from user
-                const apiData = await API.graphql(graphqlOperation(queries.getCartProducts, {
+
+                const authUser = await Auth.currentAuthenticatedUser();
+                const user = await API.graphql(graphqlOperation(queries.listUsers, {
                     filter: {
-                        userID: {
-                            eq: 0
-                        },
-                        productID: {
-                            eq: product.id
+                        username: {
+                            eq: authUser.username
                         }
                     }
                 }));
-                const cartData = apiData.data.getCartProducts.items;
-                setCartProducts(cartData);
+                const cart = await API.graphql(graphqlOperation(queries.getCart, { id: user.data.listUsers.items[0].cartID }))
+                setCartLength(cart.data.getCart.cartProducts.items.length);
+                if (cartLength != 0) {
+                    setCartQuantity(cart.data.getCart.cartProducts.items[0].quantity);
+                }
+                // const apiData = await API.graphql(graphqlOperation(queries.getCartProducts, {
+                //     filter: {
+                //         cartID: {
+                //             eq: cart.data.getCartProducts.id
+                //         },
+                //         productID: {
+                //             eq: product.id
+                //         }
+                //     }
+                // }));
+                // const cartData = apiData.data.getCartProducts.items;
+                // setCartProducts(cartData);
             } catch (err) {
                 console.log('error1: ', err);
             }
         }
+        getCart();
     }, []);
 
     // construct array for image and color data
@@ -230,7 +249,25 @@ const productModal = ({ navigation, product, onPressClose, addCartMutation }) =>
         }]
     }];
 
-    console.log(data);
+    // adds product to cart if does not exist in cart, adds 1 to quantity if exists
+    async function addToCart() {
+        if (cartLength == 0) {
+            setCartLength(cartLength + 1);
+            try {
+                await API.graphql(graphqlOperation(mutations.createCartProduct, { input: { cartID: 0, quantity: 1, productID: product.id, price: product.price } }));
+            } catch (err) {
+                console.log('addToCart new error: ', err);
+            }
+        } else {
+            setCartQuantity(cartQuantity + 1);
+            try {
+                await API.graphql(graphqlOperation(mutations.updateCartProduct, { input: { cartID: 0, quantity: cartQuantity}}));
+            } catch (err) {
+                console.log('addToCart existing error: ', err);
+            }
+        }
+    }
+
     return (
         <Container>
             <ModalContainer>
@@ -260,16 +297,17 @@ const productModal = ({ navigation, product, onPressClose, addCartMutation }) =>
                     <AddToCart
                         onPress={
                             async () => {
-                                if (cartProducts.length == 0) {
+                                if (cartLength == 0) {
+                                    setCartLength(cartLength + 1);
                                     try {
                                         await API.graphql(graphqlOperation(mutations.createCartProduct, { input: { cartID: 0, quantity: 1, productID: product.id, price: product.price } }));
                                     } catch (err) {
                                         console.log('addToCart new error: ', err);
                                     }
                                 } else {
-                                    const quantity = cartProducts[0].quantity + 1;
+                                    setCartQuantity(cartQuantity + 1);
                                     try {
-                                        await API.graphql(graphqlOperation(mutations.updateCartProduct, { input: { cartID: 0, quantity: quantity}}));
+                                        await API.graphql(graphqlOperation(mutations.updateCartProduct, { input: { cartID: 0, quantity: cartQuantity}}));
                                     } catch (err) {
                                         console.log('addToCart existing error: ', err);
                                     }

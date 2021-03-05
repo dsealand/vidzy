@@ -45,7 +45,7 @@ const cartProductStack = ({ cart, handlerFunction }) => {
             data={cart.cartProducts.items}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
-            ItemSeparatorComponent={itemSeperator}
+            // ItemSeparatorComponent={itemSeperator}
         />
     );
 };
