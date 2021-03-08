@@ -29,6 +29,8 @@ const Seperator = style.View`
 `;
 
 const cartProductStack = ({ cart, handlerFunction }) => {
+    const [refreshFlag, setRefreshFlag] = useState();
+
     const itemSeperator = () => {
         return (
             <Seperator>
@@ -36,8 +38,13 @@ const cartProductStack = ({ cart, handlerFunction }) => {
             </Seperator>
         );
     };
+
+    const refresh = () => {
+        console.log("refresh flag");
+        setRefreshFlag(!refreshFlag);
+    }
     
-    const renderItem = ({ item }) => <CartProduct cartProduct={item} likedProduct={item} handler={handlerFunction} />;
+    const renderItem = ({ item }) => <CartProduct cartProduct={item} likedProduct={item} handler={handlerFunction} /*refresh={refresh()}*/ />;
 
     return (
         <FlatList
@@ -45,7 +52,8 @@ const cartProductStack = ({ cart, handlerFunction }) => {
             data={cart.cartProducts.items}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
-            // ItemSeparatorComponent={itemSeperator}
+            ItemSeparatorComponent={itemSeperator}
+            extraData={refreshFlag}
         />
     );
 };

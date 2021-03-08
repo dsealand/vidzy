@@ -19,6 +19,8 @@ import awsmobile from '../../aws-exports';
 import * as mutations from '../../graphql/mutations';
 import * as queries from '../../graphql/queries';
 
+import { WebView } from 'react-native-webview';
+
 Amplify.configure(awsmobile);
 
 const ProductContainer = style.View`
@@ -101,10 +103,25 @@ const SmallText = style.Text`
     color: ${Colors.black};
 `;
 
+const BigText = style.Text`
+    font-size: 14px;
+    fontFamily: Circular-Std;
+    color: ${Colors.white};
+    fontWeight: bold;
+`;
+
 const TouchText = style(TouchableOpacity)`
     backgroundColor: ${Colors.white}
+`;
 
-`
+const Checkout = style(TouchableOpacity)`
+    backgroundColor: ${Colors.main};
+    borderRadius: 25px;
+    width: 30%;
+    height: 100%;
+    justifyContent: center;
+    alignItems: center;
+`;
 
 const styles = StyleSheet.create({
     shadow: {
@@ -115,11 +132,11 @@ const styles = StyleSheet.create({
     },
 });
 
-const cartProduct = ({ cartProduct, likedProduct, handler }) => {
+const cartProduct = ({ cartProduct, likedProduct, handler, refresh }) => {
     const [product, setProduct] = useState([]);
     const [quantity, setQuantity] = useState();
     const [exists, setExists] = useState(true);
-    const [liked, setLiked] = useState(false);
+    // const [liked, setLiked] = useState(false);
 
     useEffect(() => {
         async function getProduct() {
@@ -143,6 +160,11 @@ const cartProduct = ({ cartProduct, likedProduct, handler }) => {
         } catch (err) {
             console.log("minus quantity error: ", err);
         }
+    }
+
+    async function checkout() {
+        console.log("webview");
+        return <WebView source={{ uri: 'https://reactnative.dev/' }} />;
     }
 
     // console.log("product");
@@ -191,7 +213,7 @@ const cartProduct = ({ cartProduct, likedProduct, handler }) => {
                     </RightContainer>
                 </TopContainer>
                 <BottomContainer>
-                    <Element onPress={() => deleteItem()}>
+                    <Element onPress={() => {deleteItem()}}>
                         <Feather
                             name="trash-2"
                             size={20}
@@ -199,7 +221,15 @@ const cartProduct = ({ cartProduct, likedProduct, handler }) => {
                         />
                         <SmallText> Delete</SmallText>
                     </Element>
-                    <QuantityContainer>
+                    <Checkout onPress={() => {checkout()}}>
+                        <BigText>Checkout</BigText>
+                    </Checkout>
+                    {/* <Element onPress={() => checkout()}>
+                        <SmallText>
+                            Checkout
+                        </SmallText>
+                    </Element> */}
+                    {/* <QuantityContainer>
                         <Element>
                             <Feather
                                 name="minus"
@@ -257,7 +287,7 @@ const cartProduct = ({ cartProduct, likedProduct, handler }) => {
                                     }
                                 } />
                         </Element>
-                    </QuantityContainer>
+                    </QuantityContainer> */}
                     {/* <Element>
                     <Feather
                         name="heart"
