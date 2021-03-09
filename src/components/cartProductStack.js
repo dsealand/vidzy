@@ -44,7 +44,7 @@ const cartProductStack = ({ cart, handlerFunction }) => {
         setRefreshFlag(!refreshFlag);
     }
     
-    const renderItem = ({ item }) => <CartProduct cartProduct={item} likedProduct={item} handler={handlerFunction} /*refresh={refresh()}*/ />;
+    const renderItem = ({ item }) => <CartProduct cartProduct={item} likedProduct={item} handler={handlerFunction} refresh={refresh} />;
 
     return (
         <FlatList

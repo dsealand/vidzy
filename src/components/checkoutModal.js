@@ -1,0 +1,98 @@
+import React, { useState } from "react";
+
+import { WebView } from 'react-native-webview';
+
+import { Image, Text, View, TouchableOpacity } from "react-native";
+import style from "styled-components/native";
+import { Feather } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
+
+import Colors from "./colors";
+
+const Container = style.View`
+    flexDirection: column;
+    justifyContent: flex-start;
+    alignItems: stretch;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+`;
+
+const CheckoutWebView = style(WebView)`
+    flex: 1;
+`;
+
+const TopContainer = style.View`
+    backgroundColor: ${Colors.main}
+    flexDirection: row;
+    alignItems: center;
+    justifyContent: space-between;
+    width: 100%;
+    height: 100%
+`;
+
+const Element = style(TouchableOpacity)`
+    width: 20%;
+    justifyContent: center;
+    alignItems: center;
+`;
+
+const Checkout = style.Text`
+    font-size: 14px;
+    fontFamily: Circular-Std;
+    color: ${Colors.white};
+    fontWeight: bold;
+    // flexDirection: row-reverse;
+    // alignSelf: center;
+`;
+
+const ModalContainer = style.View`
+    width: 100%;
+    height: 5%;
+    borderTopLeftRadius: 20px;
+    borderTopRightRadius: 20px;
+    justifyContent: flex-end;
+    alignItems: center;
+    overflow: hidden;
+`;
+
+const BigText = style.Text`
+    font-size: 14px;
+    fontFamily: Circular-Std;
+    color: ${Colors.white};
+    fontWeight: bold;
+`;
+
+const checkoutModal = ({ onPressClose }) => {
+    return (
+        <Container>
+            <ModalContainer>
+                <TopContainer>
+                    {/* <Element onPress={() => navigation.goBack()}>
+                        <Feather name="arrow-left" size={20} color={Colors.main} />
+                    </Element> */}
+                    <Element />
+                    {/* <Checkout>
+                        Checkout
+                    </Checkout> */}
+                    <Element>
+                        <BigText style={{ color: Colors.white }}>Checkout</BigText>
+                    </Element>
+                    <Element onPress={onPressClose}>
+                        <Feather
+                            name="arrow-down"
+                            size={20}
+                            color={Colors.white}
+                        />
+                    </Element>
+                </TopContainer>
+            </ModalContainer>
+            <CheckoutWebView
+                source={{ uri: 'https://reactnative.dev/' }}
+            />
+        </Container>
+
+    );
+};
+
+export default checkoutModal;

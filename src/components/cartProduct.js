@@ -6,6 +6,7 @@ import {
     TouchableOpacity,
     FlatList,
     StyleSheet,
+    Modal,
 } from "react-native";
 import style from "styled-components/native";
 import { Feather } from "@expo/vector-icons";
@@ -20,6 +21,8 @@ import * as mutations from '../../graphql/mutations';
 import * as queries from '../../graphql/queries';
 
 import { WebView } from 'react-native-webview';
+
+import CheckoutModal from './checkoutModal';
 
 Amplify.configure(awsmobile);
 
@@ -136,6 +139,7 @@ const cartProduct = ({ cartProduct, likedProduct, handler, refresh }) => {
     const [product, setProduct] = useState([]);
     const [quantity, setQuantity] = useState();
     const [exists, setExists] = useState(true);
+    const [checkoutModalVisible, setCheckoutModalVisible] = useState(false);
     // const [liked, setLiked] = useState(false);
 
     useEffect(() => {
@@ -186,6 +190,15 @@ const cartProduct = ({ cartProduct, likedProduct, handler, refresh }) => {
     if (exists) {
         return (
             <ProductContainer>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={checkoutModalVisible}
+                >
+                    <CheckoutModal
+                        onPressClose={() => setCheckoutModalVisible(false)}
+                    />
+                </Modal>
                 <TopContainer>
                     <LeftContainer>
                         <View style={styles.shadow}>
@@ -213,7 +226,7 @@ const cartProduct = ({ cartProduct, likedProduct, handler, refresh }) => {
                     </RightContainer>
                 </TopContainer>
                 <BottomContainer>
-                    <Element onPress={() => {deleteItem()}}>
+                    <Element onPress={() => { deleteItem() }}>
                         <Feather
                             name="trash-2"
                             size={20}
@@ -221,7 +234,7 @@ const cartProduct = ({ cartProduct, likedProduct, handler, refresh }) => {
                         />
                         <SmallText> Delete</SmallText>
                     </Element>
-                    <Checkout onPress={() => {checkout()}}>
+                    <Checkout onPress={() => setCheckoutModalVisible(true)}>
                         <BigText>Checkout</BigText>
                     </Checkout>
                     {/* <Element onPress={() => checkout()}>

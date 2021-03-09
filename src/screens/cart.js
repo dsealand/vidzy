@@ -179,7 +179,7 @@ const Cart = ({ navigation }) => {
                         />
                     )} */}
                     </ProductContainer>
-                    {/* <BottomContainer style={{ height: "15%" }}>
+                    <BottomContainer style={{ height: "15%" }}>
                         {selection === "Cart" && (
                             <BottomContainer>
                                 <Checkout>
@@ -190,7 +190,7 @@ const Cart = ({ navigation }) => {
                                 </Price>
                             </BottomContainer>
                         )}
-                    </BottomContainer> */}
+                    </BottomContainer>
                 </Container>
             </View >
         )

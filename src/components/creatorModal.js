@@ -61,7 +61,7 @@ const CreatorName = style.Text`
     fontWeight: bold;
 `;
 
-const CreatorHandel = style.Text`
+const CreatorHandle = style.Text`
     font-size: 13px
     fontFamily: Circular-Std;
     color: ${Colors.lightGrey};
@@ -85,8 +85,6 @@ const MoreVideosText = style.Text`
 `;
 
 const creatorModal = ({ navigation, creator, onPressClose }) => {
-    console.log(creator);
-    console.log("creator");
     return (
         <Container>
             <ModalContainer>
@@ -104,7 +102,7 @@ const creatorModal = ({ navigation, creator, onPressClose }) => {
 
                 <BottomContainer>
                     <CreatorPhoto source={{uri:creator.photo}} />
-                    <CreatorHandel>@{creator.username}</CreatorHandel>
+                    <CreatorHandle>@{creator.username}</CreatorHandle>
                     <MoreVideos
                         onPress={onPressClose}
                         onPressOut={() => {
