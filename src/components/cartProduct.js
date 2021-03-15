@@ -158,9 +158,12 @@ const cartProduct = ({ cartProduct, likedProduct, handler, refresh }) => {
 
     async function deleteItem() {
         setQuantity(0);
-        setExists(false);
+        handler(); 
+
         try {
             await API.graphql(graphqlOperation(mutations.deleteCartProduct, { input: { id: cartProduct.id } }))
+            setExists(false);
+
         } catch (err) {
             console.log("minus quantity error: ", err);
         }

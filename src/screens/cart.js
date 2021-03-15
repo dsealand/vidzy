@@ -96,7 +96,8 @@ const Cart = ({ navigation }) => {
     // const [cartData, setCartData] = useState();
 
     function handler() {
-        // setFlag(!flag);
+        setFlag(!flag);
+        getCart();
     }
 
     async function signOut() {
@@ -109,10 +110,8 @@ const Cart = ({ navigation }) => {
         }
     }
 
-    useEffect(() => {
-        setFlag(!flag);
-
-        async function getCredentials() {
+    async function getCart() {
+            console.log("querying cart")
             try {
                 const credentials = await Auth.currentCredentials();
                 return credentials;
@@ -121,53 +120,20 @@ const Cart = ({ navigation }) => {
             }
         }
 
-        // get authenticated/guest username and cart
-        async function getUser() {
-            const credentials = await getCredentials();
-            try {
-                if (credentials.authenticated == true) {
-                    const authUser = await Auth.currentAuthenticatedUser();
-                    setUsername(authUser.username);
-                } else {
-                    setUsername(credentials.accessKeyId);
-                }
-                getCart(username);
-            } catch (err) {
-                console.log("error getting current user: ", err);
-            }
-        }
+    useEffect(() => {
+        getCart();
 
-        async function getCart(username) {
-            try {
-                const user = await API.graphql(graphqlOperation(queries.listUsers, {
-                    filter: {
-                        username: {
-                            eq: username
-                        }
-                    }
-                }));
-                const cart = await API.graphql(graphqlOperation(queries.getCart, { id: user.data.listUsers.items[0].cartID }))
-                setCart(cart.data.getCart);
-            } catch (err) {
-                console.log('error getting cart: ', err);
-            }
-            // try {
-            //     const apiData = await API.graphql(graphqlOperation(queries.getCart, { id: 0 }));
-            //     const cart = apiData.data.getCart;
-            //     var result = (cart.cartProducts.items).reduce(function (tot, arr) {
-            //         // return the sum with previous value
-            //         return tot + arr.price * arr.quantity;
-
-            //         // set initial value as 0
-            //     }, 0);
-            //     setPrice(result);
-            //     setCart(cart);
-            // } catch (err) {
-            //     console.log('cart error: ', err);
-            // }
-        }
-
-        getUser();
+        // const subscription = API.graphql(graphqlOperation(subscriptions.onUpdateCart)).subscribe({
+        //     next: data => {
+        //         console.log("subscription");
+        //         console.log(data.data.onUpdateCart);
+        //         setCartData(data.data.onUpdateCart);
+        //         console.log(cartData);
+        //     }
+        // });
+        // return () => {
+        //     subscription.unsubscribe();
+        // }
     }, []);
 
     // var result = (cart.cartProducts.items).reduce(function (tot, arr) {
@@ -199,7 +165,7 @@ const Cart = ({ navigation }) => {
                 </Header>
                 <Container style={{ width: width, height: height }}>
                     <ProductContainer>
-                        {selection === "Cart" && <CartProductStack cart={cart} handlerFunction={handler} />}
+                        {selection === "Cart" && <CartProductStack cart={cart} handlerFunction={() => handler()} />}
                         {/* {selection === "Liked" && (
                         <LikedProductStack
                             navigation={navigation}
