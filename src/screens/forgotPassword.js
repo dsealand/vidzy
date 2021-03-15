@@ -11,9 +11,9 @@ import { useWindowDimensions } from "react-native";
 import style from "styled-components/native";
 import { Feather, Ionicons } from "@expo/vector-icons";
 
-import { Auth } from 'aws-amplify';
-
 import Colors from "../components/colors";
+
+import { Auth } from "aws-amplify";
 
 const Container = style(KeyboardAvoidingView)`
     justifyContent: center;
@@ -90,25 +90,60 @@ const Terms = style.View`
     top: 10%;
 `;
 
-const TermsText = style.Text`
+const SmallText = style.Text`
     font-size: 15px
     fontFamily: Circular-Std;
     color: ${Colors.black};
     fontWeight: bold;
 `;
 
-const SignIn = ({ navigation }) => {
+const ForgotPassword = ({ navigation }) => {
+    const [email, onChangeEmail] = React.useState("");
     const [username, onChangeUsername] = React.useState("");
     const [password, onChangePassword] = React.useState("");
 
     const width = useWindowDimensions().width;
     const height = useWindowDimensions().height;
 
+    async function newPassword() {
+        try {
+            const data = await Auth.forgotPasswordSubmit(
+                username,
+                code,
+                new_password
+            )
+        } catch (error1) {
+            console.log("new password submit error: ", error1);
+        }
+    }
+
+    async function signUp() {
+        console.log("signup");
+        try {
+            const data = await Auth.signUp({
+                username,
+                password,
+                attributes: {
+                    email,          // optional
+                }
+            });
+            if (data.userConfirmed == false) {
+                navigation.navigate("Confirm");
+            } else {
+                navigation.navigate("ForYou");
+            }
+            // console.log(data);
+        } catch (error) {
+            if (error.code == 'UsernameExistsException') {
+                signIn();
+            }
+            console.log('error signing up:', error);
+        }
+    }
+
     async function signIn() {
         try {
             const user = await Auth.signIn(username, password);
-            // console.log(user);
-            navigation.navigate("ForYou");
         } catch (error) {
             if (error.code == 'UserNotConfirmedException') {
                 navigation.navigate("Confirm");
@@ -122,18 +157,34 @@ const SignIn = ({ navigation }) => {
             <BackButton onPress={() => navigation.goBack()}>
                 <Feather name="arrow-left" size={20} color={Colors.main} />
             </BackButton>
-            <Header>
-                <HeaderText>Sign in</HeaderText>
-            </Header>
+            {/* <Header>
+                <HeaderText>Sign up</HeaderText>
+            </Header> */}
             <CenterContainer>
                 <ButtonsContainer>
+                    <SmallText style={{ color: Colors.lightGrey }}>
+                        Register your vidzy account
+                    </SmallText>
                     <BasicButton>
                         <LoginInfo
                             onChangeText={(text) => onChangeUsername(text)}
                             value={username}
                             placeholder={"username"}
                             keyboardType={"default"}
-                            returnKeyType={"done"}
+                            returnKeyType={"send"}
+                            placeholderTextColor={Colors.lightGrey}
+                            autoCorrect={false}
+                            clearButtonMode={"while-editing"}
+                            autoCapitalize={'none'}
+                        />
+                    </BasicButton>
+                    <BasicButton>
+                        <LoginInfo
+                            onChangeText={(text) => onChangeEmail(text)}
+                            value={email}
+                            placeholder={"email-address"}
+                            keyboardType={"email-address"}
+                            returnKeyType={"send"}
                             placeholderTextColor={Colors.lightGrey}
                             autoCorrect={false}
                             clearButtonMode={"while-editing"}
@@ -143,41 +194,35 @@ const SignIn = ({ navigation }) => {
                     <BasicButton>
                         <LoginInfo
                             onChangeText={(text) => onChangePassword(text)}
+                            secureTextEntry={true}
                             value={password}
                             placeholder={"password"}
                             keyboardType={"default"}
-                            returnKeyType={"done"}
+                            returnKeyType={"send"}
                             placeholderTextColor={Colors.lightGrey}
-                            secureTextEntry={true}
                             autoCorrect={false}
-                            clearTextOnFocus={true}
+                            clearButtonMode={"while-editing"}
                             autoCapitalize={'none'}
                         />
                     </BasicButton>
                     <BasicButton onPress={() => {
-                        signIn(),
-                        console.log("sign in")}}>
-                        <BigText style={{ color: Colors.main }}>Login</BigText>
+                        console.log("sign up"),
+                            signUp()
+                    }}>
+                        <BigText style={{ color: Colors.main }}>Register</BigText>
                     </BasicButton>
                 </ButtonsContainer>
             </CenterContainer>
             <Terms>
+                <SmallText>You are completely safe.</SmallText>
                 <TouchableOpacity>
-                    <TermsText style={{ color: Colors.main }}>
-                        Forgot password.
-                    </TermsText>
-                </TouchableOpacity>
-            </Terms>
-            <Terms>
-                <TermsText>You are completely safe.</TermsText>
-                <TouchableOpacity>
-                    <TermsText style={{ color: Colors.main }}>
+                    <SmallText style={{ color: Colors.main }}>
                         Read our Terms & Conditions.
-                    </TermsText>
+                    </SmallText>
                 </TouchableOpacity>
             </Terms>
         </Container>
     );
 };
 
-export default SignIn;
+export default ForgotPassword;

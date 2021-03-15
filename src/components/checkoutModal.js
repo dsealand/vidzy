@@ -63,18 +63,12 @@ const BigText = style.Text`
     fontWeight: bold;
 `;
 
-const checkoutModal = ({ onPressClose }) => {
+const checkoutModal = ({ product, onPressClose }) => {
     return (
         <Container>
             <ModalContainer>
                 <TopContainer>
-                    {/* <Element onPress={() => navigation.goBack()}>
-                        <Feather name="arrow-left" size={20} color={Colors.main} />
-                    </Element> */}
                     <Element />
-                    {/* <Checkout>
-                        Checkout
-                    </Checkout> */}
                     <Element>
                         <BigText style={{ color: Colors.white }}>Checkout</BigText>
                     </Element>

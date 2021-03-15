@@ -166,14 +166,6 @@ const cartProduct = ({ cartProduct, likedProduct, handler, refresh }) => {
         }
     }
 
-    async function checkout() {
-        console.log("webview");
-        return <WebView source={{ uri: 'https://reactnative.dev/' }} />;
-    }
-
-    // console.log("product");
-    // console.log(product);
-
     const renderColorListItem = ({ item }) => {
         return (
             <ColorImageSpacer>
@@ -196,6 +188,7 @@ const cartProduct = ({ cartProduct, likedProduct, handler, refresh }) => {
                     visible={checkoutModalVisible}
                 >
                     <CheckoutModal
+                        product={product}
                         onPressClose={() => setCheckoutModalVisible(false)}
                     />
                 </Modal>
@@ -226,7 +219,7 @@ const cartProduct = ({ cartProduct, likedProduct, handler, refresh }) => {
                     </RightContainer>
                 </TopContainer>
                 <BottomContainer>
-                    <Element onPress={() => { deleteItem() }}>
+                    <Element onPress={() => { deleteItem(); refresh; }}>
                         <Feather
                             name="trash-2"
                             size={20}

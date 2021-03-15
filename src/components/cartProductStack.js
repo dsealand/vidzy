@@ -39,7 +39,7 @@ const cartProductStack = ({ cart, handlerFunction }) => {
         );
     };
 
-    const refresh = () => {
+    function refresh() {
         console.log("refresh flag");
         setRefreshFlag(!refreshFlag);
     }

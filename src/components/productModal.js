@@ -198,18 +198,42 @@ const renderSectionHeader = ({ section }) => {
 const productModal = ({ navigation, product, onPressClose }) => {
     const [cartLength, setCartLength] = useState(0);
     const [cartQuantity, setCartQuantity] = useState(0);
+    const [username, setUsername] = useState();
     
     // get cart data for add to cart button behavior
     useEffect(() => {
-        async function getCart() {
+        async function getCredentials() {
             try {
-                // repace id with cartID from user
+                const credentials = await Auth.currentCredentials();
+                return credentials;
+            } catch (err) {
+                console.log("error getting credentials: ", err);
+            }
+        }
 
-                const authUser = await Auth.currentAuthenticatedUser();
+        // get authenticated/guest username and cart
+        async function getUser() {
+            const credentials = await getCredentials();
+            try {
+                if (credentials.authenticated == true) {
+                    const authUser = await Auth.currentAuthenticatedUser();
+                    setUsername(authUser.username);
+                } else {
+                    setUsername(credentials.accessKeyId);
+                }
+                getCart(username);
+            } catch (err) {
+                console.log("error getting current user: ", err);
+            }
+        }
+
+        // get cart data of given user, sets cartLength whether product exists in cart or not
+        async function getCart(username) {
+            try {
                 const user = await API.graphql(graphqlOperation(queries.listUsers, {
                     filter: {
                         username: {
-                            eq: authUser.username
+                            eq: username
                         }
                     }
                 }));
@@ -218,23 +242,11 @@ const productModal = ({ navigation, product, onPressClose }) => {
                 if (cartLength != 0) {
                     setCartQuantity(cart.data.getCart.cartProducts.items[0].quantity);
                 }
-                // const apiData = await API.graphql(graphqlOperation(queries.getCartProducts, {
-                //     filter: {
-                //         cartID: {
-                //             eq: cart.data.getCartProducts.id
-                //         },
-                //         productID: {
-                //             eq: product.id
-                //         }
-                //     }
-                // }));
-                // const cartData = apiData.data.getCartProducts.items;
-                // setCartProducts(cartData);
             } catch (err) {
                 console.log('error1: ', err);
             }
         }
-        getCart();
+        getUser();
     }, []);
 
     // construct array for image and color data
@@ -248,25 +260,6 @@ const productModal = ({ navigation, product, onPressClose }) => {
             id: 1, title: "Colors", list: product.colors.items
         }]
     }];
-
-    // adds product to cart if does not exist in cart, adds 1 to quantity if exists
-    async function addToCart() {
-        if (cartLength == 0) {
-            setCartLength(cartLength + 1);
-            try {
-                await API.graphql(graphqlOperation(mutations.createCartProduct, { input: { cartID: 0, quantity: 1, productID: product.id, price: product.price } }));
-            } catch (err) {
-                console.log('addToCart new error: ', err);
-            }
-        } else {
-            setCartQuantity(cartQuantity + 1);
-            try {
-                await API.graphql(graphqlOperation(mutations.updateCartProduct, { input: { cartID: 0, quantity: cartQuantity}}));
-            } catch (err) {
-                console.log('addToCart existing error: ', err);
-            }
-        }
-    }
 
     return (
         <Container>
@@ -305,12 +298,13 @@ const productModal = ({ navigation, product, onPressClose }) => {
                                         console.log('addToCart new error: ', err);
                                     }
                                 } else {
+                                    console.log("item exists in cart already");
                                     setCartQuantity(cartQuantity + 1);
-                                    try {
-                                        await API.graphql(graphqlOperation(mutations.updateCartProduct, { input: { cartID: 0, quantity: cartQuantity}}));
-                                    } catch (err) {
-                                        console.log('addToCart existing error: ', err);
-                                    }
+                                    // try {
+                                    //     await API.graphql(graphqlOperation(mutations.updateCartProduct, { input: { cartID: 0, quantity: cartQuantity}}));
+                                    // } catch (err) {
+                                    //     console.log('addToCart existing error: ', err);
+                                    // }
                                 }
                             }
                         }>

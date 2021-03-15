@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { SafeAreaView, TouchableOpacity, View, Text } from "react-native";
 import { useWindowDimensions } from "react-native";
 import style from "styled-components/native";
 import { Feather } from "@expo/vector-icons";
 
-import Amplify, { Auth } from 'aws-amplify';
+import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify';
+import * as mutations from '../../graphql/mutations';
+import * as queries from '../../graphql/queries';
+
 import awsmobile from '../../aws-exports';
 
 import Colors from "../components/colors";
@@ -83,6 +86,44 @@ const Login = ({ navigation }) => {
     const width = useWindowDimensions().width;
     const height = useWindowDimensions().height;
 
+    useEffect(() => {
+        
+    }, []);
+
+    async function getCredentials() {
+        try {
+            const credentials = await Auth.currentCredentials();
+            return credentials;
+        } catch (err) {
+            console.log("error getting credentials: ", err);
+        }
+    }
+
+    // create user with given ID
+    async function createUser(userID) {
+        try {
+            const cart = await API.graphql(graphqlOperation(mutations.createCart, { input: {} }));
+            const user = await API.graphql(graphqlOperation(mutations.createUser, { input: { username: userID, cartID: cart.data.createCart.id} }));            
+        } catch (err) {
+            console.log('error creating user: ', err);
+        }
+    }
+
+    // create guest user after checking that credentials are not authenticated
+    async function createGuest() {
+        const credentials = await getCredentials();
+        try {
+            if (credentials.authenticated == false) {
+                createUser(credentials.accessKeyId);
+                console.log("created guest user");
+            } else {
+                console.log("user already authenticated");
+            }
+        } catch (err) {
+            console.log("error creating guest user: ", err);
+        }
+    }
+
     return (
         <Container style={{ width: width, height: height }}>
             <Logo>
@@ -95,6 +136,7 @@ const Login = ({ navigation }) => {
                 <BasicButton
                     style={{ backgroundColor: Colors.main }}
                     onPress={() => {
+                        createGuest();
                         navigation.navigate("ForYou");
                     }}
                 >
@@ -122,7 +164,7 @@ const Login = ({ navigation }) => {
                     </TouchableOpacity>
                 </SignUp>
             </Buttons>
-        </Container>
+        </Container >
     );
 };
 

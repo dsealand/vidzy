@@ -107,7 +107,7 @@ const Confirm = ({ navigation }) => {
     async function createUser() {
         try {
             const cart = await API.graphql(graphqlOperation(mutations.createCart, { input: {} }));
-            await API.graphql(graphqlOperation(mutations.createUser, { input: { username: username, cartID: cart.ID } }));
+            await API.graphql(graphqlOperation(mutations.createUser, { input: { username: username, cartID: cart.data.createCart.id } }));
         } catch (err) {
             console.log('addToCart new error: ', err);
         }
