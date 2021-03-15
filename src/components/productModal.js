@@ -213,6 +213,7 @@ const productModal = ({ navigation, product, onPressClose }) => {
                         }
                     }
                 }));
+                console.log(user)
                 const cart = await API.graphql(graphqlOperation(queries.getCart, { id: user.data.listUsers.items[0].cartID }))
                 setCartLength(cart.data.getCart.cartProducts.items.length);
                 if (cartLength != 0) {

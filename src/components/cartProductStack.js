@@ -21,7 +21,7 @@ const Line = style.View`
     backgroundColor: ${Colors.lighterGrey};
 `;
 
-const Seperator = style.View`
+const Separator = style.View`
     height: 30px;
     width: 100%;
     justifyContent: center;
@@ -31,11 +31,11 @@ const Seperator = style.View`
 const cartProductStack = ({ cart, handlerFunction }) => {
     const [refreshFlag, setRefreshFlag] = useState();
 
-    const itemSeperator = () => {
+    const itemSeparator = () => {
         return (
-            <Seperator>
+            <Separator>
                 <Line />
-            </Seperator>
+            </Separator>
         );
     };
 
@@ -44,7 +44,7 @@ const cartProductStack = ({ cart, handlerFunction }) => {
         setRefreshFlag(!refreshFlag);
     }
     
-    const renderItem = ({ item }) => <CartProduct cartProduct={item} likedProduct={item} handler={handlerFunction} refresh={refresh} />;
+    const renderItem = ({ item }) => <CartProduct cartProduct={item} likedProduct={item} handler={() => handlerFunction()} refresh={refresh}/>;
 
     return (
         <FlatList
@@ -52,7 +52,7 @@ const cartProductStack = ({ cart, handlerFunction }) => {
             data={cart.cartProducts.items}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
-            ItemSeparatorComponent={itemSeperator}
+            ItemSeparatorComponent={itemSeparator}
             extraData={refreshFlag}
         />
     );

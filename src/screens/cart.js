@@ -95,7 +95,8 @@ const Cart = ({ navigation }) => {
     // const [cartData, setCartData] = useState();
 
     function handler() {
-        // setFlag(!flag);
+        setFlag(!flag);
+        getCart();
     }
 
     async function signOut() {
@@ -108,10 +109,8 @@ const Cart = ({ navigation }) => {
         }
     }
 
-    useEffect(() => {
-        setFlag(!flag);
-
-        async function getCart() {
+    async function getCart() {
+            console.log("querying cart")
             try {
                 const apiData = await API.graphql(graphqlOperation(queries.getCart, { id: 0 }));
                 const cart = apiData.data.getCart;
@@ -127,6 +126,8 @@ const Cart = ({ navigation }) => {
                 console.log('cart error: ', err);
             }
         }
+
+    useEffect(() => {
         getCart();
 
         // const subscription = API.graphql(graphqlOperation(subscriptions.onUpdateCart)).subscribe({
@@ -171,7 +172,7 @@ const Cart = ({ navigation }) => {
                 </Header>
                 <Container style={{ width: width, height: height }}>
                     <ProductContainer>
-                        {selection === "Cart" && <CartProductStack cart={cart} handlerFunction={handler} />}
+                        {selection === "Cart" && <CartProductStack cart={cart} handlerFunction={() => handler()} />}
                         {/* {selection === "Liked" && (
                         <LikedProductStack
                             navigation={navigation}
