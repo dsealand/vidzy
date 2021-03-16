@@ -150,7 +150,7 @@ const cartProduct = ({ cartProduct, likedProduct, handler, refresh }) => {
                 setProduct(productData);
                 setQuantity(cartProduct.quantity);
             } catch (err) {
-                console.log('error1: ', err);
+                console.log('error getting product: ', err);
             }
         }
         getProduct();

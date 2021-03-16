@@ -112,8 +112,8 @@ const ForgotPassword = ({ navigation }) => {
                 code,
                 new_password
             )
-        } catch (error1) {
-            console.log("new password submit error: ", error1);
+        } catch (err) {
+            console.log("new password submit error: ", err);
         }
     }
 

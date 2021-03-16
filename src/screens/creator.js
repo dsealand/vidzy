@@ -29,7 +29,7 @@ const Creator = ({ route, navigation }) => {
                 const videos = apiData.data.listVideos.items;
                 setVideoStack(videos);
             } catch (err) {
-                console.log('error1: ', err);
+                console.log('error getting creator video stack: ', err);
             }
         }
         getVideos();

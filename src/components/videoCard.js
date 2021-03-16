@@ -56,7 +56,7 @@ const VideoCard = ({ navigation, card, isPlay }) => {
                 const creator = apiData.data.getCreator;
                 setCreator(creator);
             } catch (err) {
-                console.log('error1: ', err);
+                console.log('error getting video creator: ', err);
             }
         }
         async function getProduct() {
@@ -68,7 +68,7 @@ const VideoCard = ({ navigation, card, isPlay }) => {
                 const brand = brandData.data.getBrand;
                 setBrand(brand)
             } catch (err) {
-                console.log('error1: ', err);
+                console.log('error getting product and brand: ', err);
             }
         }
         async function isLiked() {

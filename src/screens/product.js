@@ -28,7 +28,7 @@ const Product = ({ route, navigation }) => {
                 const videos = apiData.data.listVideos.items;
                 setVideoStack(videos);
             } catch (err) {
-                console.log('error1: ', err);
+                console.log('error getting product video stack: ', err);
             }
         }
         getVideos();

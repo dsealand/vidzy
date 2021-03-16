@@ -97,7 +97,7 @@ const VideoElements = ({
             try {
                 await API.graphql(graphqlOperation(mutations.deleteLikedVideo, {input: {id: likedVideoID}}));
             } catch (err) {
-                console.log('error1: ', err);
+                console.log('error deleting liked video: ', err);
             }
             // console.log("deleted likedVideo object with id: ", likedID);
         } else {
@@ -107,7 +107,7 @@ const VideoElements = ({
                 setLikedID(apiData.data.createLikedVideo.id);
                 // console.log("set likedID: ", apiData.data);
             } catch (err) {
-                console.log('error1: ', err);
+                console.log('error getting liked video data: ', err);
             }
             // console.log("created new likedVideo object with id: ", likedID);
         }

@@ -41,7 +41,7 @@ const ProductContainer = style.View`
     justifyContent: center;
     alignItems: center;
     width: 100%;
-    height: 70%;
+    height: 87%;
 `;
 
 const BigText = style.Text`
@@ -92,7 +92,6 @@ const Cart = ({ navigation }) => {
     const [cart, setCart] = useState(false);
     const [price, setPrice] = useState();
     const [flag, setFlag] = useState(false);
-    const [username, setUsername] = useState();
     // const [cartData, setCartData] = useState();
 
     function handler() {
@@ -110,36 +109,43 @@ const Cart = ({ navigation }) => {
         }
     }
 
-    async function getCart() {
-            console.log("querying cart")
-            try {
-                const credentials = await Auth.currentCredentials();
-                return credentials;
-            } catch (err) {
-                console.log("error getting credentials: ", err);
+    async function getUser() {
+        try {
+            const credentials = await Auth.currentCredentials();
+            if (credentials.authenticated == true) {
+                const user = await Auth.currentAuthenticatedUser();
+                return user.username;
+            } else {
+                return credentials.accessKeyId;
             }
+        } catch (err) {
+            console.log("error getting current guest/authenticated user: ", err);
         }
+    }
+
+    async function getCart() {
+        console.log("querying cart")
+        // const user = await getUser();
+        // console.log("username: ", username);
+        try {
+            const username = await getUser();
+            const user = await API.graphql(graphqlOperation(queries.listUsers, {
+                filter: {
+                    username: {
+                        eq: username
+                    }
+                }
+            }));
+            const cart = await API.graphql(graphqlOperation(queries.getCart, { id: user.data.listUsers.items[0].cartID }))
+            setCart(cart.data.getCart);
+        } catch (err) {
+            console.log("error getting cart: ", err);
+        }
+    }
 
     useEffect(() => {
         getCart();
-
-        // const subscription = API.graphql(graphqlOperation(subscriptions.onUpdateCart)).subscribe({
-        //     next: data => {
-        //         console.log("subscription");
-        //         console.log(data.data.onUpdateCart);
-        //         setCartData(data.data.onUpdateCart);
-        //         console.log(cartData);
-        //     }
-        // });
-        // return () => {
-        //     subscription.unsubscribe();
-        // }
     }, []);
-
-    // var result = (cart.cartProducts.items).reduce(function (tot, arr) {
-    //     return tot + arr.price * arr.quantity;
-    // }, 0);
-    // setPrice(result);
 
     const width = useWindowDimensions().width;
     const height = useWindowDimensions().height;
@@ -173,8 +179,8 @@ const Cart = ({ navigation }) => {
                         />
                     )} */}
                     </ProductContainer>
-                    <BottomContainer style={{ height: "15%" }}>
-                        {selection === "Cart" && (
+                    <BottomContainer style={{ height: "0%" }}>
+                        {/* {selection === "Cart" && (
                             <BottomContainer>
                                 <Checkout>
                                     <CheckoutText>Checkout</CheckoutText>
@@ -183,7 +189,7 @@ const Cart = ({ navigation }) => {
                                     <PriceText>Total ${price}</PriceText>
                                 </Price>
                             </BottomContainer>
-                        )}
+                        )} */}
                     </BottomContainer>
                 </Container>
             </View >

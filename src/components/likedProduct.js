@@ -85,7 +85,7 @@ const likedProduct = ({ likedProduct }) => {
                 const productData = apiData.data.getProduct;
                 setProduct(productData);
             } catch (err) {
-                console.log('error1: ', err);
+                console.log('error getting product: ', err);
             }
         }
         getProduct();
