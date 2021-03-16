@@ -136,10 +136,12 @@ const Cart = ({ navigation }) => {
                     }
                 }
             }));
+            console.log("list users query: ", user);
             const cart = await API.graphql(graphqlOperation(queries.getCart, { id: user.data.listUsers.items[0].cartID }))
             setCart(cart.data.getCart);
         } catch (err) {
             console.log("error getting cart: ", err);
+            setCart([]);
         }
     }
 

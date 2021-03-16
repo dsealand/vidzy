@@ -207,6 +207,7 @@ const productModal = ({ navigation, product, onPressClose }) => {
     async function getUser() {
         try {
             const credentials = await Auth.currentCredentials();
+            console.log("credentials: ", credentials);
             if (credentials.authenticated == true) {
                 const user = await Auth.currentAuthenticatedUser();
                 return user.username;
@@ -221,6 +222,7 @@ const productModal = ({ navigation, product, onPressClose }) => {
     async function getCart() {
         try {
             const username = await getUser();
+            console.log("username: ", username);
             const user = await API.graphql(graphqlOperation(queries.listUsers, {
                 filter: {
                     username: {
@@ -228,6 +230,7 @@ const productModal = ({ navigation, product, onPressClose }) => {
                     }
                 }
             }));
+            console.log("list users query in product modal: ", user);
             setCartID(user.data.listUsers.items[0].cartID);
             const cartProducts = await API.graphql(graphqlOperation(queries.listCartProducts, {
                 filter: {

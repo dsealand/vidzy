@@ -99,23 +99,9 @@ const SmallText = style.Text`
 
 const ForgotPassword = ({ navigation }) => {
     const [username, onChangeUsername] = React.useState("");
-    const [code, onChangeCode] = React.useState("");
-    const [newPassword, onChangeNewPassword] = React.useState("");
 
     const width = useWindowDimensions().width;
     const height = useWindowDimensions().height;
-
-    async function submitForgotPassword() {
-        try {
-            const data = await Auth.forgotPasswordSubmit(
-                username,
-                code,
-                newPassword
-            )
-        } catch (err) {
-            console.log("error submitting new password: ", err);
-        }
-    }
 
     async function forgotPassword() {
         try {
