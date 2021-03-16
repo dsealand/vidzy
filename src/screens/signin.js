@@ -156,13 +156,17 @@ const SignIn = ({ navigation }) => {
                     </BasicButton>
                     <BasicButton onPress={() => {
                         signIn(),
-                        console.log("sign in")}}>
+                            console.log("sign in")
+                    }}>
                         <BigText style={{ color: Colors.main }}>Login</BigText>
                     </BasicButton>
                 </ButtonsContainer>
             </CenterContainer>
             <Terms>
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => {
+                        navigation.navigate("ForgotPassword");
+                    }}>
                     <TermsText style={{ color: Colors.main }}>
                         Forgot password.
                     </TermsText>

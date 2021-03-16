@@ -98,57 +98,30 @@ const SmallText = style.Text`
 `;
 
 const ForgotPassword = ({ navigation }) => {
-    const [email, onChangeEmail] = React.useState("");
     const [username, onChangeUsername] = React.useState("");
-    const [password, onChangePassword] = React.useState("");
+    const [code, onChangeCode] = React.useState("");
+    const [newPassword, onChangeNewPassword] = React.useState("");
 
     const width = useWindowDimensions().width;
     const height = useWindowDimensions().height;
 
-    async function newPassword() {
+    async function submitForgotPassword() {
         try {
             const data = await Auth.forgotPasswordSubmit(
                 username,
                 code,
-                new_password
+                newPassword
             )
         } catch (err) {
-            console.log("new password submit error: ", err);
+            console.log("error submitting new password: ", err);
         }
     }
 
-    async function signUp() {
-        console.log("signup");
+    async function forgotPassword() {
         try {
-            const data = await Auth.signUp({
-                username,
-                password,
-                attributes: {
-                    email,          // optional
-                }
-            });
-            if (data.userConfirmed == false) {
-                navigation.navigate("Confirm");
-            } else {
-                navigation.navigate("ForYou");
-            }
-            // console.log(data);
-        } catch (error) {
-            if (error.code == 'UsernameExistsException') {
-                signIn();
-            }
-            console.log('error signing up:', error);
-        }
-    }
-
-    async function signIn() {
-        try {
-            const user = await Auth.signIn(username, password);
-        } catch (error) {
-            if (error.code == 'UserNotConfirmedException') {
-                navigation.navigate("Confirm");
-            }
-            console.log('error signing in', error);
+            const data = await Auth.forgotPassword(username);
+        } catch (err) {
+            console.log("error submitting forgot password");
         }
     }
 
@@ -163,7 +136,7 @@ const ForgotPassword = ({ navigation }) => {
             <CenterContainer>
                 <ButtonsContainer>
                     <SmallText style={{ color: Colors.lightGrey }}>
-                        Register your vidzy account
+                        Reset your vidzy password.
                     </SmallText>
                     <BasicButton>
                         <LoginInfo
@@ -178,38 +151,12 @@ const ForgotPassword = ({ navigation }) => {
                             autoCapitalize={'none'}
                         />
                     </BasicButton>
-                    <BasicButton>
-                        <LoginInfo
-                            onChangeText={(text) => onChangeEmail(text)}
-                            value={email}
-                            placeholder={"email-address"}
-                            keyboardType={"email-address"}
-                            returnKeyType={"send"}
-                            placeholderTextColor={Colors.lightGrey}
-                            autoCorrect={false}
-                            clearButtonMode={"while-editing"}
-                            autoCapitalize={'none'}
-                        />
-                    </BasicButton>
-                    <BasicButton>
-                        <LoginInfo
-                            onChangeText={(text) => onChangePassword(text)}
-                            secureTextEntry={true}
-                            value={password}
-                            placeholder={"password"}
-                            keyboardType={"default"}
-                            returnKeyType={"send"}
-                            placeholderTextColor={Colors.lightGrey}
-                            autoCorrect={false}
-                            clearButtonMode={"while-editing"}
-                            autoCapitalize={'none'}
-                        />
-                    </BasicButton>
                     <BasicButton onPress={() => {
-                        console.log("sign up"),
-                            signUp()
+                        console.log("forgot password"),
+                            forgotPassword()
+                            navigation.navigate("ForgotPasswordSubmit");
                     }}>
-                        <BigText style={{ color: Colors.main }}>Register</BigText>
+                        <BigText style={{ color: Colors.main }}>Forgot Password</BigText>
                     </BasicButton>
                 </ButtonsContainer>
             </CenterContainer>

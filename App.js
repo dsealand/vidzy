@@ -20,25 +20,15 @@ import Creator from "./src/screens/creator";
 import Product from "./src/screens/product";
 import Cart from "./src/screens/cart";
 import Confirm from "./src/screens/confirm";
+import ForgotPassword from "./src/screens/forgotPassword";
+import ForgotPasswordSubmit from "./src/screens/forgotPasswordSubmit";
 
 Amplify.configure(awsmobile);
 
 const Stack = createStackNavigator();
 
-// const MySectionHeader = Object.assign({}, AmplifyTheme.sectionHeader, { background: 'orange' });
-// const MyTheme = Object.assign({}, AmplifyTheme, { sectionHeader: MySectionHeader });
-
-// <Authenticator theme={MyTheme} />
-
 function App() {
     const [fontsLoaded, setFontsLoaded] = useState(false);
-
-    async function loadFonts() {
-        await Font.loadAsync({
-            'Circular-Std': require('./src/assets/fonts/CircularStd-Medium.ttf'),
-        }).then(() => setFontsLoaded(true));
-        // setFontsLoaded(true);
-    }
 
     useEffect(() => {
         async function loadFonts() {
@@ -63,6 +53,16 @@ function App() {
                     <Stack.Screen
                         name="SignIn"
                         component={SignIn}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name="ForgotPassword"
+                        component={ForgotPassword}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name="ForgotPasswordSubmit"
+                        component={ForgotPasswordSubmit}
                         options={{ headerShown: false }}
                     />
                     <Stack.Screen
