@@ -2,6 +2,7 @@
   "expo": {
     "name": "vidzy",
     "slug": "vidzy",
+    "privacy": "unlisted",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
@@ -17,6 +18,7 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.vidzy",
       "supportsTablet": true
     },
     "android": {
