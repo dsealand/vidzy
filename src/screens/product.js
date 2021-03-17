@@ -6,8 +6,6 @@ import * as queries from '../../graphql/queries';
 
 import VideoStackPage from "../components/videoStackPage";
 
-// import api from "../data/productStack_api";
-
 Amplify.configure(awsmobile);
 
 const Product = ({ route, navigation }) => {

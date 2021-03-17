@@ -8,7 +8,7 @@ import { useWindowDimensions } from "react-native";
 import Colors from "../components/colors";
 import CartProductStack from "../components/cartProductStack";
 import LikedProductStack from "../components/likedProductStack";
-import api from "../data/cart_api";
+// import api from "../data/cart_api";
 
 import Amplify, { API, graphqlOperation, Auth } from 'aws-amplify';
 import awsmobile from '../../aws-exports';

@@ -15,8 +15,8 @@ import awsmobile from '../../aws-exports';
 import * as queries from '../../graphql/queries';
 
 Amplify.configure(awsmobile);
-import creatorAPI from "../data/creatorInfo_api";
-import productAPI from "../data/productInfo_api";
+// import creatorAPI from "../data/creatorInfo_api";
+// import productAPI from "../data/productInfo_api";
 
 const Gradient = style((props) => <LinearGradient {...props} />)`
     height: 100%;

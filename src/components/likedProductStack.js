@@ -15,7 +15,7 @@ import Colors from "./colors";
 import ProductModal from "./productModal";
 import LikedProduct from "./likedProduct";
 
-import productAPI from "../data/productInfo_api";
+// import productAPI from "../data/productInfo_api";
 
 const ProductContainer = style.View`
     height: 200px;

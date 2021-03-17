@@ -5,7 +5,6 @@ import awsmobile from '../../aws-exports';
 import * as queries from '../../graphql/queries';
 
 import VideoStackPage from "../components/videoStackPage";
-import api from "../data/forYouStack_api";
 import { Auth } from 'aws-amplify';
 
 // Auth.currentSession()
