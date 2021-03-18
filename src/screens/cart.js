@@ -13,7 +13,9 @@ import LikedProductStack from "../components/likedProductStack";
 import Amplify, { API, graphqlOperation, Auth } from 'aws-amplify';
 import awsmobile from '../../aws-exports';
 import * as queries from '../../graphql/queries';
+import * as mutations from '../../graphql/mutations';
 import * as subscriptions from '../../graphql/subscriptions';
+import { graphql } from "@apollo/react-hoc";
 
 Amplify.configure(awsmobile);
 
@@ -101,6 +103,19 @@ const Cart = ({ navigation }) => {
 
     async function signOut() {
         try {
+            const credentials = await Auth.currentCredentials();
+            if (credentials.authenticated == false) {
+                const user = await API.graphql(graphqlOperation(queries.listUsers, {
+                    filter: {
+                        username: {
+                            eq: credentials.accessKeyId
+                        }
+                    }
+                }));
+                await API.graphql(graphqlOperation(mutations.deleteCart, { input: { id: user.data.listUsers.items[0].cartID }}));
+                await API.graphql(graphqlOperation(mutations.deleteUser, { input: { id: user.data.listUsers.items[0].id }}));
+                console.log("deleted unauthenticated user and cart objects");
+            }
             await Auth.signOut();
             console.log("logout successful");
             navigation.navigate("Login");
@@ -129,6 +144,7 @@ const Cart = ({ navigation }) => {
         // console.log("username: ", username);
         try {
             const username = await getUser();
+            console.log("username: ", username);
             const user = await API.graphql(graphqlOperation(queries.listUsers, {
                 filter: {
                     username: {

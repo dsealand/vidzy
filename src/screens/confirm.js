@@ -11,7 +11,8 @@ import { useWindowDimensions } from "react-native";
 import style from "styled-components/native";
 import { Feather, Ionicons } from "@expo/vector-icons";
 
-import { Auth } from 'aws-amplify';
+import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify';
+import * as mutations from '../../graphql/mutations';
 
 import Colors from "../components/colors";
 
@@ -109,7 +110,7 @@ const Confirm = ({ navigation }) => {
             const cart = await API.graphql(graphqlOperation(mutations.createCart, { input: {} }));
             await API.graphql(graphqlOperation(mutations.createUser, { input: { username: username, cartID: cart.data.createCart.id } }));
         } catch (err) {
-            console.log('addToCart new error: ', err);
+            console.log('error creating new cart and user objects: ', err);
         }
     }
 

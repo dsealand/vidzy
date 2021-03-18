@@ -46,6 +46,9 @@ const cartProductStack = ({ cart, handlerFunction }) => {
     
     const renderItem = ({ item }) => <CartProduct cartProduct={item} likedProduct={item} handler={() => handlerFunction()} refresh={refresh}/>;
 
+    if (cart.length == 0) {
+        return <View></View>
+    }
     return (
         <FlatList
             style={{ width: "100%" }}
