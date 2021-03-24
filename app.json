@@ -19,7 +19,16 @@
     ],
     "ios": {
       "bundleIdentifier": "com.vidzy",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSAppTransportSecurity": {
+          "d2h74skj6dqe4u.cloudfront.net/": {
+            "NSExceptionAllowsInsecureHTTPLoads": true,
+            "NSRequiresCertificateTransparency": false,
+            "NSIncludesSubdomains": true
+          }
+        }
+      }
     },
     "android": {
       "adaptiveIcon": {
