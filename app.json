@@ -14,12 +14,19 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "bundleIdentifier": "com.Vidzy.Vidzy",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSAppTransportSecurity": {
+          "d2h74skj6dqe4u.cloudfront.net/": {
+            "NSExceptionAllowsInsecureHTTPLoads": true,
+            "NSRequiresCertificateTransparency": false,
+            "NSIncludesSubdomains": true
+          }
+        }
+      }
     },
     "android": {
       "adaptiveIcon": {
