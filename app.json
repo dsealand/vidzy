@@ -3,7 +3,7 @@
     "name": "vidzy",
     "slug": "vidzy",
     "privacy": "unlisted",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
     "splash": {
@@ -18,7 +18,7 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "com.vidzy",
+      "bundleIdentifier": "com.Vidzy.Vidzy",
       "supportsTablet": true
     },
     "android": {
