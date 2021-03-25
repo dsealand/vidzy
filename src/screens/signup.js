@@ -153,6 +153,9 @@ const SignUp = ({ navigation }) => {
                     <SmallText style={{ color: Colors.lightGrey }}>
                         Register your vidzy account
                     </SmallText>
+                    <SmallText style={{ color: Colors.lightGrey }}>
+                        {"\n"}
+                    </SmallText>
                     <BasicButton>
                         <LoginInfo
                             onChangeText={(text) => onChangeUsername(text)}

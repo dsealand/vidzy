@@ -63,6 +63,7 @@ const ImageBorder = style.View`
 `;
 
 const BottomContainer = style.View`
+    paddingTop: 10px;
     height: 20%;
     width: 100%;
     flexDirection: row;
