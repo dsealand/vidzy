@@ -1,17 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { TouchableOpacity } from "react-native";
+import { useIsFocused } from '@react-navigation/native';
 import style from "styled-components/native";
-import { Feather } from "@expo/vector-icons";
+import { Feather, Ionicons, Foundation } from "@expo/vector-icons";
 
 import Colors from "./colors";
 
-import Amplify, { API, graphqlOperation } from 'aws-amplify';
+import Amplify, { API, graphqlOperation, Auth } from 'aws-amplify';
 import awsmobile from '../../aws-exports';
 import * as mutations from '../../graphql/mutations';
 import * as queries from '../../graphql/queries';
-
-import UUIDGenerator from 'react-native-uuid-generator';
 
 Amplify.configure(awsmobile);
 
@@ -88,34 +87,104 @@ const VideoElements = ({
 }) => {
     const [liked, setLiked] = useState(videoLiked);
     const [likedID, setLikedID] = useState(likedVideoID);
+    const [exists, setExists] = useState(false);
+    const [cartID, setCartID] = useState();
+    const [focused, setFocused] = useState(false);
 
-    /* add code here to update users liked videos */
+    useEffect(() => {
+        console.log("videoElements rendered");
+        getCart();
+    }, []);
 
-    async function likePress() {
-        if (liked) {
-            setLiked(false);
-            try {
-                await API.graphql(graphqlOperation(mutations.deleteLikedVideo, {input: {id: likedVideoID}}));
-            } catch (err) {
-                console.log('error deleting liked video: ', err);
+    // setFocused(useIsFocused());
+
+    async function getUser() {
+        try {
+            const credentials = await Auth.currentCredentials();
+            console.log("credentials: ", credentials);
+            if (credentials.authenticated == true) {
+                const user = await Auth.currentAuthenticatedUser();
+                return user.username;
+            } else {
+                return credentials.accessKeyId;
             }
-            // console.log("deleted likedVideo object with id: ", likedID);
-        } else {
-            setLiked(true);
-            try {
-                const apiData = await API.graphql(graphqlOperation(mutations.createLikedVideo, {input: {videoID: videoID, userID: 0}}));
-                setLikedID(apiData.data.createLikedVideo.id);
-                // console.log("set likedID: ", apiData.data);
-            } catch (err) {
-                console.log('error getting liked video data: ', err);
-            }
-            // console.log("created new likedVideo object with id: ", likedID);
+        } catch (err) {
+            console.log("error getting current guest/authenticated user: ", err);
         }
-    };
+    }
+
+    async function getCart() {
+        try {
+            const username = await getUser();
+            console.log("username: ", username);
+            const user = await API.graphql(graphqlOperation(queries.listUsers, {
+                filter: {
+                    username: {
+                        eq: username
+                    }
+                }
+            }));
+            console.log("list users query in product modal: ", user);
+            setCartID(user.data.listUsers.items[0].cartID);
+            const cartProducts = await API.graphql(graphqlOperation(queries.listCartProducts, {
+                filter: {
+                    cartID: {
+                        eq: user.data.listUsers.items[0].cartID
+                    }
+                }
+            }))
+            if (cartProducts.data.listCartProducts.items.length != 0) {
+                setExists(true);
+            }
+        } catch (err) {
+            console.log("error getting cart: ", err);
+        }
+    }
+
+    // async function addToCart() {
+    //     if (!exists) {
+    //         setExists(!exists);
+    //         try {
+    //             console.log("added item to cart");
+    //             await API.graphql(graphqlOperation(mutations.createCartProduct, { input: { cartID: cartID, quantity: 1, productID: product.id, price: product.price } }));
+    //         } catch (err) {
+    //             console.log('addToCart new error: ', err);
+    //         }
+    //     } else {
+    //         console.log("item exists in cart already");
+    //         // try {
+    //         //     await API.graphql(graphqlOperation(mutations.updateCartProduct, { input: { cartID: 0, quantity: cartQuantity}}));
+    //         // } catch (err) {
+    //         //     console.log('addToCart existing error: ', err);
+    //         // }
+    //     }
+    // }    
+
+    // async function likePress() {
+    //     if (liked) {
+    //         setLiked(false);
+    //         try {
+    //             await API.graphql(graphqlOperation(mutations.deleteLikedVideo, {input: {id: likedVideoID}}));
+    //         } catch (err) {
+    //             console.log('error deleting liked video: ', err);
+    //         }
+    //         // console.log("deleted likedVideo object with id: ", likedID);
+    //     } else {
+    //         setLiked(true);
+    //         try {
+    //             const apiData = await API.graphql(graphqlOperation(mutations.createLikedVideo, {input: {videoID: videoID, userID: 0}}));
+    //             setLikedID(apiData.data.createLikedVideo.id);
+    //             // console.log("set likedID: ", apiData.data);
+    //         } catch (err) {
+    //             console.log('error getting liked video data: ', err);
+    //         }
+    //         // console.log("created new likedVideo object with id: ", likedID);
+    //     }
+    // };
 
     let iconColor = Colors.white;
 
-    if (liked) {
+    if (exists) {
         iconColor = Colors.main;
     }
 
@@ -129,13 +198,48 @@ const VideoElements = ({
                 </ProductInfo>
             </LeftContainer>
             <RightContainer>
-                <Element onPress={likePress}>
-                    <Feather name="heart" size={20} color={iconColor} />
+                <Element
+                    onPress={
+                        async () => {
+                            const id = cartID;
+                            console.log("id: ", id);
+                            const cartProducts = await API.graphql(graphqlOperation(queries.listCartProducts, {
+                                filter: {
+                                    cartID: {
+                                        eq: id
+                                    }
+                                }
+                            }))
+                            console.log("cartProducts: ", cartProducts);
+                            if (cartProducts.data.listCartProducts.items.length != 0) {
+                                setExists(true);
+                            } else {
+                                setExists(false);
+                            }
+                            if (!exists) {
+                                setExists(!exists);
+                                try {
+                                    console.log("added item to cart");
+                                    await API.graphql(graphqlOperation(mutations.createCartProduct, { input: { cartID: cartID, productID: product.id } }));
+                                } catch (err) {
+                                    console.log('addToCart new error: ', err);
+                                }
+                            } else {
+                                console.log("item exists in cart already");
+                                // try {
+                                //     await API.graphql(graphqlOperation(mutations.updateCartProduct, { input: { cartID: 0, quantity: cartQuantity}}));
+                                // } catch (err) {
+                                //     console.log('addToCart existing error: ', err);
+                                // }
+                            }
+                        }
+                    }>
+                    <Ionicons name="ios-cart-outline" size={30} color={iconColor} />
                 </Element>
                 {/* Logic used to hide creator icon when on creator video stack */}
                 {creator !== undefined && (
                     <Element onPress={onPressCreator}>
-                        <Feather
+                        <Foundation
                             name="at-sign"
                             size={20}
                             color={Colors.white}

@@ -23,16 +23,15 @@ const VideoPlayer = ({ video, isPlay, orientation }) => {
   // console.log("videoplayer component");
   // console.log(video);
   // console.log("\n");
-  console.log("testing cloudfront ios");
 
   return (
     <VideoContainer>
       <ProductVideo
-        source={{
-          uri:
-            "http://d2h74skj6dqe4u.cloudfront.net/test_vid_1test_vid_1_hls_output.m3u8",
-        }}
-        // source={{ uri: video }}
+        // source={{
+        //   uri:
+        //     "http://d2h74skj6dqe4u.cloudfront.net/test_vid_1test_vid_1_hls_output.m3u8",
+        // }}
+        source={{ uri: video }}
         rate={1.0}
         volume={1.0}
         isMuted={false}

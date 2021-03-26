@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { WebView } from 'react-native-webview';
 
-import { Image, Text, View, TouchableOpacity } from "react-native";
+import { Image, Text, View, TouchableOpacity, SafeAreaView } from "react-native";
 import style from "styled-components/native";
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
@@ -22,7 +22,7 @@ const CheckoutWebView = style(WebView)`
     flex: 1;
 `;
 
-const TopContainer = style.View`
+const TopContainer = style.SafeAreaView`
     backgroundColor: ${Colors.main}
     flexDirection: row;
     alignItems: center;
@@ -75,7 +75,7 @@ const checkoutModal = ({ product, onPressClose }) => {
                     <Element onPress={onPressClose}>
                         <Feather
                             name="arrow-down"
-                            size={20}
+                            size={24}
                             color={Colors.white}
                         />
                     </Element>

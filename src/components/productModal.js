@@ -7,6 +7,7 @@ import {
     TouchableOpacity,
     FlatList,
     SectionList,
+    Modal,
 } from "react-native";
 import style from "styled-components/native";
 import { Feather } from "@expo/vector-icons";
@@ -17,6 +18,8 @@ import * as mutations from '../../graphql/mutations';
 import * as queries from '../../graphql/queries';
 
 import Colors from "./colors";
+
+import CheckoutModal from './checkoutModal';
 
 Amplify.configure(awsmobile);
 
@@ -96,6 +99,10 @@ const AddToCartText = style(BigText)`
     color: ${Colors.white};
 `;
 
+const CheckoutText = style(BigText)`
+    color: ${Colors.white};
+`;
+
 const MoreVideos = style(TouchableOpacity)`
     width: 150px;
     height: 50px;
@@ -134,6 +141,15 @@ const ColorImageBorder = style.View`
     borderRadius: 25px;
     aspectRatio: 1;
     overflow: hidden;
+`;
+
+const Checkout = style(TouchableOpacity)`
+    backgroundColor: ${Colors.main};
+    borderRadius: 25px;
+    width: 30%;
+    height: 40%;
+    justifyContent: center;
+    alignItems: center;
 `;
 
 const styles = StyleSheet.create({
@@ -196,56 +212,56 @@ const renderSectionHeader = ({ section }) => {
 // TODO: get cartID from user, update createCartProduct mutation with cartID
 
 const productModal = ({ navigation, product, onPressClose }) => {
-    const [exists, setExists] = useState(false);
     const [cartID, setCartID] = useState();
-    
+    const [checkoutModalVisible, setCheckoutModalVisible] = useState(false);
+
     // get cart data for add to cart button behavior
     useEffect(() => {
-        getCart();
+        // getCart();
     }, []);
 
-    async function getUser() {
-        try {
-            const credentials = await Auth.currentCredentials();
-            console.log("credentials: ", credentials);
-            if (credentials.authenticated == true) {
-                const user = await Auth.currentAuthenticatedUser();
-                return user.username;
-            } else {
-                return credentials.accessKeyId;
-            }
-        } catch (err) {
-            console.log("error getting current guest/authenticated user: ", err);
-        }
-    }
+    // async function getUser() {
+    //     try {
+    //         const credentials = await Auth.currentCredentials();
+    //         console.log("credentials: ", credentials);
+    //         if (credentials.authenticated == true) {
+    //             const user = await Auth.currentAuthenticatedUser();
+    //             return user.username;
+    //         } else {
+    //             return credentials.accessKeyId;
+    //         }
+    //     } catch (err) {
+    //         console.log("error getting current guest/authenticated user: ", err);
+    //     }
+    // }
 
-    async function getCart() {
-        try {
-            const username = await getUser();
-            console.log("username: ", username);
-            const user = await API.graphql(graphqlOperation(queries.listUsers, {
-                filter: {
-                    username: {
-                        eq: username
-                    }
-                }
-            }));
-            console.log("list users query in product modal: ", user);
-            setCartID(user.data.listUsers.items[0].cartID);
-            const cartProducts = await API.graphql(graphqlOperation(queries.listCartProducts, {
-                filter: {
-                    cartID: {
-                        eq: user.data.listUsers.items[0].cartID
-                    }
-                }
-            }))
-            if (cartProducts.data.listCartProducts.items.length != 0) {
-                setExists(true);
-            }
-        } catch (err) {
-            console.log("error getting cart: ", err);
-        }
-    }
+    // async function getCart() {
+    //     try {
+    //         const username = await getUser();
+    //         console.log("username: ", username);
+    //         const user = await API.graphql(graphqlOperation(queries.listUsers, {
+    //             filter: {
+    //                 username: {
+    //                     eq: username
+    //                 }
+    //             }
+    //         }));
+    //         console.log("list users query in product modal: ", user);
+    //         setCartID(user.data.listUsers.items[0].cartID);
+    //         const cartProducts = await API.graphql(graphqlOperation(queries.listCartProducts, {
+    //             filter: {
+    //                 cartID: {
+    //                     eq: user.data.listUsers.items[0].cartID
+    //                 }
+    //             }
+    //         }))
+    //         if (cartProducts.data.listCartProducts.items.length != 0) {
+    //             setExists(true);
+    //         }
+    //     } catch (err) {
+    //         console.log("error getting cart: ", err);
+    //     }
+    // }
 
     // construct array for image and color data
     const data = [{
@@ -261,6 +277,16 @@ const productModal = ({ navigation, product, onPressClose }) => {
 
     return (
         <Container>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={checkoutModalVisible}
+            >
+                <CheckoutModal
+                    product={product}
+                    onPressClose={() => setCheckoutModalVisible(false)}
+                />
+            </Modal>
             <ModalContainer>
                 <TopContainer>
                     <BigText>{product.name}</BigText>
@@ -285,7 +311,10 @@ const productModal = ({ navigation, product, onPressClose }) => {
                     />
                 </ProductScroll>
                 <BottomContainer>
-                    <AddToCart
+                    <Checkout onPress={() => setCheckoutModalVisible(true)}>
+                        <CheckoutText>Checkout</CheckoutText>
+                    </Checkout>
+                    {/* <AddToCart
                         onPress={
                             async () => {
                                 if (!exists) {
@@ -307,7 +336,7 @@ const productModal = ({ navigation, product, onPressClose }) => {
                             }
                         }>
                         <AddToCartText>Add To Cart</AddToCartText>
-                    </AddToCart>
+                    </AddToCart> */}
                     <MoreVideos
                         onPress={onPressClose}
                         onPressOut={() => {

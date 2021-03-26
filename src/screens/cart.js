@@ -154,6 +154,7 @@ const Cart = ({ navigation }) => {
             }));
             console.log("list users query: ", user);
             const cart = await API.graphql(graphqlOperation(queries.getCart, { id: user.data.listUsers.items[0].cartID }))
+            console.log("cart query from list users: ", cart);
             setCart(cart.data.getCart);
         } catch (err) {
             console.log("error getting cart: ", err);
