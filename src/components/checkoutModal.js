@@ -82,7 +82,7 @@ const checkoutModal = ({ product, onPressClose }) => {
                 </TopContainer>
             </ModalContainer>
             <CheckoutWebView
-                source={{ uri: 'https://reactnative.dev/' }}
+                source={{ uri: product.link }}
             />
         </Container>
 

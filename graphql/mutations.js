@@ -13,6 +13,7 @@ export const createVideo = /* GraphQL */ `
         id
         name
         price
+        link
         description
         videos {
           nextToken
@@ -68,6 +69,7 @@ export const updateVideo = /* GraphQL */ `
         id
         name
         price
+        link
         description
         videos {
           nextToken
@@ -123,6 +125,7 @@ export const deleteVideo = /* GraphQL */ `
         id
         name
         price
+        link
         description
         videos {
           nextToken
@@ -262,6 +265,7 @@ export const createProduct = /* GraphQL */ `
       id
       name
       price
+      link
       description
       videos {
         items {
@@ -285,6 +289,7 @@ export const createProduct = /* GraphQL */ `
           id
           name
           price
+          link
           description
           brandID
           userID
@@ -330,6 +335,7 @@ export const updateProduct = /* GraphQL */ `
       id
       name
       price
+      link
       description
       videos {
         items {
@@ -353,6 +359,7 @@ export const updateProduct = /* GraphQL */ `
           id
           name
           price
+          link
           description
           brandID
           userID
@@ -398,6 +405,7 @@ export const deleteProduct = /* GraphQL */ `
       id
       name
       price
+      link
       description
       videos {
         items {
@@ -421,6 +429,7 @@ export const deleteProduct = /* GraphQL */ `
           id
           name
           price
+          link
           description
           brandID
           userID
@@ -554,6 +563,7 @@ export const createBrand = /* GraphQL */ `
         id
         name
         price
+        link
         description
         videos {
           nextToken
@@ -594,6 +604,7 @@ export const updateBrand = /* GraphQL */ `
         id
         name
         price
+        link
         description
         videos {
           nextToken
@@ -634,6 +645,7 @@ export const deleteBrand = /* GraphQL */ `
         id
         name
         price
+        link
         description
         videos {
           nextToken
@@ -675,6 +687,7 @@ export const createCartProduct = /* GraphQL */ `
         id
         name
         price
+        link
         description
         videos {
           nextToken
@@ -718,6 +731,7 @@ export const updateCartProduct = /* GraphQL */ `
         id
         name
         price
+        link
         description
         videos {
           nextToken
@@ -761,6 +775,7 @@ export const deleteCartProduct = /* GraphQL */ `
         id
         name
         price
+        link
         description
         videos {
           nextToken
@@ -803,6 +818,7 @@ export const createLikedProduct = /* GraphQL */ `
         id
         name
         price
+        link
         description
         videos {
           nextToken
@@ -845,6 +861,7 @@ export const updateLikedProduct = /* GraphQL */ `
         id
         name
         price
+        link
         description
         videos {
           nextToken
@@ -887,6 +904,7 @@ export const deleteLikedProduct = /* GraphQL */ `
         id
         name
         price
+        link
         description
         videos {
           nextToken
@@ -931,6 +949,7 @@ export const createLikedVideo = /* GraphQL */ `
           id
           name
           price
+          link
           description
           brandID
           userID
@@ -974,6 +993,7 @@ export const updateLikedVideo = /* GraphQL */ `
           id
           name
           price
+          link
           description
           brandID
           userID
@@ -1017,6 +1037,7 @@ export const deleteLikedVideo = /* GraphQL */ `
           id
           name
           price
+          link
           description
           brandID
           userID

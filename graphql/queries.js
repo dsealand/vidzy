@@ -10,6 +10,7 @@ export const getVideo = /* GraphQL */ `
         id
         name
         price
+        link
         description
         videos {
           nextToken
@@ -67,6 +68,7 @@ export const listVideos = /* GraphQL */ `
           id
           name
           price
+          link
           description
           brandID
           userID
@@ -147,6 +149,7 @@ export const getProduct = /* GraphQL */ `
       id
       name
       price
+      link
       description
       videos {
         items {
@@ -170,6 +173,7 @@ export const getProduct = /* GraphQL */ `
           id
           name
           price
+          link
           description
           brandID
           userID
@@ -217,6 +221,7 @@ export const listProducts = /* GraphQL */ `
         id
         name
         price
+        link
         description
         videos {
           nextToken
@@ -311,6 +316,7 @@ export const getBrand = /* GraphQL */ `
         id
         name
         price
+        link
         description
         videos {
           nextToken
@@ -353,6 +359,7 @@ export const listBrands = /* GraphQL */ `
           id
           name
           price
+          link
           description
           brandID
           userID
@@ -377,6 +384,7 @@ export const getCartProduct = /* GraphQL */ `
         id
         name
         price
+        link
         description
         videos {
           nextToken
@@ -422,6 +430,7 @@ export const listCartProducts = /* GraphQL */ `
           id
           name
           price
+          link
           description
           brandID
           userID
@@ -447,6 +456,7 @@ export const getLikedProduct = /* GraphQL */ `
         id
         name
         price
+        link
         description
         videos {
           nextToken
@@ -491,6 +501,7 @@ export const listLikedProducts = /* GraphQL */ `
           id
           name
           price
+          link
           description
           brandID
           userID
@@ -518,6 +529,7 @@ export const getLikedVideo = /* GraphQL */ `
           id
           name
           price
+          link
           description
           brandID
           userID

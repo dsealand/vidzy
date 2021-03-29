@@ -26,6 +26,7 @@ type Product @model {
     id: ID!
     name: String!
     price: Float!
+    link: String
     description: String
     videos: [Video] @connection(keyName: "byProduct", fields: ["id"])
     brand: Brand @connection(fields: ["brandID"])
