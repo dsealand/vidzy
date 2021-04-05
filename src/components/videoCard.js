@@ -99,7 +99,7 @@ const VideoCard = ({ navigation, card, isPlay }) => {
         isLiked();
     }, []);
 
-    if (loaded) { return (        
+    if (loaded && isPlay) { return (        
         <VideoContainer style={{ height: height, width: width }}>
             <Modal
                 animationType="slide"

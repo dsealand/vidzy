@@ -20,27 +20,29 @@ const ProductVideo = style(Video)`
 const VideoPlayer = ({ video, isPlay, orientation }) => {
   var resizeMode = orientation === "portrait" ? "cover" : "contain";
 
-  // console.log("videoplayer component");
+  console.log("videoplayer component");
   // console.log(video);
   // console.log("\n");
 
-  return (
-    <VideoContainer>
-      <ProductVideo
-        // source={{
-        //   uri:
-        //     "http://d2h74skj6dqe4u.cloudfront.net/test_vid_1test_vid_1_hls_output.m3u8",
-        // }}
-        source={{ uri: video }}
-        rate={1.0}
-        volume={1.0}
-        isMuted={false}
-        isLooping
-        shouldPlay={isPlay}
-        resizeMode={resizeMode}
-      />
-    </VideoContainer>
-  );
+  if (isPlay) {
+    return (
+      <VideoContainer>
+        <ProductVideo
+          source={{
+            uri:
+              "https://d2h74skj6dqe4u.cloudfront.net/001-WatchCharger_moony1.m3u8",
+          }}
+          // source={{ uri: video }}
+          rate={1.0}
+          volume={1.0}
+          isMuted={false}
+          isLooping
+          shouldPlay={isPlay}
+          resizeMode={resizeMode}
+        />
+      </VideoContainer>
+    );
+  }
 };
 
 export default VideoPlayer;

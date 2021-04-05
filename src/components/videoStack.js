@@ -29,6 +29,7 @@ const VideoStack = ({ navigation, stack }) => {
             orientation="vertical"
             onPageSelected={(e) => setSelected(e.nativeEvent.position)}
             initialPage={0}
+            offscreenPageLimit={1}
             style={{ backgroundColor: Colors.darkGrey }}
         >
             {stack.map((card, index) => {
