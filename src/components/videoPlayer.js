@@ -28,11 +28,11 @@ const VideoPlayer = ({ video, isPlay, orientation }) => {
     return (
       <VideoContainer>
         <ProductVideo
-          source={{
-            uri:
-              "https://d2h74skj6dqe4u.cloudfront.net/001-WatchCharger_moony1.m3u8",
-          }}
-          // source={{ uri: video }}
+          // source={{
+          //   uri:
+          //     "https://d2h74skj6dqe4u.cloudfront.net/001-WatchCharger_moony1.m3u8",
+          // }}
+          source={{ uri: video }}
           rate={1.0}
           volume={1.0}
           isMuted={false}
