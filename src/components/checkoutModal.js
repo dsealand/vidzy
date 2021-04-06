@@ -9,7 +9,7 @@ import { LinearGradient } from "expo-linear-gradient";
 
 import Colors from "./colors";
 
-const Container = style.View`
+const Container = style.SafeAreaView`
     flexDirection: column;
     justifyContent: flex-start;
     alignItems: stretch;
