@@ -27,7 +27,7 @@ const Container = style.View`
 const Header = style.View`
     position: absolute;
     width: 100%
-    top: 60px;
+    top: 50px;
     z-index: 1;
     flexDirection: row;
     alignItems: center;
