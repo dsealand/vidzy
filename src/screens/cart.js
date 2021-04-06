@@ -8,7 +8,6 @@ import { useWindowDimensions } from "react-native";
 import Colors from "../components/colors";
 import CartProductStack from "../components/cartProductStack";
 import LikedProductStack from "../components/likedProductStack";
-// import api from "../data/cart_api";
 
 import Amplify, { API, graphqlOperation, Auth } from 'aws-amplify';
 import awsmobile from '../../aws-exports';
@@ -18,10 +17,6 @@ import * as subscriptions from '../../graphql/subscriptions';
 import { graphql } from "@apollo/react-hoc";
 
 Amplify.configure(awsmobile);
-
-// const cart = api[0];
-// const liked = api[1];
-// var cart2 = [];
 
 const Container = style.View`
     justifyContent: flex-end;
@@ -153,7 +148,7 @@ const Cart = ({ navigation }) => {
                 }
             }));
             // console.log("list users query: ", user);
-            // const cart = await API.graphql(graphqlOperation(queries.getCart, { id: user.data.listUsers.items[0].cartID }))
+            const cart = await API.graphql(graphqlOperation(queries.getCart, { id: user.data.listUsers.items[0].cartID }))
             // console.log("cart query from list users: ", cart);
             setCart(cart.data.getCart);
         } catch (err) {
