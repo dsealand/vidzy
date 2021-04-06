@@ -125,7 +125,7 @@ const VideoElements = ({
                 }
             }));
             // console.log("list users query in product modal: ", user);
-            // setCartID(user.data.listUsers.items[0].cartID);
+            setCartID(user.data.listUsers.items[0].cartID);
             const cartProducts = await API.graphql(graphqlOperation(queries.listCartProducts, {
                 filter: {
                     cartID: {
