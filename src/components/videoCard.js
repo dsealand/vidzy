@@ -44,6 +44,7 @@ const VideoCard = ({ navigation, card, isPlay }) => {
     const [liked, setLiked] = useState(false);
     const [loaded, setLoaded] = useState(false);
     const [likedVideoID, setlikedVideoID] = useState();
+    const [userID, setUserID] = useState();
 
     const width = useWindowDimensions().width;
     const height = useWindowDimensions().height;
@@ -52,7 +53,7 @@ const VideoCard = ({ navigation, card, isPlay }) => {
     useEffect(() => {
         async function getCreator() {
             try {
-                const apiData = await API.graphql(graphqlOperation(queries.getCreator, {id: card.creatorID}));
+                const apiData = await API.graphql(graphqlOperation(queries.getCreator, { id: card.creatorID }));
                 const creator = apiData.data.getCreator;
                 setCreator(creator);
             } catch (err) {
@@ -61,9 +62,9 @@ const VideoCard = ({ navigation, card, isPlay }) => {
         }
         async function getProduct() {
             try {
-                const apiData = await API.graphql(graphqlOperation(queries.getProduct, {id: card.productID}));
+                const apiData = await API.graphql(graphqlOperation(queries.getProduct, { id: card.productID }));
                 const product = apiData.data.getProduct;
-                const brandData = await API.graphql(graphqlOperation(queries.getBrand, {id: product.brandID}))
+                const brandData = await API.graphql(graphqlOperation(queries.getBrand, { id: product.brandID }))
                 setProduct(product);
                 const brand = brandData.data.getBrand;
                 setBrand(brand)
@@ -73,13 +74,24 @@ const VideoCard = ({ navigation, card, isPlay }) => {
         }
         async function isLiked() {
             try {
+                const username = await getUser();
+                console.log("username: ", username);
+                const user = await API.graphql(graphqlOperation(queries.listUsers, {
+                    filter: {
+                        username: {
+                            eq: username
+                        }
+                    }
+                }));
+                // console.log("list users query in product modal: ", user);
+                setUserID(user.data.listUsers.items[0].id);
                 const apiData = await API.graphql(graphqlOperation(queries.listLikedVideos, {
                     filter: {
                         videoID: {
                             eq: card.id
                         },
                         userID: {
-                            eq: 0
+                            eq: userID
                         }
                     }
                 }));
@@ -99,62 +111,64 @@ const VideoCard = ({ navigation, card, isPlay }) => {
         isLiked();
     }, []);
 
-    if (loaded && isPlay) { return (        
-        <VideoContainer style={{ height: height, width: width }}>
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={creatorModalVisible}
-            >
-                <CreatorModal
-                    navigation={navigation}
-                    creator={creator}
-                    onPressClose={() => setCreatorModalVisible(false)}
-                />
-            </Modal>
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={productModalVisible}
-            >
-                <ProductModal
-                    navigation={navigation}
-                    product={product}
-                    onPressClose={() => setProductModalVisible(false)}
-                />
-            </Modal>
-            <VideoPlayer
-                video={card.URL}
-                isPlay={isPlay}
+    if (loaded && isPlay) {
+        return (
+            <VideoContainer style={{ height: height, width: width }}>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={creatorModalVisible}
+                >
+                    <CreatorModal
+                        navigation={navigation}
+                        creator={creator}
+                        onPressClose={() => setCreatorModalVisible(false)}
+                    />
+                </Modal>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={productModalVisible}
+                >
+                    <ProductModal
+                        navigation={navigation}
+                        product={product}
+                        onPressClose={() => setProductModalVisible(false)}
+                    />
+                </Modal>
+                <VideoPlayer
+                    video={card.URL}
+                    isPlay={isPlay}
                 // orientation={card.video.orientation}
-            />
-            <Gradient
-                locations={[0, 0.25, 0.75, 1]}
-                /* rgba(35, 35, 35) = #232323 = "Colors.darkgrey" */
-                colors={[
-                    "rgba(35,35,35,1)",
-                    "rgba(35,35,35,0)",
-                    "rgba(35,35,35,0)",
-                    "rgba(35,35,35,1)",
-                ]}
-            >
-                <VideoElements
-                    creator={creator}
-                    product={product}
-                    brand={brand}
-                    videoLiked={liked}
-                    likedVideoID={likedVideoID}
-                    videoID={card.id}
-                    onPressCreator={() => setCreatorModalVisible(true)}
-                    onPressProduct={() => setProductModalVisible(true)}
                 />
-            </Gradient>
-        </VideoContainer>
-    );
-} else {
-    return(
-        <View/>
-    )
-}}
+                <Gradient
+                    locations={[0, 0.25, 0.75, 1]}
+                    /* rgba(35, 35, 35) = #232323 = "Colors.darkgrey" */
+                    colors={[
+                        "rgba(35,35,35,1)",
+                        "rgba(35,35,35,0)",
+                        "rgba(35,35,35,0)",
+                        "rgba(35,35,35,1)",
+                    ]}
+                >
+                    <VideoElements
+                        creator={creator}
+                        product={product}
+                        brand={brand}
+                        videoLiked={liked}
+                        likedVideoID={likedVideoID}
+                        videoID={card.id}
+                        onPressCreator={() => setCreatorModalVisible(true)}
+                        onPressProduct={() => setProductModalVisible(true)}
+                    />
+                </Gradient>
+            </VideoContainer>
+        );
+    } else {
+        return (
+            <View />
+        )
+    }
+}
 
 export default VideoCard;

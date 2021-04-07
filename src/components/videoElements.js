@@ -90,6 +90,7 @@ const VideoElements = ({
     const [exists, setExists] = useState(false);
     const [cartID, setCartID] = useState();
     const [focused, setFocused] = useState(false);
+    const [userID, setUserID] = useState();
 
     useEffect(() => {
         console.log("videoElements rendered");
@@ -126,6 +127,7 @@ const VideoElements = ({
             }));
             // console.log("list users query in product modal: ", user);
             setCartID(user.data.listUsers.items[0].cartID);
+            setUserID(user.data.listUsers.items[0].id);
             const cartProducts = await API.graphql(graphqlOperation(queries.listCartProducts, {
                 filter: {
                     cartID: {
@@ -164,15 +166,15 @@ const VideoElements = ({
         if (liked) {
             setLiked(false);
             try {
-                await API.graphql(graphqlOperation(mutations.deleteLikedVideo, { input: { id: likedVideoID } }));
+                await API.graphql(graphqlOperation(mutations.deleteLikedVideo, { input: { id: likedID } }));
             } catch (err) {
                 console.log('error deleting liked video: ', err);
             }
-            console.log("deleted likedVideo object with id: ", likedID);
+            // console.log("deleted likedVideo object with id: ", likedID);
         } else {
             setLiked(true);
             try {
-                const apiData = await API.graphql(graphqlOperation(mutations.createLikedVideo, { input: { videoID: videoID, userID: 0 } }));
+                const apiData = await API.graphql(graphqlOperation(mutations.createLikedVideo, { input: { videoID: videoID, userID: userID } }));
                 setLikedID(apiData.data.createLikedVideo.id);
                 await API.graphql(graphqlOperation(mutations.createCartProduct, { input: { cartID: cartID, productID: product.id } }));
                 console.log("set likedID: ", apiData.data);
