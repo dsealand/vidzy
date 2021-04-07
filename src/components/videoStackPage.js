@@ -71,7 +71,7 @@ const VideoStackPage = ({
                 <HeaderText>{headerText}</HeaderText>
                 <Element onPress={() => navigation.navigate("Cart")}>
                     <Feather
-                        name="shopping-cart"
+                        name="user"
                         size={20}
                         color={Colors.white}
                     />

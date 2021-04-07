@@ -234,7 +234,7 @@ const VideoElements = ({
                             }
                         }
                     }>
-                    <Ionicons name="ios-cart-outline" size={30} color={iconColor} />
+                    <Feather name="heart" size={20} color={iconColor} />
                 </Element>
                 {/* Logic used to hide creator icon when on creator video stack */}
                 {creator !== undefined && (
