@@ -160,31 +160,32 @@ const VideoElements = ({
     //     }
     // }    
 
-    // async function likePress() {
-    //     if (liked) {
-    //         setLiked(false);
-    //         try {
-    //             await API.graphql(graphqlOperation(mutations.deleteLikedVideo, {input: {id: likedVideoID}}));
-    //         } catch (err) {
-    //             console.log('error deleting liked video: ', err);
-    //         }
-    //         // console.log("deleted likedVideo object with id: ", likedID);
-    //     } else {
-    //         setLiked(true);
-    //         try {
-    //             const apiData = await API.graphql(graphqlOperation(mutations.createLikedVideo, {input: {videoID: videoID, userID: 0}}));
-    //             setLikedID(apiData.data.createLikedVideo.id);
-    //             // console.log("set likedID: ", apiData.data);
-    //         } catch (err) {
-    //             console.log('error getting liked video data: ', err);
-    //         }
-    //         // console.log("created new likedVideo object with id: ", likedID);
-    //     }
-    // };
+    async function likePress() {
+        if (liked) {
+            setLiked(false);
+            try {
+                await API.graphql(graphqlOperation(mutations.deleteLikedVideo, { input: { id: likedVideoID } }));
+            } catch (err) {
+                console.log('error deleting liked video: ', err);
+            }
+            console.log("deleted likedVideo object with id: ", likedID);
+        } else {
+            setLiked(true);
+            try {
+                const apiData = await API.graphql(graphqlOperation(mutations.createLikedVideo, { input: { videoID: videoID, userID: 0 } }));
+                setLikedID(apiData.data.createLikedVideo.id);
+                await API.graphql(graphqlOperation(mutations.createCartProduct, { input: { cartID: cartID, productID: product.id } }));
+                console.log("set likedID: ", apiData.data);
+            } catch (err) {
+                console.log('error liking video and adding to cart: ', err);
+            }
+            // console.log("created new likedVideo object with id: ", likedID);
+        }
+    };
 
     let iconColor = Colors.white;
 
-    if (exists) {
+    if (liked) {
         iconColor = Colors.main;
     }
 
@@ -200,39 +201,40 @@ const VideoElements = ({
             <RightContainer>
                 <Element
                     onPress={
-                        async () => {
-                            const id = cartID;
-                            console.log("id: ", id);
-                            const cartProducts = await API.graphql(graphqlOperation(queries.listCartProducts, {
-                                filter: {
-                                    cartID: {
-                                        eq: id
-                                    }
-                                }
-                            }))
-                            console.log("cartProducts: ", cartProducts);
-                            if (cartProducts.data.listCartProducts.items.length != 0) {
-                                setExists(true);
-                            } else {
-                                setExists(false);
-                            }
-                            if (!exists) {
-                                setExists(!exists);
-                                try {
-                                    console.log("added item to cart");
-                                    await API.graphql(graphqlOperation(mutations.createCartProduct, { input: { cartID: cartID, productID: product.id } }));
-                                } catch (err) {
-                                    console.log('addToCart new error: ', err);
-                                }
-                            } else {
-                                console.log("item exists in cart already");
-                                // try {
-                                //     await API.graphql(graphqlOperation(mutations.updateCartProduct, { input: { cartID: 0, quantity: cartQuantity}}));
-                                // } catch (err) {
-                                //     console.log('addToCart existing error: ', err);
-                                // }
-                            }
-                        }
+                        likePress
+                        // async () => {
+                        //     const id = cartID;
+                        //     console.log("id: ", id);
+                        //     const cartProducts = await API.graphql(graphqlOperation(queries.listCartProducts, {
+                        //         filter: {
+                        //             cartID: {
+                        //                 eq: id
+                        //             }
+                        //         }
+                        //     }))
+                        //     console.log("cartProducts: ", cartProducts);
+                        //     if (cartProducts.data.listCartProducts.items.length != 0) {
+                        //         setExists(true);
+                        //     } else {
+                        //         setExists(false);
+                        //     }
+                        //     if (!exists) {
+                        //         setExists(!exists);
+                        //         try {
+                        //             console.log("added item to cart");
+                        //             await API.graphql(graphqlOperation(mutations.createCartProduct, { input: { cartID: cartID, productID: product.id } }));
+                        //         } catch (err) {
+                        //             console.log('addToCart new error: ', err);
+                        //         }
+                        //     } else {
+                        //         console.log("item exists in cart already");
+                        //         // try {
+                        //         //     await API.graphql(graphqlOperation(mutations.updateCartProduct, { input: { cartID: 0, quantity: cartQuantity}}));
+                        //         // } catch (err) {
+                        //         //     console.log('addToCart existing error: ', err);
+                        //         // }
+                        //     }
+                        // }
                     }>
                     <Feather name="heart" size={20} color={iconColor} />
                 </Element>
