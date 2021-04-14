@@ -10,9 +10,9 @@ import VideoElements from "./videoElements";
 import CreatorModal from "./creatorModal";
 import ProductModal from "./productModal";
 
-import Amplify, { API, graphqlOperation } from 'aws-amplify';
-import awsmobile from '../../aws-exports';
-import * as queries from '../../graphql/queries';
+import Amplify, { API, graphqlOperation } from "aws-amplify";
+import awsmobile from "../../aws-exports";
+import * as queries from "../../graphql/queries";
 
 Amplify.configure(awsmobile);
 // import creatorAPI from "../data/creatorInfo_api";
@@ -30,145 +30,153 @@ const Gradient = style((props) => <LinearGradient {...props} />)`
 `;
 
 const VideoContainer = style.View`
-    backgroundColor: ${Colors.darkGrey};
+    backgroundColor: ${Colors.black};
     justifyContent: center;
 	alignItems: flex-end;
 `;
 
 const VideoCard = ({ navigation, card, isPlay }) => {
-    const [creatorModalVisible, setCreatorModalVisible] = useState(false);
-    const [productModalVisible, setProductModalVisible] = useState(false);
-    const [creator, setCreator] = useState([]);
-    const [product, setProduct] = useState([]);
-    const [brand, setBrand] = useState([]);
-    const [liked, setLiked] = useState(false);
-    const [loaded, setLoaded] = useState(false);
-    const [likedVideoID, setlikedVideoID] = useState();
-    const [userID, setUserID] = useState();
+  const [creatorModalVisible, setCreatorModalVisible] = useState(false);
+  const [productModalVisible, setProductModalVisible] = useState(false);
+  const [creator, setCreator] = useState([]);
+  const [product, setProduct] = useState([]);
+  const [brand, setBrand] = useState([]);
+  const [liked, setLiked] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [likedVideoID, setlikedVideoID] = useState();
+  const [userID, setUserID] = useState();
 
-    const width = useWindowDimensions().width;
-    const height = useWindowDimensions().height;
+  const width = useWindowDimensions().width;
+  const height = useWindowDimensions().height;
 
-    // video query with useEffect hook and async function
-    useEffect(() => {
-        async function getCreator() {
-            try {
-                const apiData = await API.graphql(graphqlOperation(queries.getCreator, { id: card.creatorID }));
-                const creator = apiData.data.getCreator;
-                setCreator(creator);
-            } catch (err) {
-                console.log('error getting video creator: ', err);
-            }
-        }
-        async function getProduct() {
-            try {
-                const apiData = await API.graphql(graphqlOperation(queries.getProduct, { id: card.productID }));
-                const product = apiData.data.getProduct;
-                const brandData = await API.graphql(graphqlOperation(queries.getBrand, { id: product.brandID }))
-                setProduct(product);
-                const brand = brandData.data.getBrand;
-                setBrand(brand)
-            } catch (err) {
-                console.log('error getting product and brand: ', err);
-            }
-        }
-        async function isLiked() {
-            try {
-                const username = await getUser();
-                console.log("username: ", username);
-                const user = await API.graphql(graphqlOperation(queries.listUsers, {
-                    filter: {
-                        username: {
-                            eq: username
-                        }
-                    }
-                }));
-                // console.log("list users query in product modal: ", user);
-                setUserID(user.data.listUsers.items[0].id);
-                const apiData = await API.graphql(graphqlOperation(queries.listLikedVideos, {
-                    filter: {
-                        videoID: {
-                            eq: card.id
-                        },
-                        userID: {
-                            eq: userID
-                        }
-                    }
-                }));
-                if (apiData.data.listLikedVideos.items != 0) {
-                    setlikedVideoID(apiData.data.listLikedVideos.items[0].id)
-                    setLiked(true);
-                } else {
-                    setLiked(false);
-                }
-            } catch (err) {
-                console.log('likedVideos query error: ', err);
-            }
-            setLoaded(true);
-        }
-        getCreator();
-        getProduct();
-        isLiked();
-    }, []);
-
-    if (loaded && isPlay) {
-        return (
-            <VideoContainer style={{ height: height, width: width }}>
-                <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={creatorModalVisible}
-                >
-                    <CreatorModal
-                        navigation={navigation}
-                        creator={creator}
-                        onPressClose={() => setCreatorModalVisible(false)}
-                    />
-                </Modal>
-                <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={productModalVisible}
-                >
-                    <ProductModal
-                        navigation={navigation}
-                        product={product}
-                        onPressClose={() => setProductModalVisible(false)}
-                    />
-                </Modal>
-                <VideoPlayer
-                    video={card.URL}
-                    isPlay={isPlay}
-                // orientation={card.video.orientation}
-                />
-                <Gradient
-                    locations={[0, 0.25, 0.75, 1]}
-                    /* rgba(35, 35, 35) = #232323 = "Colors.darkgrey" */
-                    colors={[
-                        "rgba(35,35,35,1)",
-                        "rgba(35,35,35,0)",
-                        "rgba(35,35,35,0)",
-                        "rgba(35,35,35,1)",
-                    ]}
-                >
-                    <VideoElements
-                        creator={creator}
-                        product={product}
-                        brand={brand}
-                        videoLiked={liked}
-                        likedVideoID={likedVideoID}
-                        videoID={card.id}
-                        onPressCreator={() => setCreatorModalVisible(true)}
-                        onPressProduct={() => setProductModalVisible(true)}
-                    />
-                </Gradient>
-            </VideoContainer>
+  // video query with useEffect hook and async function
+  useEffect(() => {
+    async function getCreator() {
+      try {
+        const apiData = await API.graphql(
+          graphqlOperation(queries.getCreator, { id: card.creatorID })
         );
-    } else {
-        return (
-            <View />
-        )
+        const creator = apiData.data.getCreator;
+        setCreator(creator);
+      } catch (err) {
+        console.log("error getting video creator: ", err);
+      }
     }
-}
+    async function getProduct() {
+      try {
+        const apiData = await API.graphql(
+          graphqlOperation(queries.getProduct, { id: card.productID })
+        );
+        const product = apiData.data.getProduct;
+        const brandData = await API.graphql(
+          graphqlOperation(queries.getBrand, { id: product.brandID })
+        );
+        setProduct(product);
+        const brand = brandData.data.getBrand;
+        setBrand(brand);
+      } catch (err) {
+        console.log("error getting product and brand: ", err);
+      }
+    }
+    async function isLiked() {
+      try {
+        const username = await getUser();
+        console.log("username: ", username);
+        const user = await API.graphql(
+          graphqlOperation(queries.listUsers, {
+            filter: {
+              username: {
+                eq: username,
+              },
+            },
+          })
+        );
+        // console.log("list users query in product modal: ", user);
+        setUserID(user.data.listUsers.items[0].id);
+        const apiData = await API.graphql(
+          graphqlOperation(queries.listLikedVideos, {
+            filter: {
+              videoID: {
+                eq: card.id,
+              },
+              userID: {
+                eq: userID,
+              },
+            },
+          })
+        );
+        if (apiData.data.listLikedVideos.items != 0) {
+          setlikedVideoID(apiData.data.listLikedVideos.items[0].id);
+          setLiked(true);
+        } else {
+          setLiked(false);
+        }
+      } catch (err) {
+        console.log("likedVideos query error: ", err);
+      }
+      setLoaded(true);
+    }
+    getCreator();
+    getProduct();
+    isLiked();
+  }, []);
+
+  if (loaded && isPlay) {
+    return (
+      <VideoContainer style={{ height: height, width: width }}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={creatorModalVisible}
+        >
+          <CreatorModal
+            navigation={navigation}
+            creator={creator}
+            onPressClose={() => setCreatorModalVisible(false)}
+          />
+        </Modal>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={productModalVisible}
+        >
+          <ProductModal
+            navigation={navigation}
+            product={product}
+            onPressClose={() => setProductModalVisible(false)}
+          />
+        </Modal>
+        <VideoPlayer
+          video={card.URL}
+          isPlay={isPlay}
+          // orientation={card.video.orientation}
+        />
+        <Gradient
+          locations={[0, 0.25, 0.75, 1]}
+          /* rgba(0, 0, 0) = #232323 = "Colors.darkgrey" */
+          colors={[
+            "rgba(0,0,0,1)",
+            "rgba(0,0,0,0)",
+            "rgba(0,0,0,0)",
+            "rgba(0,0,0,1)",
+          ]}
+        >
+          <VideoElements
+            creator={creator}
+            product={product}
+            brand={brand}
+            videoLiked={liked}
+            likedVideoID={likedVideoID}
+            videoID={card.id}
+            onPressCreator={() => setCreatorModalVisible(true)}
+            onPressProduct={() => setProductModalVisible(true)}
+          />
+        </Gradient>
+      </VideoContainer>
+    );
+  } else {
+    return <View />;
+  }
+};
 
 export default VideoCard;
