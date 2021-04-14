@@ -92,92 +92,108 @@ const PriceText = style(BigText)`
 `;
 
 const Cart = ({ navigation }) => {
-  const [selection, setSelection] = useState("Cart");
-  const [cart, setCart] = useState(false);
-  const [price, setPrice] = useState();
-  const [flag, setFlag] = useState(false);
-  // const [cartData, setCartData] = useState();
+    const [selection, setSelection] = useState("Cart");
+    const [cart, setCart] = useState(false);
+    const [price, setPrice] = useState();
+    const [flag, setFlag] = useState(false);
+    // const [cartData, setCartData] = useState();
 
-  function handler() {
-    setFlag(!flag);
-    getCart();
-  }
+    function handler() {
+        setFlag(!flag);
+        getCart();
+    }
 
-  async function signOut() {
-    try {
-      const credentials = await Auth.currentCredentials();
-      if (credentials.authenticated == false) {
-        const user = await API.graphql(
-          graphqlOperation(queries.listUsers, {
-            filter: {
-              username: {
-                eq: credentials.accessKeyId,
-              },
-            },
-          })
-        );
-        await API.graphql(
-          graphqlOperation(mutations.deleteCart, {
-            input: { id: user.data.listUsers.items[0].cartID },
-          })
-        );
-        await API.graphql(
-          graphqlOperation(mutations.deleteUser, {
-            input: { id: user.data.listUsers.items[0].id },
-          })
-        );
-        console.log("deleted unauthenticated user and cart objects");
+    async function signOut() {
+        try {
+            const credentials = await Auth.currentCredentials();
+            if (credentials.authenticated == false) {
+                const user = await API.graphql(
+                    graphqlOperation(queries.listUsers, {
+                        filter: {
+                            username: {
+                                eq: credentials.accessKeyId,
+                            },
+                        },
+                    })
+                );
+                await API.graphql(
+                    graphqlOperation(mutations.deleteCart, {
+                        input: { id: user.data.listUsers.items[0].cartID },
+                    })
+                );
+                await API.graphql(
+                    graphqlOperation(mutations.deleteUser, {
+                        input: { id: user.data.listUsers.items[0].id },
+                    })
+                );
+                console.log("deleted unauthenticated user and cart objects");
+            }
+            await Auth.signOut();
+            console.log("logout successful");
+            navigation.navigate("Login");
+        } catch (error) {
+            console.log("error signing out: ", error);
+        }
+    }
+
+    async function getUser() {
+        try {
+            const credentials = await Auth.currentCredentials();
+            if (credentials.authenticated == true) {
+                const user = await Auth.currentAuthenticatedUser();
+                return user.username;
+            } else {
+                return credentials.accessKeyId;
+            }
+        } catch (err) {
+            console.log("error getting current guest/authenticated user: ", err);
+        }
+    }
+
+    async function getCart() {
+        console.log("querying cart");
+        // const user = await getUser();
+        // console.log("username: ", username);
+        try {
+            const username = await getUser();
+            console.log("username: ", username);
+            const user = await API.graphql(
+                graphqlOperation(queries.listUsers, {
+                    filter: {
+                        username: {
+                            eq: username,
+                        },
+                    },
+                })
+            );
+            // console.log("list users query: ", user);
+            const cart = await API.graphql(
+                graphqlOperation(queries.getCart, {
+                    id: user.data.listUsers.items[0].cartID,
+                })
+            );
+            // console.log("cart query from list users: ", cart);
+            setCart(cart.data.getCart);
+        } catch (err) {
+            console.log("error getting cart: ", err);
+            setCart([]);
+        }
+    }
+    
+    useEffect(() => {
+        getCart();
+      }, []);
+    
+      const width = useWindowDimensions().width;
+      const height = useWindowDimensions().height;
+    
+      let cartColor = Colors.main;
+      let likedColor = Colors.lightGrey;
+    
+      if (selection === "Liked") {
+        cartColor = Colors.lightGrey;
+        likedColor = Colors.main;
       }
-      await Auth.signOut();
-      console.log("logout successful");
-      navigation.navigate("Login");
-    } catch (error) {
-      console.log("error signing out: ", error);
-    }
-  }
-
-  async function getUser() {
-    try {
-      const credentials = await Auth.currentCredentials();
-      if (credentials.authenticated == true) {
-        const user = await Auth.currentAuthenticatedUser();
-        return user.username;
-      } else {
-        return credentials.accessKeyId;
-      }
-    } catch (err) {
-      console.log("error getting current guest/authenticated user: ", err);
-    }
-  }
-
-  async function getCart() {
-    console.log("querying cart");
-    // const user = await getUser();
-    // console.log("username: ", username);
-    try {
-      const username = await getUser();
-      console.log("username: ", username);
-      const user = await API.graphql(
-        graphqlOperation(queries.listUsers, {
-          filter: {
-            username: {
-              eq: username,
-            },
-          },
-        })
-      );
-      // console.log("list users query: ", user);
-      const cart = await API.graphql(
-        graphqlOperation(queries.getCart, {
-          id: user.data.listUsers.items[0].cartID,
-        })
-      );
-      // console.log("cart query from list users: ", cart);
-      setCart(cart.data.getCart);
-    } catch (err) {
-      console.log("error getting cart: ", err);
-      setCart([]);
-    }
 
     if (cart) {
         return (
@@ -202,9 +218,9 @@ const Cart = ({ navigation }) => {
                             liked={cart}
                         />
                     )} */}
-          </ProductContainer>
-          <BottomContainer style={{ height: "0%" }}>
-            {/* {selection === "Cart" && (
+                    </ProductContainer>
+                    <BottomContainer style={{ height: "0%" }}>
+                        {/* {selection === "Cart" && (
                             <BottomContainer>
                                 <Checkout>
                                     <CheckoutText>Checkout</CheckoutText>
@@ -214,14 +230,15 @@ const Cart = ({ navigation }) => {
                                 </Price>
                             </BottomContainer>
                         )} */}
-          </BottomContainer>
-        </Container>
-      </View>
-    );
-  } else {
-    // this should eventually be an error page if a cart loads incorrectly
-    return <View />;
-  }
+                    </BottomContainer>
+                </Container>
+            </View>
+        );
+    } else {
+        // this should eventually be an error page if a cart loads incorrectly
+        return <View />;
+    }
 };
+
 
 export default Cart;
