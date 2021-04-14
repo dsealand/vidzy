@@ -54,6 +54,12 @@ const Element = style(TouchableOpacity)`
     justifyContent: center;
 `;
 
+const MiddleElement = style(TouchableOpacity)`
+    width: 30%
+    alignItems: center;
+    justifyContent: center;
+`;
+
 const BottomContainer = style.View`
     width: 100%;
     flexDirection: row;
@@ -179,6 +185,9 @@ const Cart = ({ navigation }) => {
                     <Element onPress={() => navigation.goBack()}>
                         <Feather name="arrow-left" size={20} color={Colors.main} />
                     </Element>
+                    <MiddleElement>
+                        <BigText style={{ color: Colors.main }}>Liked Videos</BigText>
+                    </MiddleElement>
                     <Element onPress={() => signOut()}>
                         <BigText style={{ color: Colors.main }}>Log Out</BigText>
                     </Element>

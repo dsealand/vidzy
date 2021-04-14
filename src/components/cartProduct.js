@@ -206,9 +206,9 @@ const cartProduct = ({ cartProduct, likedProduct, handler, refresh }) => {
                         <SmallText style={{ fontWeight: "bold" }}>
                             {product.name}
                         </SmallText>
-                        <SmallText style={{ color: Colors.lightGrey }}>
+                        {/* <SmallText style={{ color: Colors.lightGrey }}>
                             {product.name}
-                        </SmallText>
+                        </SmallText> */}
                         <SmallText style={{ color: Colors.main }}>
                             $ {product.price}
                         </SmallText>
