@@ -38,7 +38,7 @@ const ProductContainer = style.View`
     justifyContent: center;
     alignItems: center;
     width: 100%;
-    height: 90%;
+    height: 87%;
     marginTop: 20px;
 `;
 
@@ -179,7 +179,7 @@ const Cart = ({ navigation }) => {
             setCart([]);
         }
     }
-    
+
     useEffect(() => {
         getCart();
       }, []);
