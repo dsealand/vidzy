@@ -69,13 +69,16 @@ const VideoStackPage = ({
                 )}
                 {filter == undefined && back == undefined && <Element />}
                 <HeaderText>{headerText}</HeaderText>
-                <Element onPress={() => navigation.navigate("Cart")}>
+                <Element>
+                </Element>
+
+                {/* <Element onPress={() => navigation.navigate("Cart")}>
                     <Feather
                         name="user"
                         size={20}
                         color={Colors.white}
                     />
-                </Element>
+                </Element> */}
             </Header>
             <VideoStack navigation={navigation} stack={videoStack} />
         </View>

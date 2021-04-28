@@ -201,7 +201,7 @@ const VideoElements = ({
                 </ProductInfo>
             </LeftContainer>
             <RightContainer>
-                <Element
+                {/* <Element
                     onPress={
                         likePress
                         // async () => {
@@ -239,7 +239,7 @@ const VideoElements = ({
                         // }
                     }>
                     <Feather name="heart" size={20} color={iconColor} />
-                </Element>
+                </Element> */}
                 {/* Logic used to hide creator icon when on creator video stack */}
                 {creator !== undefined && (
                     <Element onPress={onPressCreator}>

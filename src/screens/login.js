@@ -144,7 +144,7 @@ const Login = ({ navigation }) => {
                         Get Started
                     </BigText>
                 </BasicButton>
-                <BasicButton
+                {/* <BasicButton
                     onPress={() => {
                         navigation.navigate("SignIn");
                     }}
@@ -162,7 +162,7 @@ const Login = ({ navigation }) => {
                             Sign up
                         </SignUpText>
                     </TouchableOpacity>
-                </SignUp>
+                </SignUp> */}
             </Buttons>
         </Container >
     );
