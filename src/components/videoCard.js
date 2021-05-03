@@ -43,6 +43,7 @@ const VideoCard = ({ navigation, card, isPlay }) => {
   const [loaded, setLoaded] = useState(false);
   const [likedVideoID, setlikedVideoID] = useState();
   const [userID, setUserID] = useState();
+  const [videoFlag, setVideoFlag] = useState(isPlay);
 
   const width = useWindowDimensions().width;
   const height = useWindowDimensions().height;
@@ -119,6 +120,11 @@ const VideoCard = ({ navigation, card, isPlay }) => {
     isLiked();
   }, []);
 
+  function handler() {
+    setVideoFlag(!videoFlag);
+    console.log("video flag handler ran");
+  }
+
   if (loaded && isPlay) {
     return (
       <VideoContainer style={{ height: height, width: width }}>
@@ -142,11 +148,12 @@ const VideoCard = ({ navigation, card, isPlay }) => {
             navigation={navigation}
             product={product}
             onPressClose={() => setProductModalVisible(false)}
+            handlerFunction={() => handler()}
           />
         </Modal>
         <VideoPlayer
           video={card.URL}
-          isPlay={isPlay}
+          isPlay={videoFlag}
           // orientation={card.video.orientation}
         />
         <Gradient

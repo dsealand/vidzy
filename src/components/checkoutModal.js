@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { WebView } from 'react-native-webview';
 
-import { Image, Text, View, TouchableOpacity, SafeAreaView } from "react-native";
+import { Image, Text, View, TouchableOpacity, SafeAreaView, BackHandler } from "react-native";
 import style from "styled-components/native";
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";

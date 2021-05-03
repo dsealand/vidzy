@@ -208,7 +208,7 @@ const renderSectionHeader = ({ section }) => {
 
 // TODO: get cartID from user, update createCartProduct mutation with cartID
 
-const productModal = ({ navigation, product, onPressClose }) => {
+const productModal = ({ navigation, product, onPressClose, handlerFunction }) => {
     const [cartID, setCartID] = useState();
     const [checkoutModalVisible, setCheckoutModalVisible] = useState(false);
 
@@ -281,7 +281,7 @@ const productModal = ({ navigation, product, onPressClose }) => {
             >
                 <CheckoutModal
                     product={product}
-                    onPressClose={() => setCheckoutModalVisible(false)}
+                    onPressClose={() => {setCheckoutModalVisible(false); handlerFunction();}}
                 />
             </Modal>
             <ModalContainer>
@@ -308,7 +308,7 @@ const productModal = ({ navigation, product, onPressClose }) => {
                     />
                 </ProductScroll>
                 <BottomContainer>
-                    <Checkout onPress={() => setCheckoutModalVisible(true)}>
+                    <Checkout onPress={() => {setCheckoutModalVisible(true); handlerFunction();}}>
                         <CheckoutText>Checkout</CheckoutText>
                     </Checkout>
                     {/* <AddToCart

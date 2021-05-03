@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     },
 });
 
-const cartProduct = ({ cartProduct, likedProduct, handler, refresh }) => {
+const cartProduct = ({ cartProduct, likedProduct, handler }) => {
     const [product, setProduct] = useState([]);
     const [quantity, setQuantity] = useState();
     const [exists, setExists] = useState(true);
@@ -157,7 +157,7 @@ const cartProduct = ({ cartProduct, likedProduct, handler, refresh }) => {
 
     async function deleteItem() {
         setQuantity(0);
-        handler(); 
+        handler();
 
         try {
             await API.graphql(graphqlOperation(mutations.deleteCartProduct, { input: { id: cartProduct.id } }))
@@ -191,7 +191,7 @@ const cartProduct = ({ cartProduct, likedProduct, handler, refresh }) => {
                 >
                     <CheckoutModal
                         product={product}
-                        onPressClose={() => setCheckoutModalVisible(false)}
+                        onPressClose={() => {setCheckoutModalVisible(false); handlerFunction();}}
                     />
                 </Modal>
                 <TopContainer>
@@ -221,7 +221,7 @@ const cartProduct = ({ cartProduct, likedProduct, handler, refresh }) => {
                     </RightContainer>
                 </TopContainer>
                 <BottomContainer>
-                    <Element onPress={() => { deleteItem(); refresh; }}>
+                    <Element onPress={() => { deleteItem(); }}>
                         <Feather
                             name="trash-2"
                             size={20}
@@ -229,7 +229,10 @@ const cartProduct = ({ cartProduct, likedProduct, handler, refresh }) => {
                         />
                         <SmallText> Delete</SmallText>
                     </Element>
-                    <Checkout onPress={() => setCheckoutModalVisible(true)}>
+                    <Checkout onPress={() => {
+                        setCheckoutModalVisible(true);
+                        handlerFunction();}
+                        }>
                         <BigText>Checkout</BigText>
                     </Checkout>
                     {/* <Element onPress={() => checkout()}>
