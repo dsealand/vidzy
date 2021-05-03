@@ -13,15 +13,12 @@ import style from "styled-components/native";
 import { Feather } from "@expo/vector-icons";
 
 import Amplify, { API, graphqlOperation, Auth } from 'aws-amplify';
-import awsmobile from '../../aws-exports';
 import * as mutations from '../../graphql/mutations';
 import * as queries from '../../graphql/queries';
 
 import Colors from "./colors";
 
 import CheckoutModal from './checkoutModal';
-
-Amplify.configure(awsmobile);
 
 const Container = style.View`
     flexDirection: column;

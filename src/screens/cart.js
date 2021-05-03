@@ -10,13 +10,10 @@ import CartProductStack from "../components/cartProductStack";
 import LikedProductStack from "../components/likedProductStack";
 
 import Amplify, { API, graphqlOperation, Auth } from "aws-amplify";
-import awsmobile from "../../aws-exports";
 import * as queries from "../../graphql/queries";
 import * as mutations from "../../graphql/mutations";
 import * as subscriptions from "../../graphql/subscriptions";
 import { graphql } from "@apollo/react-hoc";
-
-Amplify.configure(awsmobile);
 
 const Container = style.View`
     justifyContent: flex-end;

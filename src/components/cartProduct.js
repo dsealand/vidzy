@@ -16,7 +16,6 @@ import { Picker } from "@react-native-picker/picker";
 import Colors from "./colors";
 
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
-import awsmobile from '../../aws-exports';
 import * as mutations from '../../graphql/mutations';
 import * as queries from '../../graphql/queries';
 
@@ -24,7 +23,6 @@ import { WebView } from 'react-native-webview';
 
 import CheckoutModal from './checkoutModal';
 
-Amplify.configure(awsmobile);
 
 const ProductContainer = style.View`
     height: 200px;

@@ -22,7 +22,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-vidzy-dev-95631-deployment/amplify-cfn-templates/auth/vidzyf6a62934-cloudformation-template.yml",
         "logicalId": "authvidzyf6a62934"
       },
-      "lastPushTimeStamp": "2021-03-29T16:52:39.065Z",
+      "lastPushTimeStamp": "2021-04-29T00:01:54.375Z",
       "output": {
         "AppClientSecret": "bi7kuqsqq3a7ob6lmql59brrr5blnahlkrq3bgdge3fo4tf46dq",
         "UserPoolId": "us-west-2_ooFJljxdL",
@@ -32,7 +32,7 @@
         "IdentityPoolName": "vidzyf6a62934_identitypool_f6a62934__dev",
         "UserPoolName": "vidzyf6a62934_userpool_f6a62934"
       },
-      "lastPushDirHash": "7/T0WTj5E9iJmCfAQjPSwEKijHY="
+      "lastPushDirHash": "/An6NGw4P8mjwfCEH7SSRiAzyH0="
     }
   },
   "api": {
@@ -54,7 +54,7 @@
         "GraphQLAPIEndpointOutput": "https://777f6ecfivh73nhjl6lpeknfuy.appsync-api.us-west-2.amazonaws.com/graphql",
         "GraphQLAPIKeyOutput": "da2-b54trzibwbhmjm4gnee7ukusse"
       },
-      "lastPushTimeStamp": "2021-03-29T16:52:40.625Z",
+      "lastPushTimeStamp": "2021-04-29T00:01:54.358Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-vidzy-dev-95631-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apividzy"
@@ -62,5 +62,22 @@
       "lastPushDirHash": "Vrpi9V+sSNNbz885g8JRXz9gPi8="
     }
   },
-  "function": {}
+  "function": {},
+  "analytics": {
+    "vidzy": {
+      "service": "Pinpoint",
+      "providerPlugin": "awscloudformation",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-vidzy-dev-95631-deployment/amplify-cfn-templates/analytics/pinpoint-cloudformation-template.json",
+        "logicalId": "analyticsvidzy"
+      },
+      "lastPushTimeStamp": "2021-04-29T00:01:54.375Z",
+      "output": {
+        "appName": "vidzy-dev",
+        "Region": "us-west-2",
+        "Id": "0a348ddcab904d76ace8b94f9c8d7558"
+      },
+      "lastPushDirHash": "n8YjcOcukKVUZ/g5fdOAdsh0S2w="
+    }
+  }
 }

@@ -8,11 +8,8 @@ import { Feather, Ionicons, Foundation } from "@expo/vector-icons";
 import Colors from "./colors";
 
 import Amplify, { API, graphqlOperation, Auth } from 'aws-amplify';
-import awsmobile from '../../aws-exports';
 import * as mutations from '../../graphql/mutations';
 import * as queries from '../../graphql/queries';
-
-Amplify.configure(awsmobile);
 
 const Container = style.View`
     flexDirection: row;
@@ -93,8 +90,8 @@ const VideoElements = ({
     const [userID, setUserID] = useState();
 
     useEffect(() => {
-        console.log("videoElements rendered");
-        getCart();
+        // console.log("videoElements rendered");
+        // getCart();
     }, []);
 
     // setFocused(useIsFocused());

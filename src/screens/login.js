@@ -5,15 +5,12 @@ import { useWindowDimensions } from "react-native";
 import style from "styled-components/native";
 import { Feather } from "@expo/vector-icons";
 
-import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify';
+import Amplify, { Auth, API, graphqlOperation, Analytics } from 'aws-amplify';
 import * as mutations from '../../graphql/mutations';
 import * as queries from '../../graphql/queries';
 
-import awsmobile from '../../aws-exports';
-
 import Colors from "../components/colors";
 
-Amplify.configure(awsmobile)
 
 const Container = style.View`
     justifyContent: center;
@@ -87,7 +84,22 @@ const Login = ({ navigation }) => {
     const height = useWindowDimensions().height;
 
     useEffect(() => {
-        
+        Analytics.autoTrack('session', {
+            enable: true,
+
+            attributes: {
+                attr: 'attr'
+            },
+            // when using function
+            // attributes: () => {
+            //    const attr = somewhere();
+            //    return {
+            //        myAttr: attr
+            //    }
+            // },
+            // OPTIONAL, the service provider, by default is the Amazon Pinpoint
+            provider: 'AWSPinpoint'
+        });
     }, []);
 
     async function getCredentials() {
@@ -138,6 +150,7 @@ const Login = ({ navigation }) => {
                     onPress={() => {
                         createGuest();
                         navigation.navigate("ForYou");
+                        Analytics.record({ name: 'getStarted' });
                     }}
                 >
                     <BigText style={{ color: Colors.white }}>

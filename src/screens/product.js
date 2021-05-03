@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
-import awsmobile from '../../aws-exports';
 import * as queries from '../../graphql/queries';
 
 import VideoStackPage from "../components/videoStackPage";
-
-Amplify.configure(awsmobile);
 
 const Product = ({ route, navigation }) => {
     const { product, back } = route.params;

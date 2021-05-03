@@ -20,10 +20,6 @@ const ProductVideo = style(Video)`
 const VideoPlayer = ({ video, isPlay, orientation }) => {
   var resizeMode = orientation === "portrait" ? "cover" : "contain";
 
-  console.log("videoplayer component");
-  // console.log(video);
-  // console.log("\n");
-
   if (isPlay) {
     return (
       <VideoContainer>

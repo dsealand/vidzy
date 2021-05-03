@@ -11,10 +11,8 @@ import CreatorModal from "./creatorModal";
 import ProductModal from "./productModal";
 
 import Amplify, { API, graphqlOperation } from "aws-amplify";
-import awsmobile from "../../aws-exports";
 import * as queries from "../../graphql/queries";
 
-Amplify.configure(awsmobile);
 // import creatorAPI from "../data/creatorInfo_api";
 // import productAPI from "../data/productInfo_api";
 

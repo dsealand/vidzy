@@ -1,6 +1,6 @@
 {
     "identityPoolName": "vidzyf6a62934_identitypool_f6a62934",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "vidzyf6a62934",
     "userPoolName": "vidzyf6a62934_userpool_f6a62934",
     "autoVerifiedAttributes": [

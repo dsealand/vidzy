@@ -74,7 +74,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-vidzy-dev-95631-deployment/amplify-cfn-templates/auth/vidzyf6a62934-cloudformation-template.yml",
         "Parameters": {
           "identityPoolName": "vidzyf6a62934_identitypool_f6a62934",
-          "allowUnauthenticatedIdentities": false,
+          "allowUnauthenticatedIdentities": true,
           "resourceNameTruncated": "vidzyf6a62934",
           "userPoolName": "vidzyf6a62934_userpool_f6a62934",
           "autoVerifiedAttributes": "email",
@@ -131,6 +131,34 @@
           "AppSyncApiName": "vidzy",
           "S3DeploymentBucket": "amplify-vidzy-dev-95631-deployment",
           "S3DeploymentRootKey": "amplify-appsync-files/9a65d2dda8bbc62ccce6385bad4e43b2d2f81f3d",
+          "env": "dev"
+        }
+      }
+    },
+    "analyticsvidzy": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-vidzy-dev-95631-deployment/amplify-cfn-templates/analytics/pinpoint-cloudformation-template.json",
+        "Parameters": {
+          "appName": "vidzy",
+          "roleName": "pinpointLambdaRole1567b083",
+          "cloudformationPolicyName": "cloudformationPolicy1567b083",
+          "cloudWatchPolicyName": "cloudWatchPolicy1567b083",
+          "pinpointPolicyName": "pinpointPolicy1567b083",
+          "authPolicyName": "pinpoint_amplify_1567b083",
+          "unauthPolicyName": "pinpoint_amplify_1567b083",
+          "authRoleName": {
+            "Ref": "AuthRoleName"
+          },
+          "unauthRoleName": {
+            "Ref": "UnauthRoleName"
+          },
+          "authRoleArn": {
+            "Fn::GetAtt": [
+              "AuthRole",
+              "Arn"
+            ]
+          },
           "env": "dev"
         }
       }
