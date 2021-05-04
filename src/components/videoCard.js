@@ -120,10 +120,16 @@ const VideoCard = ({ navigation, card, isPlay }) => {
     isLiked();
   }, []);
 
-  function handler() {
-    setVideoFlag(!videoFlag);
+  function pauseHandler() {
+    setVideoFlag(false);
     console.log("video flag handler ran");
   }
+
+  function playHandler() {
+    setVideoFlag(true);
+  }
+
+  console.log("isPlay: ", isPlay, " loaded: ", loaded);
 
   if (loaded && isPlay) {
     return (
@@ -148,13 +154,14 @@ const VideoCard = ({ navigation, card, isPlay }) => {
             navigation={navigation}
             product={product}
             onPressClose={() => setProductModalVisible(false)}
-            handlerFunction={() => handler()}
+            playHandlerFunction={() => playHandler()}
+            pauseHandlerFunction={() => pauseHandler()}
           />
         </Modal>
         <VideoPlayer
           video={card.URL}
           isPlay={videoFlag}
-          // orientation={card.video.orientation}
+        // orientation={card.video.orientation}
         />
         <Gradient
           locations={[0, 0.25, 0.75, 1]}
