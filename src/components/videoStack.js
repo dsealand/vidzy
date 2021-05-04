@@ -28,8 +28,8 @@ const VideoStack = ({ navigation, stack }) => {
         <ViewPager
             orientation="vertical"
             onPageSelected={(e) => setSelected(e.nativeEvent.position)}
-            initialPage={0}
-            offscreenPageLimit={1}
+            initialPage={1}
+            offscreenPageLimit={2}
             style={{ backgroundColor: Colors.darkGrey }}
         >
             {stack.map((card, index) => {

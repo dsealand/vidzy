@@ -43,7 +43,7 @@ const VideoCard = ({ navigation, card, isPlay }) => {
   const [loaded, setLoaded] = useState(false);
   const [likedVideoID, setlikedVideoID] = useState();
   const [userID, setUserID] = useState();
-  const [videoFlag, setVideoFlag] = useState(isPlay);
+  const [videoFlag, setVideoFlag] = useState(true);
 
   const width = useWindowDimensions().width;
   const height = useWindowDimensions().height;
@@ -122,14 +122,11 @@ const VideoCard = ({ navigation, card, isPlay }) => {
 
   function pauseHandler() {
     setVideoFlag(false);
-    console.log("video flag handler ran");
   }
 
   function playHandler() {
     setVideoFlag(true);
   }
-
-  console.log("isPlay: ", isPlay, " loaded: ", loaded);
 
   if (loaded && isPlay) {
     return (
@@ -160,7 +157,7 @@ const VideoCard = ({ navigation, card, isPlay }) => {
         </Modal>
         <VideoPlayer
           video={card.URL}
-          isPlay={videoFlag}
+          isPlay={videoFlag && isPlay}
         // orientation={card.video.orientation}
         />
         <Gradient
