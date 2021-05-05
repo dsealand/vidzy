@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from "react";
 
 import {
-    View,
-    Text,
-    StyleSheet,
-    TouchableOpacity,
-    FlatList,
-    SectionList,
-    Modal,
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+  SectionList,
+  Modal,
 } from "react-native";
 import style from "styled-components/native";
 import { Feather } from "@expo/vector-icons";
 
-import Amplify, { API, graphqlOperation, Auth } from 'aws-amplify';
-import * as mutations from '../../graphql/mutations';
-import * as queries from '../../graphql/queries';
+import Amplify, { API, graphqlOperation, Auth } from "aws-amplify";
+import * as mutations from "../../graphql/mutations";
+import * as queries from "../../graphql/queries";
 
 import Colors from "./colors";
 
-import CheckoutModal from './checkoutModal';
+import CheckoutModal from "./checkoutModal";
 
 const Container = style.View`
     flexDirection: column;
@@ -159,160 +159,182 @@ const Checkout = style(TouchableOpacity)`
 `;
 
 const styles = StyleSheet.create({
-    shadow: {
-        shadowColor: Colors.darkGrey,
-        shadowOpacity: 0.15,
-        shadowRadius: 3,
-        shadowOffset: { width: 3, height: 3 },
-    },
+  shadow: {
+    shadowColor: Colors.darkGrey,
+    shadowOpacity: 0.15,
+    shadowRadius: 3,
+    shadowOffset: { width: 3, height: 3 },
+  },
 });
 
 const renderSection = ({ item }) => {
-    if (item.title === "Images") {
-        return (
-            <FlatList
-                data={item.list}
-                numColumns={3}
-                renderItem={renderImageListItem}
-                keyExtractor={(item) => item.id}
-            />
-        );
-    } else {
-        return (
-            <FlatList
-                data={item.list}
-                numColumns={5}
-                renderItem={renderColorListItem}
-                keyExtractor={(item) => item.id}
-            />
-        );
-    }
+  if (item.title === "Images") {
+    return (
+      <FlatList
+        data={item.list}
+        numColumns={3}
+        renderItem={renderImageListItem}
+        keyExtractor={(item) => item.id}
+      />
+    );
+  } else {
+    return (
+      <FlatList
+        data={item.list}
+        numColumns={5}
+        renderItem={renderColorListItem}
+        keyExtractor={(item) => item.id}
+      />
+    );
+  }
 };
 
 const renderImageListItem = ({ item }) => {
-    return (
-        <ImageSpacer style={{ width: "33%" }}>
-            <View style={styles.shadow}>
-                <ProductImageBorder />
-            </View>
-        </ImageSpacer>
-    );
+  return (
+    <ImageSpacer style={{ width: "33%" }}>
+      <View style={styles.shadow}>
+        <ProductImageBorder />
+      </View>
+    </ImageSpacer>
+  );
 };
 
 const renderColorListItem = ({ item }) => {
-    return (
-        <ImageSpacer style={{ width: "20%" }}>
-            <View style={styles.shadow}>
-                <ColorImageBorder>
-                    <View style={{ flex: 1, backgroundColor: item.asset }} />
-                </ColorImageBorder>
-            </View>
-        </ImageSpacer>
-    );
+  return (
+    <ImageSpacer style={{ width: "20%" }}>
+      <View style={styles.shadow}>
+        <ColorImageBorder>
+          <View style={{ flex: 1, backgroundColor: item.asset }} />
+        </ColorImageBorder>
+      </View>
+    </ImageSpacer>
+  );
 };
 
 const renderSectionHeader = ({ section }) => {
-    return <SectionHeaderText>{section.title}</SectionHeaderText>;
+  return <SectionHeaderText>{section.title}</SectionHeaderText>;
 };
 
 // TODO: get cartID from user, update createCartProduct mutation with cartID
 
-const productModal = ({ navigation, product, onPressClose, playHandlerFunction, pauseHandlerFunction }) => {
-    const [cartID, setCartID] = useState();
-    const [checkoutModalVisible, setCheckoutModalVisible] = useState(false);
+const productModal = ({
+  navigation,
+  product,
+  onPressClose,
+  playHandlerFunction,
+  pauseHandlerFunction,
+}) => {
+  const [cartID, setCartID] = useState();
+  const [checkoutModalVisible, setCheckoutModalVisible] = useState(false);
 
-    // get cart data for add to cart button behavior
-    useEffect(() => {
-        // getCart();
-    }, []);
+  // get cart data for add to cart button behavior
+  useEffect(() => {
+    // getCart();
+  }, []);
 
-    // async function getUser() {
-    //     try {
-    //         const credentials = await Auth.currentCredentials();
-    //         console.log("credentials: ", credentials);
-    //         if (credentials.authenticated == true) {
-    //             const user = await Auth.currentAuthenticatedUser();
-    //             return user.username;
-    //         } else {
-    //             return credentials.accessKeyId;
-    //         }
-    //     } catch (err) {
-    //         console.log("error getting current guest/authenticated user: ", err);
-    //     }
-    // }
+  // async function getUser() {
+  //     try {
+  //         const credentials = await Auth.currentCredentials();
+  //         console.log("credentials: ", credentials);
+  //         if (credentials.authenticated == true) {
+  //             const user = await Auth.currentAuthenticatedUser();
+  //             return user.username;
+  //         } else {
+  //             return credentials.accessKeyId;
+  //         }
+  //     } catch (err) {
+  //         console.log("error getting current guest/authenticated user: ", err);
+  //     }
+  // }
 
-    // async function getCart() {
-    //     try {
-    //         const username = await getUser();
-    //         console.log("username: ", username);
-    //         const user = await API.graphql(graphqlOperation(queries.listUsers, {
-    //             filter: {
-    //                 username: {
-    //                     eq: username
-    //                 }
-    //             }
-    //         }));
-    //         console.log("list users query in product modal: ", user);
-    //         setCartID(user.data.listUsers.items[0].cartID);
-    //         const cartProducts = await API.graphql(graphqlOperation(queries.listCartProducts, {
-    //             filter: {
-    //                 cartID: {
-    //                     eq: user.data.listUsers.items[0].cartID
-    //                 }
-    //             }
-    //         }))
-    //         if (cartProducts.data.listCartProducts.items.length != 0) {
-    //             setExists(true);
-    //         }
-    //     } catch (err) {
-    //         console.log("error getting cart: ", err);
-    //     }
-    // }
+  // async function getCart() {
+  //     try {
+  //         const username = await getUser();
+  //         console.log("username: ", username);
+  //         const user = await API.graphql(graphqlOperation(queries.listUsers, {
+  //             filter: {
+  //                 username: {
+  //                     eq: username
+  //                 }
+  //             }
+  //         }));
+  //         console.log("list users query in product modal: ", user);
+  //         setCartID(user.data.listUsers.items[0].cartID);
+  //         const cartProducts = await API.graphql(graphqlOperation(queries.listCartProducts, {
+  //             filter: {
+  //                 cartID: {
+  //                     eq: user.data.listUsers.items[0].cartID
+  //                 }
+  //             }
+  //         }))
+  //         if (cartProducts.data.listCartProducts.items.length != 0) {
+  //             setExists(true);
+  //         }
+  //     } catch (err) {
+  //         console.log("error getting cart: ", err);
+  //     }
+  // }
 
-    // construct array for image and color data
-    const data = [{
-        id: 0, title: "Images", data: [{
-            id: 0, title: "Images", list: product.images.items
-        }]
+  // construct array for image and color data
+  const data = [
+    {
+      id: 0,
+      title: "Images",
+      data: [
+        {
+          id: 0,
+          title: "Images",
+          list: product.images.items,
+        },
+      ],
     },
     {
-        id: 1, title: "Colors", data: [{
-            id: 1, title: "Colors", list: product.colors.items
-        }]
-    }];
+      id: 1,
+      title: "Colors",
+      data: [
+        {
+          id: 1,
+          title: "Colors",
+          list: product.colors.items,
+        },
+      ],
+    },
+  ];
 
-    return (
-        <Container>
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={checkoutModalVisible}
-            >
-                <CheckoutModal
-                    product={product}
-                    onPressClose={() => {setCheckoutModalVisible(false); playHandlerFunction();}}
-                />
-            </Modal>
-            <ModalContainer>
-                <TopContainer>
-                    <BigText>{product.name}</BigText>
-                    <TopRightContainer>
-                        <PriceText>$ {product.price}</PriceText>
-                        <TouchableOpacity onPress={onPressClose}>
-                            <Feather
-                                name="arrow-down"
-                                size={20}
-                                color={Colors.main}
-                            />
-                        </TouchableOpacity>
-                    </TopRightContainer>
-                </TopContainer>
+  return (
+    <Container>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={checkoutModalVisible}
+      >
+        <CheckoutModal
+          product={product}
+          onPressClose={() => {
+            setCheckoutModalVisible(false);
+            playHandlerFunction();
+          }}
+        />
+      </Modal>
+      <ModalContainer>
+        <TopContainer>
+          <BigText>{product.name}</BigText>
+          <TopRightContainer>
+            <PriceText>$ {product.price}</PriceText>
+            <TouchableOpacity onPress={onPressClose}>
+              <Feather name="arrow-down" size={20} color={Colors.main} />
+            </TouchableOpacity>
+          </TopRightContainer>
+        </TopContainer>
 
-                <MiddleContainer>
-                    <BigText>Use code VIDZY for $5 off your first purchase (one use per customer)</BigText>
-                </MiddleContainer>
+        <MiddleContainer>
+          <BigText>
+            Press checkout below and use promo code VIDZY for $5 off your first
+            purchase (must place order using checkout button below)
+          </BigText>
+        </MiddleContainer>
 
-                {/* <ProductScroll>
+        {/* <ProductScroll>
                     <SectionList
                         sections={data}
                         renderSectionHeader={renderSectionHeader}
@@ -321,11 +343,16 @@ const productModal = ({ navigation, product, onPressClose, playHandlerFunction, 
                     />
                 </ProductScroll> */}
 
-                <BottomContainer>
-                    <Checkout onPress={() => {setCheckoutModalVisible(true); pauseHandlerFunction();}}>
-                        <CheckoutText>Checkout</CheckoutText>
-                    </Checkout>
-                    {/* <AddToCart
+        <BottomContainer>
+          <Checkout
+            onPress={() => {
+              setCheckoutModalVisible(true);
+              pauseHandlerFunction();
+            }}
+          >
+            <CheckoutText>Checkout</CheckoutText>
+          </Checkout>
+          {/* <AddToCart
                         onPress={
                             async () => {
                                 if (!exists) {
@@ -348,21 +375,21 @@ const productModal = ({ navigation, product, onPressClose, playHandlerFunction, 
                         }>
                         <AddToCartText>Add To Cart</AddToCartText>
                     </AddToCart> */}
-                    <MoreVideos
-                        onPress={onPressClose}
-                        onPressOut={() => {
-                            navigation.navigate("Product", {
-                                product: product,
-                                back: true,
-                            });
-                        }}
-                    >
-                        <MoreVideosText>More Videos</MoreVideosText>
-                    </MoreVideos>
-                </BottomContainer>
-            </ModalContainer>
-        </Container>
-    );
+          <MoreVideos
+            onPress={onPressClose}
+            onPressOut={() => {
+              navigation.navigate("Product", {
+                product: product,
+                back: true,
+              });
+            }}
+          >
+            <MoreVideosText>More Videos</MoreVideosText>
+          </MoreVideos>
+        </BottomContainer>
+      </ModalContainer>
+    </Container>
+  );
 };
 
 export default productModal;
