@@ -31,7 +31,7 @@ const Container = style.View`
 const ModalContainer = style.View`
     backgroundColor: ${Colors.lighterGrey}
     width: 100%;
-    height: 60%;
+    height: 40%;
     borderTopLeftRadius: 20px;
     borderTopRightRadius: 20px;
     justifyContent: flex-start;
@@ -43,8 +43,17 @@ const TopContainer = style.View`
     justifyContent: space-between;
     alignItems: center;
     width: 94%;
-    height: 10%
-    left: 3%;
+    height: 15%
+    left: 5%;
+`;
+
+const MiddleContainer = style.View`
+    flexDirection: row;
+    justifyContent: space-between;
+    alignItems: center;
+    width: 90%;
+    height: 60%
+    left:7%;
 `;
 
 const TopRightContainer = style.View`
@@ -299,14 +308,19 @@ const productModal = ({ navigation, product, onPressClose, playHandlerFunction, 
                     </TopRightContainer>
                 </TopContainer>
 
-                <ProductScroll>
+                <MiddleContainer>
+                    <BigText>Use code VIDZY for $5 off your first purchase (one use per customer)</BigText>
+                </MiddleContainer>
+
+                {/* <ProductScroll>
                     <SectionList
                         sections={data}
                         renderSectionHeader={renderSectionHeader}
                         renderItem={renderSection}
                         stickySectionHeadersEnabled={false}
                     />
-                </ProductScroll>
+                </ProductScroll> */}
+
                 <BottomContainer>
                     <Checkout onPress={() => {setCheckoutModalVisible(true); pauseHandlerFunction();}}>
                         <CheckoutText>Checkout</CheckoutText>
