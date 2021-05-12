@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, FlatList, View } from "react";
 
 import PagerView from "react-native-pager-view";
 import { PagerViewOnPageScrollEventData, PagerViewOnPageSelectedEventData } from 'react-native-pager-view';
@@ -25,15 +25,72 @@ const VideoStack = ({ navigation, stack }) => {
         return didBlur, didFocus;
     }, [navigation]);
 
+    // return (
+    //     <PagerView
+    //         orientation="vertical"
+    //         onPageSelected={(e) => setSelected(e.nativeEvent.position)}
+    //         initialPage={1}
+    //         offscreenPageLimit={2}
+    //         style={{ backgroundColor: Colors.darkGrey }}
+    //     >
+    //         {stack.map((card, index) => {
+    //             return (
+    //                 <VideoCard
+    //                     key={index}
+    //                     navigation={navigation}
+    //                     card={card}
+    //                     isPlay={selected === index && focus}
+    //                 />
+    //             );
+    //         })}
+    //     </PagerView>
+    // );
+
+    const renderItem = ({ item }) => {
+        return (
+            <VideoCard
+                key={index}
+                navigation={navigation}
+                card={card}
+                isPlay={selected === index && focus}
+            />
+        );
+    }
+
+    const viewabilityConfig = {
+        itemVisiblePercentThreshold: 80,
+    };
+
     return (
-        <PagerView
-            orientation="vertical"
-            onPageSelected={(e) => setSelected(e.nativeEvent.position)}
-            initialPage={1}
-            offscreenPageLimit={2}
-            style={{ backgroundColor: Colors.darkGrey }}
-        >
-            {stack.map((card, index) => {
+        <View>
+            <FlatList
+                snapToAlignment={'start'}
+                // snapToInterval={screenHeight}
+                decelerationRate={'fast'}
+                scrollEventThrottle={250}
+                pagingEnabled
+                showsVerticalScrollIndicator={false}
+                vertical={true}
+                scrollEnabled={true}
+                style={{ flex: 1 }}
+                data={stack}
+                renderItem={renderItem}
+                keyExtractor={(item) => item.id}
+                // onViewableItemsChanged={this.onViewableItemsChanged}
+                initialNumToRender={3}
+                maxToRenderPerBatch={3}
+                windowSize={5}
+                getItemLayout={(_data, index) => ({
+                    length: cellHeight,
+                    offset: cellHeight * index,
+                    index,
+                })}
+                // onEndReached={this.onEndReached}
+                // onEndReachedThreshold={0.1}
+                viewabilityConfig={viewabilityConfig}
+                removeClippedSubviews={true}
+            >
+                {/* {stack.map((card, index) => {
                 return (
                     <VideoCard
                         key={index}
@@ -42,8 +99,10 @@ const VideoStack = ({ navigation, stack }) => {
                         isPlay={selected === index && focus}
                     />
                 );
-            })}
-        </PagerView>
-    );
+            })} */}
+            </FlatList>
+        </View>
+
+    )
 };
 export default VideoStack;

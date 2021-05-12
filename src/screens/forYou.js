@@ -25,10 +25,6 @@ const ForYou = ({ navigation }) => {
             }
         }
         getVideos();
-
-        const unsubscribe = navigation.addListener('focus', () => {
-            // do something
-          });
     }, []);
 
     return (
