@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
-import ViewPager from "@react-native-community/viewpager";
+import PagerView from "react-native-pager-view";
+import { PagerViewOnPageScrollEventData, PagerViewOnPageSelectedEventData } from 'react-native-pager-view';
 
 import Colors from "./colors";
 import VideoCard from "./videoCard";
@@ -25,7 +26,7 @@ const VideoStack = ({ navigation, stack }) => {
     }, [navigation]);
 
     return (
-        <ViewPager
+        <PagerView
             orientation="vertical"
             onPageSelected={(e) => setSelected(e.nativeEvent.position)}
             initialPage={1}
@@ -42,7 +43,7 @@ const VideoStack = ({ navigation, stack }) => {
                     />
                 );
             })}
-        </ViewPager>
+        </PagerView>
     );
 };
 export default VideoStack;

@@ -329,7 +329,7 @@ const productModal = ({
 
         <MiddleContainer>
           <BigText>
-            (Press checkout below and use promo code VIDZY for $5 off your first
+            Press checkout below and use promo code VIDZY for $5 off your first
             purchase (must place order using checkout button below)
           </BigText>
         </MiddleContainer>
