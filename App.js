@@ -22,6 +22,7 @@ import Cart from "./src/screens/cart";
 import Confirm from "./src/screens/confirm";
 import ForgotPassword from "./src/screens/forgotPassword";
 import ForgotPasswordSubmit from "./src/screens/forgotPasswordSubmit";
+import Upload from "./src/screens/upload";
 
 Amplify.configure(awsmobile);
 
@@ -93,6 +94,11 @@ function App() {
                     <Stack.Screen
                         name="Cart"
                         component={Cart}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name="Upload"
+                        component={Upload}
                         options={{ headerShown: false }}
                     />
                 </Stack.Navigator>

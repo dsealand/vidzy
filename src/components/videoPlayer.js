@@ -1,6 +1,5 @@
 import React from "react";
 
-import { SafeAreaView, View, useWindowDimensions } from "react-native";
 import { Video } from "expo-av";
 import style from "styled-components/native";
 

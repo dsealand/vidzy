@@ -4,6 +4,8 @@ import { View, useWindowDimensions, Modal } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import style from "styled-components/native";
 
+import * as FileSystem from 'expo-file-system';
+
 import Colors from "./colors";
 import VideoPlayer from "./videoPlayer";
 import VideoElements from "./videoElements";
@@ -44,6 +46,7 @@ const VideoCard = ({ navigation, card, isPlay }) => {
   const [likedVideoID, setlikedVideoID] = useState();
   const [userID, setUserID] = useState();
   const [videoFlag, setVideoFlag] = useState(true);
+  const [videoURI, setVideoURI] = useState();
 
   const width = useWindowDimensions().width;
   const height = useWindowDimensions().height;
@@ -117,8 +120,9 @@ const VideoCard = ({ navigation, card, isPlay }) => {
     }
     getCreator();
     getProduct();
+
     isLiked();
-  }, []);
+  }, [loaded]);
 
   function pauseHandler() {
     setVideoFlag(false);
@@ -129,6 +133,7 @@ const VideoCard = ({ navigation, card, isPlay }) => {
   }
 
   if (loaded && isPlay) {
+
     return (
       <VideoContainer style={{ height: height, width: width }}>
         <Modal
